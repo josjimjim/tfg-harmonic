@@ -1,13 +1,22 @@
 <template>
   <div>
-    <h1>Home</h1>
-    <p>Here is some information. This is the home page</p>
+    <h3 class="title is-3">Home</h3>
+    <div class="columns">
+      <div class="column">
+        <documentation type="home"></documentation>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import Documentation from './Documentation'
+
 export default {
-  name: 'Home' //this is the name of the component
+  name: 'Home',
+  components: {
+    'documentation': Documentation
+  },
 }
 </script>
 <style>

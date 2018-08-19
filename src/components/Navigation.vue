@@ -22,10 +22,10 @@
               2D
             </a>
             <div class="navbar-dropdown is-boxed">
-              <router-link to="/pendulo/simple" class="navbar-item">
+              <router-link to="/pendulum/simple" class="navbar-item">
                 Simple pendulum
               </router-link>
-              <router-link to="/pendulo/doble" class="navbar-item">
+              <router-link to="/pendulum/double" class="navbar-item">
                 Double pendulum
               </router-link>
             </div>
@@ -35,7 +35,7 @@
               3D
             </a>
             <div class="navbar-dropdown is-boxed">
-              <router-link to="/pendulo/esferico" class="navbar-item">
+              <router-link to="/pendulum/spherical" class="navbar-item">
                 Spherical pendulum
               </router-link>
             </div>

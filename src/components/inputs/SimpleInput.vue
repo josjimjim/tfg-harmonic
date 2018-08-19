@@ -1,88 +1,39 @@
 <template>
   <div>
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">Angle</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <p class="control">
-            <input v-model="status.pendulum.angle" @keyup="setStatus" class="input" placeholder="Angle">
-          </p>
-        </div>
-      </div>
-    </div>
+    <generic-input label="Angle">
+      <input v-model="status.pendulum.angle" @keyup="setStatus" class="input" placeholder="Angle">
+    </generic-input>
 
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">Velocity</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <p class="control">
-            <input v-model="status.pendulum.velocity" @keyup="setStatus" class="input" placeholder="Velocity">
-          </p>
-        </div>
-      </div>
-    </div>
+    <generic-input label="Velocity">
+      <input v-model="status.pendulum.velocity" @keyup="setStatus" class="input" placeholder="Velocity">
+    </generic-input>
 
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">Length</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <p class="control">
-            <input v-model="status.pendulum.length" @keyup="setStatus" class="input" placeholder="Length">
-          </p>
-        </div>
-      </div>
-    </div>
+    <generic-input label="Length">
+      <input v-model="status.pendulum.length" @keyup="setStatus" class="input" placeholder="Length">
+    </generic-input>
 
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">Mass</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <p class="control">
-            <input v-model="status.pendulum.mass" @keyup="setStatus" class="input" placeholder="Mass">
-          </p>
-        </div>
-      </div>
-    </div>
+    <generic-input label="Mass">
+      <input v-model="status.pendulum.mass" @keyup="setStatus" class="input" placeholder="Mass">
+    </generic-input>
 
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">Step</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <p class="control">
-            <input v-model="status.step" @keyup="setStatus" class="input" placeholder="Step">
-          </p>
-        </div>
-      </div>
-    </div>
+    <generic-input label="Step">
+      <input v-model="status.step" @keyup="setStatus" class="input" placeholder="Step">
+    </generic-input>
 
-    <div class="field is-horizontal">
-      <div class="field-label">
-        <!-- Left empty for spacing -->
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <button v-model="clapper.animate" v-text="clapper.text" @click="setAnimation" class="button"></button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <generic-input>
+      <button v-model="clapper.animate" v-text="clapper.text" @click="setAnimation" class="button"></button>
+    </generic-input>
   </div>
 </template>
 
 <script>
+import GenericInput from './GenericInput'
+
 export default {
   name: 'simple-input',
+  components: {
+    'generic-input': GenericInput
+  },
   data() {
     return {
       status: {
@@ -90,7 +41,7 @@ export default {
           angle: 45,
           velocity: 0.0,
           length: 1.0,
-          mass: 1.0
+          mass: 2.0
         },
         step: 0.01
       },

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import About from '@/components/About'
 import SimplePendulum from '@/components/objects/SimplePendulum'
+import DoublePendulum from '@/components/objects/DoublePendulum'
 
 Vue.use(Router);
 
@@ -14,9 +15,14 @@ export default new Router({
       component: Home
     },
     {
-      path: '/pendulo/simple',
+      path: '/pendulum/simple',
       name: 'SimplePendulum',
       component: SimplePendulum
+    },
+    {
+      path: '/pendulum/double',
+      name: 'DoublePendulum',
+      component: DoublePendulum
     },
     {
       path: '/about',

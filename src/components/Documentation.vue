@@ -1,5 +1,5 @@
 <template>
-  <div class="content is-medium has-text-justified">
+  <div class="content has-text-justified">
     <div v-for="elem in docum">
       <h4 v-if="elem.text.title != ''">{{elem.text.title}}</h4>
       <p>{{elem.text.content}}</p>
