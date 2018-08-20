@@ -6,7 +6,7 @@
         <div id="canvas"></div>
       </div>
       <double-input class="column is-quarter" @setStatus="setStatus" @setAnimation="setAnimation"
-      @enableDamping="enableDamping"></double-input>
+      @enableDamping="enableDamping" @enableTrail="enableTrail"></double-input>
     </div>
     <div class="columns">
       <div class="column">
@@ -37,12 +37,14 @@ export default {
       camera: null,
       renderer: null,
       canvas: null,
+      animFrameID: null,
 
       time: 0,
       step: 0,
       pendulum1: {},
       pendulum2: {},
       damping: {},
+      trail: false,
 
       circle1: null,
       circle2: null,
@@ -52,9 +54,7 @@ export default {
       circleRadius1: null,
       circleRadius2: null,
       lineLength1: null,
-      lineLength2: null,
-
-      anFrmID: null
+      lineLength2: null
     }
   },
   methods: {
@@ -75,7 +75,6 @@ export default {
 
       return ((- a + b - c - d) / e) - damping
     },
-
     pendulumDwEq(x, v, t) {
       var pendulum1 = this.pendulum1
       var pendulum2 = this.pendulum2
@@ -93,7 +92,6 @@ export default {
 
       return ((a + b + c - d) / e) - damping
     },
-
     setStatus(status){
       this.pendulum1.angle = parseFloat(status.pendulum1.angle * Math.PI / 180);
       this.pendulum1.length = parseFloat(status.pendulum1.length);
@@ -123,15 +121,17 @@ export default {
       if(animate) this.move(); else this.stop();
     },
     enableDamping(active) {
-      console.log(active)
       this.damping.active = active
+    },
+    enableTrail(active) {
+      this.trail = active
     },
     initContext(){
       this.camera = new THREE.PerspectiveCamera(20, CANVAS_WIDTH/CANVAS_HEIGHT, 0.1, 1000);
       this.camera.position.set(0, 0, 100);
       this.camera.lookAt( new THREE.Vector3(0, 0, 0));
 
-      this.renderer = new THREE.WebGLRenderer();
+      this.renderer = new THREE.WebGLRenderer() //{ preserveDrawingBuffer: true }
       this.renderer.setSize( CANVAS_WIDTH, CANVAS_HEIGHT);
       this.renderer.sortObjects = false;
 
@@ -198,9 +198,8 @@ export default {
       this.renderer.render( this.scene, this.camera );
     },
     move() {
-      this.anFrmID = requestAnimationFrame( this.move );
+      this.animFrameID = requestAnimationFrame( this.move );
 
-      var angle0_1 = this.pendulum1.angle;
       var nextStep1 = rungeKutta4(this.pendulumUpEq, this.pendulum1.angle, this.pendulum1.velocity, this.time, this.step);
       this.pendulum1.angle = parseFloat(nextStep1[0]);
       this.pendulum1.velocity = parseFloat(nextStep1[1]);
@@ -210,7 +209,6 @@ export default {
       this.line1.geometry.vertices[ 1 ].y = this.circle1.position.y;
       this.line1.geometry.verticesNeedUpdate = true;
 
-      var angle0_2 = this.pendulum2.angle;
       var nextStep2 = rungeKutta4(this.pendulumDwEq, this.pendulum2.angle, this.pendulum2.velocity, this.time, this.step);
       this.pendulum2.angle = parseFloat(nextStep2[0]);
       this.pendulum2.velocity = parseFloat(nextStep2[1]);
@@ -223,10 +221,24 @@ export default {
       this.line2.geometry.verticesNeedUpdate = true;
 
       this.time += this.step;
+
+      this.drawTrail();
+
       this.renderer.render( this.scene, this.camera );
     },
     stop(){
-      cancelAnimationFrame(this.anFrmID);
+      cancelAnimationFrame(this.animFrameID);
+    },
+    drawTrail(){
+      if(this.trail) {
+        var dotMaterial = new THREE.PointsMaterial( { size: 1, color: 0xff8800, sizeAttenuation: false } );
+        var dotGeometry = new THREE.Geometry();
+        dotGeometry.vertices.push(new THREE.Vector3( this.circle2.position.x, this.circle2.position.y, -1));
+
+        var dot = new THREE.Points( dotGeometry, dotMaterial );
+
+        this.scene.add(dot)
+      }
     }
   },
   mounted() {

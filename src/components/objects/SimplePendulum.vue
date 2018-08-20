@@ -22,8 +22,8 @@ import SimpleImput from '../inputs/SimpleInput'
 import Documentation from '../Documentation'
 import {GRAVITY, rungeKutta4} from '@/assets/js/math.js'
 
-const CANVAS_WIDTH = 500;
-const CANVAS_HEIGHT = 400;
+const CANVAS_WIDTH = 500
+const CANVAS_HEIGHT = 400
 
 export default {
   name: 'simple-pendulum',
@@ -37,19 +37,20 @@ export default {
       camera: null,
       renderer: null,
       canvas: null,
-      group: null,
+      circle: null,
+      line: null,
+      animFrameID: null,
 
       time: 0,
       step: 0,
       pendulum: {},
       damping: {},
-
-      anFrmID: null
+      trail: false
     }
   },
   methods: {
     pendulumEq(x, v, t){
-      var damping = 0;
+      var damping = 0
       if(this.damping.active){
         damping = (this.damping.value / this.pendulum.mass * v)
       }
@@ -71,21 +72,24 @@ export default {
       }
     },
     setAnimation(animate) {
-      if(animate) this.move(); else this.stop();
+      if(animate){ this.move() }else{ this.stop() }
     },
     enableDamping(active) {
-      console.log(active)
       this.damping.active = active
     },
+    enableTrail(active) {
+      this.trail = active
+    },
     initContext(){
-      this.camera = new THREE.PerspectiveCamera(20, CANVAS_WIDTH/CANVAS_HEIGHT, 0.1, 1000);
-      this.camera.position.set(0, 0, 80);
-      this.camera.lookAt( new THREE.Vector3(0, 0, 0));
+      this.camera = new THREE.PerspectiveCamera(20, CANVAS_WIDTH/CANVAS_HEIGHT, 0.1, 1000)
+      this.camera.position.set(0, 0, 80)
+      this.camera.lookAt( new THREE.Vector3(0, 0, 0))
 
-      this.renderer = new THREE.WebGLRenderer();
-      this.renderer.setSize( CANVAS_WIDTH, CANVAS_HEIGHT);
-      this.canvas = document.getElementById("canvas");
-      this.canvas.appendChild(this.renderer.domElement);
+      this.renderer = new THREE.WebGLRenderer()
+      this.renderer.setSize( CANVAS_WIDTH, CANVAS_HEIGHT)
+      this.renderer.sortObjects = false;
+      this.canvas = document.getElementById("canvas")
+      this.canvas.appendChild(this.renderer.domElement)
 
     },
     initScene() {
@@ -94,67 +98,77 @@ export default {
 
       this.initAxis()
       this.initObject()
+
+      this.renderer.render( this.scene, this.camera )
     },
     initAxis() {
-      var materialAxisX = new THREE.LineBasicMaterial( { color: 0xff0000 } );
-      var geometryAxisX = new THREE.Geometry();
-      geometryAxisX.vertices.push(new THREE.Vector3( 0, -50, 0) );
-      geometryAxisX.vertices.push(new THREE.Vector3( 0,  50, 0) );
+      var materialAxisX = new THREE.LineBasicMaterial( { color: 0xff0000 } )
+      var geometryAxisX = new THREE.Geometry()
+      geometryAxisX.vertices.push(new THREE.Vector3( 0, -50, 0) )
+      geometryAxisX.vertices.push(new THREE.Vector3( 0,  50, 0) )
 
-      var materialAxisY = new THREE.LineBasicMaterial( { color: 0x0000ff } );
-      var geometryAxisY = new THREE.Geometry();
-      geometryAxisY.vertices.push(new THREE.Vector3(-50, 0, 0) );
-      geometryAxisY.vertices.push(new THREE.Vector3( 50, 0, 0) );
+      var materialAxisY = new THREE.LineBasicMaterial( { color: 0x0000ff } )
+      var geometryAxisY = new THREE.Geometry()
+      geometryAxisY.vertices.push(new THREE.Vector3(-50, 0, 0) )
+      geometryAxisY.vertices.push(new THREE.Vector3( 50, 0, 0) )
 
-      var axisX = new THREE.Line( geometryAxisX, materialAxisX );
-      var axisY = new THREE.Line( geometryAxisY, materialAxisY );
+      var axisX = new THREE.Line( geometryAxisX, materialAxisX )
+      var axisY = new THREE.Line( geometryAxisY, materialAxisY )
 
-      var axis = new THREE.Object3D();
-      axis.add( axisX );
-      axis.add( axisY );
-      this.scene.add( axis );
+      var axis = new THREE.Object3D()
+      axis.add( axisX )
+      axis.add( axisY )
+      this.scene.add( axis )
     },
     initObject() {
 
-      var material_line = new THREE.LineBasicMaterial( { color: 0x000000 } );
-      var geometry_line = new THREE.Geometry();
-      geometry_line.vertices.push(new THREE.Vector3(
-        this.pendulum.length * Math.sin(this.pendulum.angle),
-        -this.pendulum.length * Math.cos(this.pendulum.angle),
-        0) );
-      geometry_line.vertices.push(new THREE.Vector3( 0, 0, 0) );
-      var line = new THREE.Line( geometry_line, material_line );
+      var geometry_circle = new THREE.CircleGeometry( this.pendulum.mass / 2, 50 )
+      var material_circle = new THREE.MeshBasicMaterial( { color: 0x2469ff } )
+      this.circle = new THREE.Mesh( geometry_circle, material_circle )
+      this.circle.position.x = this.pendulum.length * Math.sin(this.pendulum.angle)
+      this.circle.position.y = -this.pendulum.length * Math.cos(this.pendulum.angle)
 
+      var material_line = new THREE.LineBasicMaterial( { color: 0x000000 } )
+      var geometry_line = new THREE.Geometry()
+      geometry_line.vertices.push(new THREE.Vector3( 0, 0, 0))
+      geometry_line.vertices.push(new THREE.Vector3( this.circle.position.x, this.circle.position.y, 0))
+      this.line = new THREE.Line( geometry_line, material_line )
 
-      var geometry_circle = new THREE.CircleGeometry( this.pendulum.mass / 2, 50 );
-      var material_circle = new THREE.MeshBasicMaterial( { color: 0x2469ff } );
-      var circle = new THREE.Mesh( geometry_circle, material_circle );
-      circle.position.x = this.pendulum.length * Math.sin(this.pendulum.angle);
-      circle.position.y = -this.pendulum.length * Math.cos(this.pendulum.angle);
-
-      this.group = new THREE.Object3D();
-      this.group.add( line );
-      this.group.add( circle );
-
-      this.scene.add( this.group );
-
-      this.renderer.render( this.scene, this.camera );
+      this.scene.add(this.line)
+      this.scene.add(this.circle)
     },
     move() {
-      this.anFrmID = requestAnimationFrame( this.move );
-      var angle0 = this.pendulum.angle;
-      var nextStep = rungeKutta4(this.pendulumEq, this.pendulum.angle, this.pendulum.velocity, this.time, this.step);
+      this.animFrameID = requestAnimationFrame( this.move )
 
-      this.pendulum.angle = nextStep[0];
-      this.pendulum.velocity = nextStep[1];
-      this.time = nextStep[2];
+      var nextStep = rungeKutta4(this.pendulumEq, this.pendulum.angle, this.pendulum.velocity, this.time, this.step)
 
-      this.group.rotation.z -= (angle0 - this.pendulum.angle);
+      this.pendulum.angle = parseFloat(nextStep[0])
+      this.pendulum.velocity = parseFloat(nextStep[1])
+      this.circle.position.x =  this.pendulum.length * Math.sin(this.pendulum.angle)
+      this.circle.position.y = -this.pendulum.length * Math.cos(this.pendulum.angle)
+      this.line.geometry.vertices[ 1 ].x = this.circle.position.x
+      this.line.geometry.vertices[ 1 ].y = this.circle.position.y
+      this.line.geometry.verticesNeedUpdate = true
 
-      this.renderer.render( this.scene, this.camera );
+      this.time += this.step;
+
+      this.drawTrail();
+
+      this.renderer.render( this.scene, this.camera )
     },
     stop(){
-      cancelAnimationFrame(this.anFrmID);
+      cancelAnimationFrame(this.animFrameID)
+    },
+    drawTrail(){
+      if(this.trail) {
+        var dotMaterial = new THREE.PointsMaterial( { size: 1, color: 0xff8800 } );
+        var dotGeometry = new THREE.Geometry();
+        dotGeometry.vertices.push(new THREE.Vector3( this.circle.position.x, this.circle.position.y, -1));
+
+        var dot = new THREE.Points( dotGeometry, dotMaterial );
+
+        this.scene.add(dot)
+      }
     }
   },
   mounted() {

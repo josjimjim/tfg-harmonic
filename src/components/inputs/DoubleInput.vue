@@ -64,7 +64,7 @@
       <input id="enableDamping" type="checkbox" name="enableDamping" @click="enableDamping" class="switch is-rtl is-small">
       <label for="enableDamping">Enable damping</label>
 
-      <input id="enableTrail" type="checkbox" name="enableTrail" class="switch is-rtl is-small" checked="checked">
+      <input id="enableTrail" type="checkbox" name="enableTrail" @click="enableTrail" class="switch is-rtl is-small">
       <label for="enableTrail">Enable trail</label>
     </generic-input>
 
@@ -103,6 +103,7 @@ export default {
         },
         step: 0.01
       },
+      trail: false,
       clapper: {
         animate: false,
         text: 'Start'
@@ -122,6 +123,10 @@ export default {
     enableDamping(){
       this.status.damping.active = !this.status.damping.active
       this.$emit('enableDamping', this.status.damping.active)
+    },
+    enableTrail(){
+      this.trail = !this.trail
+      this.$emit('enableTrail', this.trail)
     }
   },
   created(){
