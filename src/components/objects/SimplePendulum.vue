@@ -5,7 +5,8 @@
       <div class="column is-half">
         <div id="canvas"></div>
       </div>
-      <simple-input class="column is-quarter" @setStatus="setStatus" @setAnimation="setAnimation"></simple-input>
+      <simple-input class="column is-quarter" @setStatus="setStatus" @setAnimation="setAnimation"
+      @enableDamping="enableDamping" @enableTrail="enableTrail"></simple-input>
     </div>
     <div class="columns">
       <div class="column">
@@ -41,21 +42,29 @@ export default {
       time: 0,
       step: 0,
       pendulum: {},
+      damping: {},
 
       anFrmID: null
     }
   },
   methods: {
     pendulumEq(x, v, t){
-      return - GRAVITY * Math.sin(x) / this.pendulum.length;
+      var damping = 0;
+      if(this.damping.active){
+        damping = (this.damping.value / this.pendulum.mass * v)
+      }
+      return - GRAVITY * Math.sin(x) / this.pendulum.length - damping
     },
     setStatus(status){
-      this.pendulum.angle = parseFloat(status.pendulum.angle * Math.PI / 180);
-      this.pendulum.velocity = parseFloat(status.pendulum.velocity);
-      this.pendulum.length = parseFloat(status.pendulum.length) * 5;
-      this.pendulum.mass = parseFloat(status.pendulum.mass);
+      this.pendulum.angle = parseFloat(status.pendulum.angle * Math.PI / 180)
+      this.pendulum.velocity = parseFloat(status.pendulum.velocity)
+      this.pendulum.length = parseFloat(status.pendulum.length) * 5
+      this.pendulum.mass = parseFloat(status.pendulum.mass)
 
-      this.step = parseFloat(status.step);
+      this.damping.value = status.damping.value
+      this.damping.active = status.damping.active
+
+      this.step = parseFloat(status.step)
 
       if(this.scene != null) {
         this.initScene()
@@ -63,6 +72,10 @@ export default {
     },
     setAnimation(animate) {
       if(animate) this.move(); else this.stop();
+    },
+    enableDamping(active) {
+      console.log(active)
+      this.damping.active = active
     },
     initContext(){
       this.camera = new THREE.PerspectiveCamera(20, CANVAS_WIDTH/CANVAS_HEIGHT, 0.1, 1000);

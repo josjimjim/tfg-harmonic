@@ -21,4 +21,6 @@ export default {
 
 <style lang="css">
     @import "../node_modules/bulma/css/bulma.css";
+    @import "../node_modules/bulma-extensions/bulma-slider/dist/css/bulma-slider.min.css";
+    @import "../node_modules/bulma-extensions/bulma-switch/dist/css/bulma-switch.min.css";
 </style>

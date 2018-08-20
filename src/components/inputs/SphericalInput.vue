@@ -1,31 +1,45 @@
 <template>
   <div>
     <generic-input label="Angle amplitude">
-      <input v-model="status.pendulum.angleAmplitude" @keyup="setStatus" class="input" placeholder="Angle amplitude">
+      <input type="range" min="0" max="360" step="1" v-model="status.pendulum.angleAmplitude"
+      @change="setStatus" class="slider" placeholder="Angle amplitude">
+      <span v-text="status.pendulum.angleAmplitude"></span>
     </generic-input>
 
     <generic-input label="Velocity amplitude">
-      <input v-model="status.pendulum.velocityAmplitude" @keyup="setStatus" class="input" placeholder="Velocity amplitude">
+      <input type="range" min="0" max="20" step="0.5" v-model="status.pendulum.velocityAmplitude"
+      @change="setStatus" class="slider" placeholder="Velocity amplitude">
+      <span v-text="status.pendulum.velocityAmplitude"></span>
     </generic-input>
 
     <generic-input label="Angle rotation">
-      <input v-model="status.pendulum.angleRotation" @keyup="setStatus" class="input" placeholder="Angle rotation">
+      <input type="range" min="0" max="360" step="1" v-model="status.pendulum.angleRotation"
+      @change="setStatus" class="slider" placeholder="Angle rotation">
+      <span v-text="status.pendulum.angleRotation"></span>
     </generic-input>
 
     <generic-input label="Velocity rotation">
-      <input v-model="status.pendulum.velocityRotation" @keyup="setStatus" class="input" placeholder="Velocity rotation">
+      <input type="range" min="0" max="20" step="0.5" v-model="status.pendulum.velocityRotation"
+      @change="setStatus" class="slider" placeholder="Velocity rotation">
+      <span v-text="status.pendulum.velocityRotation"></span>
     </generic-input>
 
     <generic-input label="Length">
-      <input v-model="status.pendulum.length" @keyup="setStatus" class="input" placeholder="Length">
+      <input type="range" min="1" max="3" step="0.2" v-model="status.pendulum.length"
+      @change="setStatus" class="slider" placeholder="Length">
+      <span v-text="status.pendulum.length"></span>
     </generic-input>
 
     <generic-input label="Mass">
-      <input v-model="status.pendulum.mass" @keyup="setStatus" class="input" placeholder="Mass">
+      <input type="range" min="0.5" max="5" step="0.5" v-model="status.pendulum.mass"
+      @change="setStatus" class="slider" placeholder="Mass">
+      <span v-text="status.pendulum.mass"></span>
     </generic-input>
 
     <generic-input label="Step">
-      <input v-model="status.step" @keyup="setStatus" class="input" placeholder="Step">
+      <input type="range" min="0.01" max="0.5" step="0.01" v-model="status.step"
+      @change="setStatus" class="slider" placeholder="Step">
+      <span v-text="status.step"></span>
     </generic-input>
 
     <generic-input>
@@ -48,9 +62,9 @@ export default {
         pendulum :{
           angleAmplitude: 45,
           velocityAmplitude: 0.0,
-          angleRotation: 45,
+          angleRotation: 90,
           velocityRotation: 1.0,
-          length: 1.0,
+          length: 2.0,
           mass: 2.0
         },
         step: 0.01

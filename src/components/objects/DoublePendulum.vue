@@ -5,7 +5,8 @@
       <div class="column is-half">
         <div id="canvas"></div>
       </div>
-      <double-input class="column is-quarter" @setStatus="setStatus" @setAnimation="setAnimation"></double-input>
+      <double-input class="column is-quarter" @setStatus="setStatus" @setAnimation="setAnimation"
+      @enableDamping="enableDamping"></double-input>
     </div>
     <div class="columns">
       <div class="column">
@@ -41,6 +42,7 @@ export default {
       step: 0,
       pendulum1: {},
       pendulum2: {},
+      damping: {},
 
       circle1: null,
       circle2: null,
@@ -60,18 +62,28 @@ export default {
       var pendulum1 = this.pendulum1
       var pendulum2 = this.pendulum2
 
+      var damping = 0;
+      if(this.damping.active){
+        damping = (this.damping.value / pendulum1.mass * v)
+      }
+
     	var a = Math.pow(v, 2) * pendulum1.length * pendulum2.mass * Math.cos(x - pendulum2.angle) * Math.sin(x - pendulum2.angle);
     	var b = GRAVITY * pendulum2.mass * Math.sin(pendulum2.angle) * Math.cos(x - pendulum2.angle);
     	var c = Math.pow(pendulum2.velocity, 2) * pendulum2.length * Math.sin(x - pendulum2.angle) * pendulum2.mass;
     	var d = GRAVITY * (pendulum1.mass + pendulum2.mass) * Math.sin(x);
     	var e = pendulum1.length * (pendulum1.mass + pendulum2.mass) - pendulum1.length * pendulum2.mass * Math.pow(Math.cos(x - pendulum2.angle), 2);
 
-      return (- a + b - c - d) / e ;//- (damping / pendulum1.mass * v);
+      return ((- a + b - c - d) / e) - damping
     },
 
     pendulumDwEq(x, v, t) {
       var pendulum1 = this.pendulum1
       var pendulum2 = this.pendulum2
+
+      var damping = 0;
+      if(this.damping.active){
+        damping = (this.damping.value / pendulum2.mass * v)
+      }
 
       var a = Math.pow(v, 2) * pendulum2.length * pendulum2.mass * Math.cos(pendulum1.angle - x) * Math.sin(pendulum1.angle - x);
       var b = GRAVITY * (pendulum1.mass + pendulum2.mass) * Math.sin(pendulum1.angle) * Math.cos(pendulum1.angle - x);
@@ -79,7 +91,7 @@ export default {
       var d = GRAVITY * (pendulum1.mass + pendulum2.mass) * Math.sin(x);
       var e = pendulum2.length * (pendulum1.mass + pendulum2.mass) - pendulum2.length * pendulum2.mass * Math.pow(Math.cos(pendulum1.angle - x), 2);
 
-      return (a + b + c - d) / e ;//- (damping / pendulum2.mass * v);
+      return ((a + b + c - d) / e) - damping
     },
 
     setStatus(status){
@@ -92,6 +104,9 @@ export default {
       this.pendulum2.length = parseFloat(status.pendulum2.length);
       this.pendulum2.velocity = parseFloat(status.pendulum2.velocity);
       this.pendulum2.mass = parseFloat(status.pendulum2.mass);
+
+      this.damping.value = status.damping.value
+      this.damping.active = status.damping.active
 
       this.circleRadius1 = this.pendulum1.mass / 2;
       this.circleRadius2 = this.pendulum2.mass / 2;
@@ -106,6 +121,10 @@ export default {
     },
     setAnimation(animate) {
       if(animate) this.move(); else this.stop();
+    },
+    enableDamping(active) {
+      console.log(active)
+      this.damping.active = active
     },
     initContext(){
       this.camera = new THREE.PerspectiveCamera(20, CANVAS_WIDTH/CANVAS_HEIGHT, 0.1, 1000);

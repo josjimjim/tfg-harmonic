@@ -62,6 +62,7 @@ export default {
       this.pendulum.angleRotation = parseFloat(status.pendulum.angleRotation * Math.PI / 180);
       this.pendulum.velocityRotation = parseFloat(status.pendulum.velocityRotation);
       this.pendulum.length = parseFloat(status.pendulum.length);
+      this.pendulum.mass = parseFloat(status.pendulum.mass);
 
       this.step = parseFloat(status.step);
 
@@ -128,7 +129,7 @@ export default {
         this.lineLength * Math.sin(this.pendulum.angleAmplitude) *  Math.cos(this.pendulum.angleRotation)) );
       this.line = new THREE.Line( geometry_line, material_line );
 
-      var geometry_sphere = new THREE.SphereGeometry( 1, 32, 32 );
+      var geometry_sphere = new THREE.SphereGeometry( this.pendulum.mass / 2, 32, 32 );
       var material_sphere = new THREE.MeshBasicMaterial( { color: 0x2469ff } );
       this.sphere = new THREE.Mesh( geometry_sphere, material_sphere );
       this.sphere.position.x = this.lineLength * Math.sin(this.pendulum.angleAmplitude) *  Math.sin(this.pendulum.angleRotation);
