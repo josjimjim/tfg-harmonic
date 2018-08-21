@@ -39,7 +39,7 @@ export default {
       camera: null,
       renderer: null,
       canvas: null,
-      controls: null,
+      // controls: null,
 
       sphere: null,
       line: null,
@@ -89,11 +89,11 @@ export default {
     },
     initContext(){
       this.camera = new THREE.PerspectiveCamera(20, CANVAS_WIDTH/CANVAS_HEIGHT, 0.1, 1000)
-      this.controls = new THREE.OrbitControls(this.camera)
+      // this.controls = new THREE.OrbitControls(this.camera)
 
       this.camera.position.set( 80, 50, 80 )
       this.camera.lookAt( new THREE.Vector3(0, 0, 0))
-      controls.update();
+      // controls.update();
 
       this.renderer = new THREE.WebGLRenderer()
       this.renderer.setSize( CANVAS_WIDTH, CANVAS_HEIGHT)
