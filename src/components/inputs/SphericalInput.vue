@@ -42,6 +42,11 @@
       <span v-text="status.step"></span>
     </generic-input>
 
+    <generic-input label="">
+      <input id="enableTrail" type="checkbox" name="enableTrail" @click="enableTrail" class="switch is-rtl is-small">
+      <label for="enableTrail">Enable trail</label>
+    </generic-input>
+
     <generic-input>
       <button v-model="clapper.animate" v-text="clapper.text" @click="setAnimation" class="button"></button>
     </generic-input>
@@ -67,6 +72,7 @@ export default {
           length: 2.0,
           mass: 2.0
         },
+        trail: false,
         step: 0.01
       },
       clapper: {
@@ -84,7 +90,11 @@ export default {
       this.clapper.text = this.clapper.animate ? 'Stop' : 'Start'
 
       this.$emit('setAnimation', this.clapper.animate)
-    }
+    },
+    enableTrail(){
+      this.trail = !this.trail
+      this.$emit('enableTrail', this.trail)
+    },
   },
   created(){
     this.setStatus()

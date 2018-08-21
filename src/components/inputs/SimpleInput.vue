@@ -41,8 +41,8 @@
       <input id="enableDamping" type="checkbox" name="enableDamping" @click="enableDamping" class="switch is-rtl is-small">
       <label for="enableDamping">Enable damping</label>
 
-      <input id="enableTrail" type="checkbox" name="enableTrail" @click="enableTrail" class="switch is-rtl is-small">
-      <label for="enableTrail">Enable trail</label>
+      <!-- <input id="enableTrail" type="checkbox" name="enableTrail" @click="enableTrail" class="switch is-rtl is-small">
+      <label for="enableTrail">Enable trail</label> -->
     </generic-input>
 
     <generic-input>

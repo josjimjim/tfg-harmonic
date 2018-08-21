@@ -5,14 +5,14 @@
         <router-link to="/" class="navbar-item">
           <img src="/static/harmonic-logo.png" alt="TFG - Harmonic" width="112" height="28">
         </router-link>
-        <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+        <div @click="toggleActive" :class="{'is-active': isActive}" class="navbar-burger burger" data-target="navbarExampleTransparentExample">
           <span></span>
           <span></span>
           <span></span>
         </div>
       </div>
 
-      <div id="navbarExampleTransparentExample" class="navbar-menu">
+      <div id="navbarExampleTransparentExample" :class="{'is-active': isActive}" class="navbar-menu">
         <div class="navbar-start">
           <router-link to="/" class="navbar-item">
             Home
@@ -55,6 +55,16 @@
 
 <script>
 export default {
-  name: 'nav-bar'
+  name: 'nav-bar',
+  data() {
+    return {
+      isActive: false
+    }
+  },
+  methods: {
+    toggleActive() {
+      this.isActive = !this.isActive
+    }
+  }
 }
 </script>

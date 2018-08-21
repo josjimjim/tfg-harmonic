@@ -9,6 +9,7 @@ import SphericalPendulum from '@/components/objects/SphericalPendulum'
 Vue.use(Router);
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
