@@ -5,6 +5,7 @@ import About from '@/components/About'
 import SimplePendulum from '@/components/objects/SimplePendulum'
 import DoublePendulum from '@/components/objects/DoublePendulum'
 import SphericalPendulum from '@/components/objects/SphericalPendulum'
+import ConicalPendulum from '@/components/objects/ConicalPendulum'
 
 Vue.use(Router);
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/pendulum/spherical',
       name: 'SphericalPendulum',
       component: SphericalPendulum
+    },
+    {
+      path: '/pendulum/conical',
+      name: 'ConicalPendulum',
+      component: ConicalPendulum
     },
     {
       path: '/about',

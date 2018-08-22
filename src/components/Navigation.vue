@@ -38,6 +38,9 @@
               <router-link to="/pendulum/spherical" class="navbar-item">
                 Spherical pendulum
               </router-link>
+              <router-link to="/pendulum/conical" class="navbar-item">
+                Conical pendulum
+              </router-link>
             </div>
           </div>
           <router-link to="/about" class="navbar-item">

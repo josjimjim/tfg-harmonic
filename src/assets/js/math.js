@@ -1,7 +1,24 @@
 export const GRAVITY = 9.81;
 
 export function euler(f, x, v , t, h){
-    //TODO
+    x+=h*f(x, v, t);
+    v+=h*v;
+    t+=h;
+    return [x, v, t];
+}
+
+export function heun(f, x, v , t, h){
+    var k1, k2;
+    var l1, l2;
+
+    k1=h*v;
+    l1=h*f(x, v, t);
+    k2=h*(v+l1);
+    l2=h*f(x+k1, v+l1, t+h);
+    x+=(k1+k2)/2;
+    v+=(l1+l2)/2;
+    t+=h;
+
     return [x, v, t];
 }
 

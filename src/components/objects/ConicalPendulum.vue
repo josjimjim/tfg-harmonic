@@ -1,16 +1,16 @@
 <template>
   <div>
-    <h3 class="title is-3">Spherical pendulum</h3>
+    <h3 class="title is-3">Conical pendulum</h3>
     <div class="columns">
       <div class="column is-half">
         <div id="canvas"></div>
       </div>
-      <spherical-input class="column is-quarter" @setStatus="setStatus" @setAnimation="setAnimation"
-      @enableTrail="enableTrail"></spherical-input>
+      <conical-input class="column is-quarter" @setStatus="setStatus" @setAnimation="setAnimation"
+      @enableTrail="enableTrail"></conical-input>
     </div>
     <div class="columns">
       <div class="column">
-        <documentation type="spherical-pendulum"></documentation>
+        <documentation type="conical-pendulum"></documentation>
       </div>
     </div>
   </div>
@@ -21,9 +21,9 @@ import * as THREE from 'three'
 window.THREE = THREE;
 require('three/examples/js/controls/OrbitControls.js');
 
-import SphericalInput from '../inputs/SphericalInput'
+import ConicalInput from '../inputs/ConicalInput'
 import Documentation from '../Documentation'
-import {GRAVITY, rungeKutta4} from '@/assets/js/math.js'
+import {GRAVITY} from '@/assets/js/math.js'
 
 const CANVAS_WIDTH = 500
 const CANVAS_HEIGHT = 400
@@ -31,9 +31,9 @@ const CANVAS_HEIGHT = 400
 const MAX_TRAIL_POINTS = 5000
 
 export default {
-  name: 'spherical-pendulum',
+  name: 'conical-pendulum',
   components: {
-    'spherical-input': SphericalInput,
+    'conical-input': ConicalInput,
     'documentation': Documentation
   },
   data() {
@@ -51,31 +51,21 @@ export default {
       trailLine: null,
       trailReload: false,
 
-      time: 0,
-      step: 0,
       pendulum: {},
+      angleAmplitude: 0,
+      angleRotation: 0,
+      minimumFrequency: 0,
 
-      lineLength: null,
+      lineLength: 0,
 
       anFrmID: null
     }
   },
   methods: {
-    pendulumAmplitudeEq(x, v, t){
-      return Math.pow(this.pendulum.velocityRotation, 2) * Math.sin(x) * Math.cos(x) - GRAVITY * Math.sin(x) / this.pendulum.length
-    },
-    pendulumRotationEq(x, v, t){
-      return -2 * this.pendulum.velocityAmplitude * v * 1 / Math.tan(this.pendulum.angleAmplitude)
-    },
     setStatus(status){
-      this.pendulum.angleAmplitude = parseFloat(status.pendulum.angleAmplitude * Math.PI / 180)
-      this.pendulum.velocityAmplitude = parseFloat(status.pendulum.velocityAmplitude)
-      this.pendulum.angleRotation = parseFloat(status.pendulum.angleRotation * Math.PI / 180)
-      this.pendulum.velocityRotation = parseFloat(status.pendulum.velocityRotation)
-      this.pendulum.length = parseFloat(status.pendulum.length)
+      this.pendulum.frequency = parseFloat(status.pendulum.frequency)
       this.pendulum.mass = parseFloat(status.pendulum.mass)
-
-      this.step = parseFloat(status.step)
+      this.pendulum.length = parseFloat(status.pendulum.length)
 
       this.lineLength = this.pendulum.length * 5
 
@@ -140,23 +130,23 @@ export default {
       this.scene.add( axis )
     },
     initObject() {
-      var material_line = new THREE.LineBasicMaterial( { color: 0x000000 } )
-      var geometry_line = new THREE.Geometry()
-      geometry_line.vertices.push(new THREE.Vector3( 0, 0, 0) )
-      geometry_line.vertices.push(new THREE.Vector3(
-        this.lineLength * Math.sin(this.pendulum.angleAmplitude) *  Math.sin(this.pendulum.angleRotation),
-        -this.lineLength * Math.cos(this.pendulum.angleAmplitude),
-        this.lineLength * Math.sin(this.pendulum.angleAmplitude) *  Math.cos(this.pendulum.angleRotation)) )
-      this.line = new THREE.Line( geometry_line, material_line )
 
       var geometry_sphere = new THREE.SphereGeometry( this.pendulum.mass / 2, 32, 32 )
       var material_sphere = new THREE.MeshBasicMaterial( { color: 0x2469ff } )
       this.sphere = new THREE.Mesh( geometry_sphere, material_sphere )
-      this.sphere.position.x = this.lineLength * Math.sin(this.pendulum.angleAmplitude) *  Math.sin(this.pendulum.angleRotation)
-      this.sphere.position.y = -this.lineLength * Math.cos(this.pendulum.angleAmplitude)
-      this.sphere.position.z = this.lineLength * Math.sin(this.pendulum.angleAmplitude) *  Math.cos(this.pendulum.angleRotation)
+      this.sphere.position.x =  this.lineLength * Math.sin(this.angleAmplitude) *  Math.sin(this.angleRotation)
+      this.sphere.position.y = -this.lineLength * Math.cos(this.angleAmplitude)
+      this.sphere.position.z =  this.lineLength * Math.sin(this.angleAmplitude) *  Math.cos(this.angleRotation)
+
+      var material_line = new THREE.LineBasicMaterial( { color: 0x000000 } )
+      var geometry_line = new THREE.Geometry()
+      geometry_line.vertices.push(new THREE.Vector3(0, 0, 0))
+      geometry_line.vertices.push(new THREE.Vector3(this.sphere.position.x, this.sphere.position.y, this.sphere.position.z))
+      this.line = new THREE.Line( geometry_line, material_line )
 
       this.initTrail()
+
+      this.minimumFrequency = Math.sqrt(GRAVITY / this.pendulum.length)
 
       this.scene.add(this.trailLine)
       this.scene.add(this.line)
@@ -167,24 +157,17 @@ export default {
     move() {
       this.anFrmID = requestAnimationFrame( this.move )
 
-      var nextStep1 = rungeKutta4(this.pendulumAmplitudeEq, this.pendulum.angleAmplitude, this.pendulum.velocityAmplitude, this.time, this.step)
-      this.pendulum.angleAmplitude = nextStep1[0]
-      this.pendulum.velocityAmplitude = nextStep1[1]
+      this.angleAmplitude = this.pendulum.frequency > this.minimumFrequency ? Math.acos(GRAVITY / (this.pendulum.length * Math.pow(this.pendulum.frequency, 2))) : 0.0
+      this.angleRotation += this.pendulum.frequency * 0.01// x dif(time) pero como siempre será 1 pues ¯\_(ツ)_/¯
 
-      var nextStep2 = rungeKutta4(this.pendulumRotationEq, this.pendulum.angleRotation, this.pendulum.velocityRotation, this.time, this.step)
-      this.pendulum.angleRotation = nextStep2[0]
-      this.pendulum.velocityRotation = nextStep2[1]
-
-      this.sphere.position.x = this.lineLength * Math.sin(this.pendulum.angleAmplitude) *  Math.sin(this.pendulum.angleRotation)
-      this.sphere.position.y = -this.lineLength * Math.cos(this.pendulum.angleAmplitude)
-      this.sphere.position.z = this.lineLength * Math.sin(this.pendulum.angleAmplitude) *  Math.cos(this.pendulum.angleRotation)
+      this.sphere.position.x =  this.lineLength * Math.sin(this.angleAmplitude) *  Math.sin(this.angleRotation)
+      this.sphere.position.y = -this.lineLength * Math.cos(this.angleAmplitude)
+      this.sphere.position.z =  this.lineLength * Math.sin(this.angleAmplitude) *  Math.cos(this.angleRotation)
 
       this.line.geometry.vertices[ 1 ].x = this.sphere.position.x
       this.line.geometry.vertices[ 1 ].y = this.sphere.position.y
       this.line.geometry.vertices[ 1 ].z = this.sphere.position.z
       this.line.geometry.verticesNeedUpdate = true
-
-      this.time += this.step
 
       this.updateTrail()
 
