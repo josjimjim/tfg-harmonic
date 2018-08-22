@@ -18,6 +18,9 @@
 
 <script>
 import * as THREE from 'three'
+window.THREE = THREE;
+require('three/examples/js/controls/OrbitControls.js');
+
 import SphericalInput from '../inputs/SphericalInput'
 import Documentation from '../Documentation'
 import {GRAVITY, rungeKutta4} from '@/assets/js/math.js'
@@ -39,7 +42,7 @@ export default {
       camera: null,
       renderer: null,
       canvas: null,
-      // controls: null,
+      controls: null,
 
       sphere: null,
       line: null,
@@ -88,15 +91,15 @@ export default {
       if(active){ this.trailReload = true }
     },
     initContext(){
-      this.camera = new THREE.PerspectiveCamera(20, CANVAS_WIDTH/CANVAS_HEIGHT, 0.1, 1000)
-      // this.controls = new THREE.OrbitControls(this.camera)
-
-      this.camera.position.set( 80, 50, 80 )
-      this.camera.lookAt( new THREE.Vector3(0, 0, 0))
-      // controls.update();
-
       this.renderer = new THREE.WebGLRenderer()
       this.renderer.setSize( CANVAS_WIDTH, CANVAS_HEIGHT)
+
+      this.camera = new THREE.PerspectiveCamera(20, CANVAS_WIDTH/CANVAS_HEIGHT, 0.1, 1000)
+      this.camera.position.set( 100, 20, 100 )
+      this.camera.lookAt( new THREE.Vector3(0, 0, 0))
+
+      this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement)
+
       this.canvas = document.getElementById("canvas")
       this.canvas.appendChild(this.renderer.domElement)
 
@@ -116,13 +119,13 @@ export default {
 
       var materialAxisY = new THREE.LineBasicMaterial( { color: 0x0000ff } )
       var geometryAxisY = new THREE.Geometry()
-      geometryAxisY.vertices.push(new THREE.Vector3(-50, 0, 0) )
-      geometryAxisY.vertices.push(new THREE.Vector3( 50, 0, 0) )
+      geometryAxisY.vertices.push(new THREE.Vector3(-50, -17, 0) )
+      geometryAxisY.vertices.push(new THREE.Vector3( 50, -17, 0) )
 
       var materialAxisZ = new THREE.LineBasicMaterial( { color: 0x00ff00 } )
       var geometryAxisZ = new THREE.Geometry()
-      geometryAxisZ.vertices.push(new THREE.Vector3( 0, 0, -50) )
-      geometryAxisZ.vertices.push(new THREE.Vector3( 0, 0, 50) )
+      geometryAxisZ.vertices.push(new THREE.Vector3( 0, -17, -50) )
+      geometryAxisZ.vertices.push(new THREE.Vector3( 0, -17, 50) )
 
       var axisX = new THREE.Line( geometryAxisX, materialAxisX )
       var axisY = new THREE.Line( geometryAxisY, materialAxisY )
@@ -132,6 +135,7 @@ export default {
       axis.add( axisX )
       axis.add( axisY )
       axis.add( axisZ )
+
       this.scene.add( axis )
     },
     initObject() {
