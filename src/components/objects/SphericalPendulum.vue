@@ -61,10 +61,10 @@ export default {
     }
   },
   methods: {
-    pendulumAmplitudeEq(x, v, t){
+    pendulumAmplitudeEq(t, x, v){
       return Math.pow(this.pendulum.velocityRotation, 2) * Math.sin(x) * Math.cos(x) - GRAVITY * Math.sin(x) / this.pendulum.length
     },
-    pendulumRotationEq(x, v, t){
+    pendulumRotationEq(t, x, v){
       return -2 * this.pendulum.velocityAmplitude * v * 1 / Math.tan(this.pendulum.angleAmplitude)
     },
     setStatus(status){
@@ -167,11 +167,11 @@ export default {
     move() {
       this.anFrmID = requestAnimationFrame( this.move )
 
-      var nextStep1 = rungeKutta4(this.pendulumAmplitudeEq, this.pendulum.angleAmplitude, this.pendulum.velocityAmplitude, this.time, this.step)
+      var nextStep1 = rungeKutta4(this.pendulumAmplitudeEq, this.time, this.pendulum.angleAmplitude, this.pendulum.velocityAmplitude, this.step)
       this.pendulum.angleAmplitude = nextStep1[0]
       this.pendulum.velocityAmplitude = nextStep1[1]
 
-      var nextStep2 = rungeKutta4(this.pendulumRotationEq, this.pendulum.angleRotation, this.pendulum.velocityRotation, this.time, this.step)
+      var nextStep2 = rungeKutta4(this.pendulumRotationEq, this.time, this.pendulum.angleRotation, this.pendulum.velocityRotation, this.step)
       this.pendulum.angleRotation = nextStep2[0]
       this.pendulum.velocityRotation = nextStep2[1]
 

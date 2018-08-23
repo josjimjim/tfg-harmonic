@@ -20,7 +20,7 @@
 import * as THREE from 'three'
 import SimpleImput from '../inputs/SimpleInput'
 import Documentation from '../Documentation'
-import {GRAVITY, rungeKutta4} from '@/assets/js/math.js'
+import {GRAVITY, numericalResolution} from '@/assets/js/math.js'
 
 const CANVAS_WIDTH = 500
 const CANVAS_HEIGHT = 400
@@ -45,11 +45,13 @@ export default {
       step: 0,
       pendulum: {},
       damping: {},
-      trail: false
+      trail: false,
+
+      numericalMethodSelected: ''
     }
   },
   methods: {
-    pendulumEq(x, v, t){
+    pendulumEq(t, x, v){
       var damping = 0
       if(this.damping.active){
         damping = (this.damping.value / this.pendulum.mass * v)
@@ -66,6 +68,8 @@ export default {
       this.damping.active = status.damping.active
 
       this.step = parseFloat(status.step)
+
+      this.numericalMethodSelected = status.numericalMethodSelected
 
       if(this.scene != null) {
         this.initScene()
@@ -140,7 +144,8 @@ export default {
     move() {
       this.animFrameID = requestAnimationFrame( this.move )
 
-      var nextStep = rungeKutta4(this.pendulumEq, this.pendulum.angle, this.pendulum.velocity, this.time, this.step)
+      var nextStep = numericalResolution(this.pendulumEq, this.time, this.pendulum.angle,
+      this.pendulum.velocity, this.step)[this.numericalMethodSelected]
 
       this.pendulum.angle = parseFloat(nextStep[0])
       this.pendulum.velocity = parseFloat(nextStep[1])
@@ -150,7 +155,10 @@ export default {
       this.line.geometry.vertices[ 1 ].y = this.circle.position.y
       this.line.geometry.verticesNeedUpdate = true
 
-      this.time += this.step;
+      this.time += parseFloat(nextStep[2])
+      this.step = parseFloat(nextStep[2])
+
+      console.log(this.step)
 
       this.drawTrail();
 

@@ -1,5 +1,16 @@
 <template>
   <div>
+
+    <generic-input label="Method">
+      <div class="select">
+        <select v-model="status.numericalMethodSelected" @change="setStatus">
+          <option v-for="numMeth in numericalMethods" v-bind:value="numMeth.method">
+            {{ numMeth.name }}
+          </option>
+        </select>
+      </div>
+    </generic-input>
+
     <generic-input label="Angle">
       <input type="range" min="0" max="360" step="1" v-model="status.pendulum.angle"
             @change="setStatus" class="slider" placeholder="Angle">
@@ -53,6 +64,7 @@
 
 <script>
 import GenericInput from './GenericInput'
+import {NUMERICAL_METHODS} from '@/assets/js/math.js'
 
 export default {
   name: 'simple-input',
@@ -72,13 +84,16 @@ export default {
           value: 0.1,
           active: false
         },
-        step: 0.01
+        step: 0.01,
+        numericalMethodSelected: 'rungeKutta4',
       },
       trail: false,
       clapper: {
         animate: false,
         text: 'Start'
-      }
+      },
+
+      numericalMethods: NUMERICAL_METHODS,
     }
   },
   methods: {

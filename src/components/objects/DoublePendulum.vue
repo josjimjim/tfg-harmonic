@@ -63,7 +63,7 @@ export default {
     }
   },
   methods: {
-    pendulumUpEq(x, v, t) {
+    pendulumUpEq(t, x, v) {
       var pendulum1 = this.pendulum1
       var pendulum2 = this.pendulum2
 
@@ -80,7 +80,7 @@ export default {
 
       return ((- a + b - c - d) / e) - damping
     },
-    pendulumDwEq(x, v, t) {
+    pendulumDwEq(t, x, v) {
       var pendulum1 = this.pendulum1
       var pendulum2 = this.pendulum2
 
@@ -209,7 +209,7 @@ export default {
     move() {
       this.animFrameID = requestAnimationFrame( this.move )
 
-      var nextStep1 = rungeKutta4(this.pendulumUpEq, this.pendulum1.angle, this.pendulum1.velocity, this.time, this.step)
+      var nextStep1 = rungeKutta4(this.pendulumUpEq, this.time, this.pendulum1.angle, this.pendulum1.velocity, this.step)
       this.pendulum1.angle = parseFloat(nextStep1[0])
       this.pendulum1.velocity = parseFloat(nextStep1[1])
       this.circle1.position.x =  this.lineLength1 * Math.sin(this.pendulum1.angle)
@@ -218,7 +218,7 @@ export default {
       this.line1.geometry.vertices[ 1 ].y = this.circle1.position.y
       this.line1.geometry.verticesNeedUpdate = true
 
-      var nextStep2 = rungeKutta4(this.pendulumDwEq, this.pendulum2.angle, this.pendulum2.velocity, this.time, this.step)
+      var nextStep2 = rungeKutta4(this.pendulumDwEq, this.time, this.pendulum2.angle, this.pendulum2.velocity, this.step)
       this.pendulum2.angle = parseFloat(nextStep2[0])
       this.pendulum2.velocity = parseFloat(nextStep2[1])
       this.circle2.position.x = this.circle1.position.x + this.lineLength2 * Math.sin(this.pendulum2.angle)
