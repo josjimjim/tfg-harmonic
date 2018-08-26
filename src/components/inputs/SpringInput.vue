@@ -11,6 +11,12 @@
       </div>
     </generic-input>
 
+    <generic-input label="Stiffness">
+      <input type="range" min="5" max="15" step="0.05" v-model="status.pendulum.stiffness"
+            @change="setStatus" class="slider" placeholder="Stiffness">
+      <span v-text="status.pendulum.stiffness"></span>
+    </generic-input>
+
     <generic-input label="Angle">
       <input type="range" min="0" max="360" step="1" v-model="status.pendulum.angle"
             @change="setStatus" class="slider" placeholder="Angle">
@@ -19,15 +25,15 @@
     </generic-input>
 
     <generic-input label="Velocity">
-      <input type="range" min="0" max="20" step="0.5" v-model="status.pendulum.velocity"
+      <input type="range" min="0" max="5" step="0.1" v-model="status.pendulum.velocity"
             @change="setStatus" class="slider" placeholder="Velocity">
       <span v-text="status.pendulum.velocity"></span>
     </generic-input>
 
-    <generic-input label="Length">
-      <input type="range" min="1" max="3" step="0.2" v-model="status.pendulum.length"
-            @change="setStatus" class="slider" placeholder="Length">
-      <span v-text="status.pendulum.length"></span>
+    <generic-input label="Elongation">
+      <input type="range" min="-4" max="10" step="0.1" v-model="status.pendulum.elongation"
+            @change="setStatus" class="slider" placeholder="Elongation">
+      <span v-text="status.pendulum.elongation"></span>
     </generic-input>
 
     <generic-input label="Mass">
@@ -52,12 +58,12 @@
       <input id="enableDamping" type="checkbox" name="enableDamping" @click="enableDamping" class="switch is-rtl is-small">
       <label for="enableDamping">Enable damping</label>
 
-      <!-- <input id="enableTrail" type="checkbox" name="enableTrail" @click="enableTrail" class="switch is-rtl is-small">
-      <label for="enableTrail">Enable trail</label> -->
+      <input id="enableTrail" type="checkbox" name="enableTrail" @click="enableTrail" class="switch is-rtl is-small">
+      <label for="enableTrail">Enable trail</label>
     </generic-input>
 
     <generic-input>
-      <button v-model="clapper.animate" v-text="clapper.text" @click="setAnimation" class="button"></button>
+      <button v-text="clapper.text" @click="setAnimation" class="button"></button>
     </generic-input>
   </div>
 </template>
@@ -67,7 +73,7 @@ import GenericInput from './GenericInput'
 import {NUMERICAL_METHODS} from '@/assets/js/math.js'
 
 export default {
-  name: 'simple-input',
+  name: 'spring-input',
   components: {
     'generic-input': GenericInput
   },
@@ -75,9 +81,11 @@ export default {
     return {
       status: {
         pendulum :{
+          stiffness: 8.82,
           angle: 45,
-          velocity: Math.sqrt(9.81),
+          velocity: 0.0,
           length: 1.0,
+          elongation: 0.0,
           mass: 2.0
         },
         damping: {
@@ -91,7 +99,9 @@ export default {
       clapper: {
         animate: false,
         text: 'Start'
-      }
+      },
+
+      numericalMethods: NUMERICAL_METHODS,
     }
   },
   methods: {
@@ -112,13 +122,6 @@ export default {
       this.trail = !this.trail
       this.$emit('enableTrail', this.trail)
     },
-  },
-  computed: {
-    numericalMethods(){
-      let nm = NUMERICAL_METHODS
-      nm.push({method:'pendulumExact', name: 'Exact solution'})
-      return nm
-    }
   },
   created(){
     this.setStatus()

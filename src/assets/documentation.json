@@ -102,6 +102,29 @@
         "alt": ""
       }
     }
+  ],
+  "spring-pendulum": [
+    {
+      "text": {
+        "title": "Lorem ipsum",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et vestibulum magna. Etiam et felis quis ante aliquet sollicitudin. Donec suscipit ipsum quis sapien ultrices, eu ullamcorper nisi tempor. Cras rhoncus justo nec nunc rutrum tincidunt. Sed sit amet ipsum aliquam sapien interdum interdum. Vivamus fermentum ornare quam, non egestas leo consequat ut. Cras eleifend sapien in tempus posuere. Duis in varius eros. Ut interdum fringilla massa, quis consequat metus convallis non. In pretium nulla eros, id congue tellus tempor eget. Maecenas lobortis ligula lectus, eget vestibulum ante viverra ut. Ut viverra elit nec felis bibendum congue. Sed at dolor imperdiet, gravida felis quis, blandit enim. In iaculis turpis eros, non commodo arcu hendrerit et. In ut velit eget diam congue pharetra sed ut sem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla placerat imperdiet nulla eu bibendum. Maecenas viverra feugiat risus at fermentum. Integer at mi id lacus molestie pretium et nec tellus. Nam sollicitudin neque vel neque sagittis accumsan. Nunc mattis lacus nisl. Nulla sed orci vestibulum, cursus odio nec, fringilla tortor. Aenean sollicitudin sollicitudin erat luctus blandit. Maecenas id efficitur enim. Pellentesque luctus porttitor ex, et placerat enim malesuada suscipit. Sed dictum odio eget sollicitudin dictum. Sed non leo sit amet augue auctor consequat. Nam laoreet diam tincidunt, cursus orci id, efficitur mauris. Aliquam laoreet est felis. Quisque ex sapien, dictum vitae diam vitae, maximus varius lectus. Donec a sapien turpis. Vivamus volutpat dui id lorem ornare malesuada. Aliquam sit amet tellus ac ante ullamcorper facilisis quis vel justo. Aenean dapibus quam egestas, dapibus diam sit amet, finibus nulla. Sed eget semper ex, at consequat mi. Donec maximus placerat ipsum, ut porta nunc porta in. Ut nec ultricies massa. Praesent mattis congue tellus, ac iaculis libero aliquet ut. Vestibulum libero felis, vestibulum id magna vel, tempus cursus eros. Morbi tincidunt dictum velit, vitae dictum nunc ornare ac. Mauris at luctus nibh, nec ultrices tortor. Curabitur iaculis, erat sit amet rhoncus aliquet, velit turpis consectetur ante, vitae faucibus sapien tellus sit amet lacus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut mi eros, tristique ac venenatis id, egestas quis lectus. Pellentesque sed egestas augue. Ut eu fringilla lectus. Nunc non diam faucibus, convallis urna sed, suscipit est. Cras egestas quam lorem, ut blandit mauris molestie ac."
+      },
+      "image": {
+        "src": "home-placeholder.png",
+        "alt": "Figure 1: Spring pendulum schema"
+      }
+    },
+
+    {
+      "text": {
+        "title": "",
+        "content": "Vestibulum fringilla eros eget erat dignissim consequat. Nullam nec iaculis purus. Aenean feugiat erat nisi, in finibus urna aliquam nec. Mauris tempus a ex in ultricies. Fusce aliquam velit non est ornare, sit amet ornare metus tincidunt. Quisque est nisi, vehicula ac imperdiet at, laoreet vitae nisl. Etiam iaculis odio sit amet enim vulputate, a congue justo bibendum. Aenean luctus elementum rutrum. Curabitur congue, ligula tempor vehicula molestie, tortor arcu tincidunt eros, id ornare felis ligula et nulla. Suspendisse potenti. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam erat volutpat. Sed porta massa nisi, quis ultrices sem lobortis quis. Ut nec ultricies dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec iaculis sem at mi rhoncus, ut viverra lectus fermentum. Mauris ullamcorper, leo a dignissim bibendum, arcu eros ultrices libero, nec mollis velit lectus at quam. Morbi in facilisis magna, in sodales odio. Aenean consequat, sem in fringilla eleifend, diam mi posuere elit, nec condimentum lacus nisl eget augue."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    }
   ]
 
 }

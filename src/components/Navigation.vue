@@ -25,6 +25,9 @@
               <router-link to="/pendulum/simple" class="navbar-item">
                 Simple pendulum
               </router-link>
+              <router-link to="/pendulum/spring" class="navbar-item">
+                Spring pendulum
+              </router-link>
               <router-link to="/pendulum/double" class="navbar-item">
                 Double pendulum
               </router-link>

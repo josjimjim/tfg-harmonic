@@ -18,9 +18,9 @@
 
 <script>
 import * as THREE from 'three'
-import SimpleImput from '../inputs/SimpleInput'
+import SimpleInput from '../inputs/SimpleInput'
 import Documentation from '../Documentation'
-import {GRAVITY, numericalResolution} from '@/assets/js/math.js'
+import {GRAVITY, numericalResolution, pendulumSimpleExact} from '@/assets/js/math.js'
 
 const CANVAS_WIDTH = 500
 const CANVAS_HEIGHT = 400
@@ -28,7 +28,7 @@ const CANVAS_HEIGHT = 400
 export default {
   name: 'simple-pendulum',
   components: {
-    'simple-input': SimpleImput,
+    'simple-input': SimpleInput,
     'documentation': Documentation
   },
   data() {
@@ -47,7 +47,8 @@ export default {
       damping: {},
       trail: false,
 
-      numericalMethodSelected: ''
+      numericalMethodSelected: '',
+      nextStep: null
     }
   },
   methods: {
@@ -144,21 +145,24 @@ export default {
     move() {
       this.animFrameID = requestAnimationFrame( this.move )
 
-      var nextStep = numericalResolution(this.pendulumEq, this.time, this.pendulum.angle,
-      this.pendulum.velocity, this.step)[this.numericalMethodSelected]
+      if(this.numericalMethodSelected != 'pendulumExact'){
+        this.nextStep = numericalResolution(this.pendulumEq, this.time, this.pendulum.angle,
+        this.pendulum.velocity, this.step)[this.numericalMethodSelected]
 
-      this.pendulum.angle = parseFloat(nextStep[0])
-      this.pendulum.velocity = parseFloat(nextStep[1])
+        this.time += parseFloat(this.nextStep[2])
+        this.step = parseFloat(this.nextStep[2])
+      }else{
+        this.nextStep = pendulumSimpleExact(this.time, this.pendulum.angle, this.pendulum.velocity)
+        this.time += 0.1
+      }
+
+      this.pendulum.angle = parseFloat(this.nextStep[0])
+      this.pendulum.velocity = parseFloat(this.nextStep[1])
       this.circle.position.x =  this.pendulum.length * Math.sin(this.pendulum.angle)
       this.circle.position.y = -this.pendulum.length * Math.cos(this.pendulum.angle)
       this.line.geometry.vertices[ 1 ].x = this.circle.position.x
       this.line.geometry.vertices[ 1 ].y = this.circle.position.y
       this.line.geometry.verticesNeedUpdate = true
-
-      this.time += parseFloat(nextStep[2])
-      this.step = parseFloat(nextStep[2])
-
-      console.log(this.step)
 
       this.drawTrail();
 

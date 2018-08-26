@@ -108,3 +108,69 @@ export function adamsBashforth4(f, t, x, v, h){
   //TODO
   return [x, v, h];
 }
+
+export function pendulumSimpleExact(t, x, v) {
+
+  console.log("ANGLE: " + x)
+  console.log("VELOC: " + v)
+  console.log("TIME: " + t)
+
+  // Velocity
+  let e = v * Math.PI / 2;
+  let f = 1 / k(Math.pow(Math.sin(x/2),2));
+  v = e * f;
+
+  // Angle
+  let a = Math.sin(x/2);
+  let b = k(Math.pow(Math.sin(x/2),2));
+  let c = v * t;
+  let d = Math.pow(Math.sin(x/2),2);
+
+  x = 2 * Math.asin(a * sn(b - c, d))
+
+  console.log("\n")
+  return [x, v, t]
+}
+
+export function fact(n) {
+  return n == 1 ? 1 : n * fact(n - 1);
+}
+
+/**
+ * Ellpitical sinus - Taylor aproximation
+ */
+export function sn(u, k) {
+  let a = u;
+  let b = (1 + Math.pow(k, 2)) * Math.pow(u, 3) / fact(3);
+  let c = (1 + 14 * Math.pow(k, 2) + Math.pow(k, 4)) * Math.pow(u, 5) / fact(5);
+  let d = (1 + 135 * Math.pow(k, 2) + 135 * Math.pow(k, 4) + Math.pow(k, 6)) * Math.pow(u, 7) / fact(7);
+
+  return a - b + c - d;
+}
+
+/**
+ * Complete elliptic integral of the first kind
+ */
+export function k(x) {
+  let a0 = 1;
+  let g0 = Math.sqrt(1 - x);
+  return Math.PI/ (2 * agm(a0, g0));
+}
+
+/**
+ * Arithmetic-geometric mean
+ */
+export function agm(a0, g0) {
+  let a = a0;
+  let g = g0;
+
+  for(let i=0; i<30; i++){
+    let an = 1/2 * (a + g)
+    let gn = Math.sqrt(a * g)
+
+    a = an;
+    g = gn;
+  }
+
+  return a;
+}

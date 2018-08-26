@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import About from '@/components/About'
 import SimplePendulum from '@/components/objects/SimplePendulum'
+import SpringPendulum from '@/components/objects/SpringPendulum'
 import DoublePendulum from '@/components/objects/DoublePendulum'
 import SphericalPendulum from '@/components/objects/SphericalPendulum'
 import ConicalPendulum from '@/components/objects/ConicalPendulum'
@@ -21,6 +22,11 @@ export default new Router({
       path: '/pendulum/simple',
       name: 'SimplePendulum',
       component: SimplePendulum
+    },
+    {
+      path: '/pendulum/spring',
+      name: 'SpringPendulum',
+      component: SpringPendulum
     },
     {
       path: '/pendulum/double',
