@@ -28,8 +28,14 @@
               <router-link to="/pendulum/spring" class="navbar-item">
                 Spring pendulum
               </router-link>
+              <router-link to="/pendulum/cradle" class="navbar-item">
+                Newton's cradle
+              </router-link>
               <router-link to="/pendulum/double" class="navbar-item">
                 Double pendulum
+              </router-link>
+              <router-link to="/pendulum/triple" class="navbar-item">
+                Triple pendulum
               </router-link>
             </div>
           </div>

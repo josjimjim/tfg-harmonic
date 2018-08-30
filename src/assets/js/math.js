@@ -109,16 +109,12 @@ export function adamsBashforth4(f, t, x, v, h){
   return [x, v, h];
 }
 
-export function pendulumSimpleExact(t, x, v) {
-
-  console.log("ANGLE: " + x)
-  console.log("VELOC: " + v)
-  console.log("TIME: " + t)
+export function pendulumSimpleExact(t, x) {
 
   // Velocity
-  let e = v * Math.PI / 2;
+  let e = Math.sqrt(9.81) * Math.PI / 2;
   let f = 1 / k(Math.pow(Math.sin(x/2),2));
-  v = e * f;
+  let v = e * f;
 
   // Angle
   let a = Math.sin(x/2);
@@ -128,7 +124,6 @@ export function pendulumSimpleExact(t, x, v) {
 
   x = 2 * Math.asin(a * sn(b - c, d))
 
-  console.log("\n")
   return [x, v, t]
 }
 
@@ -173,4 +168,67 @@ export function agm(a0, g0) {
   }
 
   return a;
+}
+
+
+// function agm2(a0, b0, c0) {
+//   let i;
+//   let a = a0;
+//   let b = b0; 
+//   let c = c0; 
+//   let aB = [];
+//   let bB = [];
+//   let cB = [];
+  
+//   for(i=0; i<10; i++) {
+//       a = (a + b)/2;
+//       b = Math.sqrt(a * b);
+//       c = (a - b)/2;
+      
+//       aB.push(a);
+//       bB.push(b);
+//       cB.push(c);
+//   }
+  
+//   return {
+//       n: i,
+//       a: a,
+//       b: b,
+//       c: c,
+//       aB: aB,
+//       bB: bB,
+//       cB: cB
+//   };
+// }
+
+// function am(u, k) {
+  
+//   if(k < 0.15){
+//       return u - 0.25*k*(u - 0.5*Math.sin(2.0*u));
+//   }
+//   if((1 - k) < 0.15){
+//       let t = Math.tanh(u);
+//       return Math.asin(t) + 0.25*(1-k)*(t - u*(1 - Math.pow(t,2)))*Math.cosh(u);
+//   }
+  
+//   let met = agm2(1, Math.sqrt(1 - k), Math.sqrt(k));
+//   let phi = Math.pow(2, met.n) * met.a * u; 
+  
+//   for(let i=met.n-1; i>=0; i--) {
+//       phi = 0.5 * (phi + Math.asin(Math.sin(phi) * met.cB[i] / met.aB[i]));
+//   }
+  
+//   return phi;
+// }
+
+// function sn2(u, k) {
+//   return Math.sin(am(u, k));
+// }
+
+export function circleColisionDetection(ball1, ball2, bounce = 0){
+  let dx = Math.abs(ball1.circle.position.x - ball2.circle.position.x);
+  let dy = Math.abs(ball1.circle.position.y - ball2.circle.position.y);
+  let distance = Math.sqrt(dx * dx + dy * dy);
+
+  return distance < ball1.radius + ball2.radius - 2* bounce;
 }

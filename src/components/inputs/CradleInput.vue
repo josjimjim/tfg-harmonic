@@ -1,33 +1,22 @@
 <template>
   <div>
 
-    <generic-input label="Method">
-      <div class="select">
-        <select v-model="status.numericalMethodSelected" @change="setStatus">
-          <option v-for="numMeth in numericalMethods" v-bind:value="numMeth.method">
-            {{ numMeth.name }}
-          </option>
-        </select>
-      </div>
+    <generic-input label="Position">
+      <input type="range" min="1" max="5" step="1" v-model="status.position"
+            @change="setStatus" class="slider" placeholder="Position">
+      <span v-text="status.position"></span>
     </generic-input>
 
     <generic-input label="Angle">
-      <input type="range" min="0" max="360" step="1" v-model="status.pendulum.angle"
+      <input type="range" min="0" max="179" step="1" v-model="status.pendulum.angle"
             @change="setStatus" class="slider" placeholder="Angle">
       <span v-text="status.pendulum.angle"></span>
-
     </generic-input>
 
     <generic-input label="Velocity">
       <input type="range" min="0" max="20" step="0.5" v-model="status.pendulum.velocity"
             @change="setStatus" class="slider" placeholder="Velocity">
       <span v-text="status.pendulum.velocity"></span>
-    </generic-input>
-
-    <generic-input label="Length">
-      <input type="range" min="1" max="3" step="0.2" v-model="status.pendulum.length"
-            @change="setStatus" class="slider" placeholder="Length">
-      <span v-text="status.pendulum.length"></span>
     </generic-input>
 
     <generic-input label="Mass">
@@ -52,8 +41,6 @@
       <input id="enableDamping" type="checkbox" name="enableDamping" @click="enableDamping" class="switch is-rtl is-small">
       <label for="enableDamping">Enable damping</label>
 
-      <!-- <input id="enableTrail" type="checkbox" name="enableTrail" @click="enableTrail" class="switch is-rtl is-small">
-      <label for="enableTrail">Enable trail</label> -->
     </generic-input>
 
     <generic-input>
@@ -74,20 +61,18 @@ export default {
   data() {
     return {
       status: {
+        position: 1,
         pendulum :{
-          angle: 45,
-          velocity: Math.sqrt(9.81),
-          length: 1.0,
+          angle: 15,
+          velocity: 0.0,
           mass: 2.0
         },
         damping: {
           value: 0.1,
           active: false
         },
-        step: 0.01,
-        numericalMethodSelected: 'rungeKutta4',
+        step: 0.03
       },
-      trail: false,
       clapper: {
         animate: false,
         text: 'Start'
@@ -107,17 +92,6 @@ export default {
     enableDamping(){
       this.status.damping.active = !this.status.damping.active
       this.$emit('enableDamping', this.status.damping.active)
-    },
-    enableTrail(){
-      this.trail = !this.trail
-      this.$emit('enableTrail', this.trail)
-    },
-  },
-  computed: {
-    numericalMethods(){
-      let nm = NUMERICAL_METHODS
-      nm.push({method:'pendulumExact', name: 'Exact solution'})
-      return nm
     }
   },
   created(){

@@ -5,7 +5,12 @@
       <div class="column is-half">
         <div id="canvas"></div>
       </div>
-      <spherical-input class="column is-quarter" @setStatus="setStatus" @setAnimation="setAnimation"
+      <div class="column is-half">
+        <div id="chart" style="width:600px; height:400px;"></div>
+      </div>
+    </div>
+    <div class="columns">
+      <spherical-input class="column" @setStatus="setStatus" @setAnimation="setAnimation"
       @enableTrail="enableTrail"></spherical-input>
     </div>
     <div class="columns">
@@ -20,7 +25,7 @@
 import * as THREE from 'three'
 window.THREE = THREE;
 require('three/examples/js/controls/OrbitControls.js');
-
+import echarts from 'echarts'
 import SphericalInput from '../inputs/SphericalInput'
 import Documentation from '../Documentation'
 import {GRAVITY, rungeKutta4} from '@/assets/js/math.js'
@@ -50,6 +55,9 @@ export default {
       trail: false,
       trailLine: null,
       trailReload: false,
+
+      chart: null,
+      datos: [],
 
       time: 0,
       step: 0,
@@ -104,6 +112,30 @@ export default {
       this.canvas = document.getElementById("canvas")
       this.canvas.appendChild(this.renderer.domElement)
 
+      this.chart = echarts.init(document.getElementById('chart'));
+
+      // specify chart configuration item and data
+      var option = {
+          title: {
+              text: 'ECharts entry example'
+          },
+          tooltip: {},
+          legend: {
+              data:['Sales']
+          },
+          xAxis: {
+              data: ["shirt","cardign","chiffon shirt","pants","heels","socks"]
+          },
+          yAxis: {},
+          series: [{
+              name: 'Sales',
+              type: 'bar',
+              data: [5, 20, 36, 10, 10, 20]
+          }]
+      };
+
+      // use configuration item and data specified to show chart
+      this.chart.setOption(option);
     },
     initScene() {
       this.scene = new THREE.Scene()
@@ -189,6 +221,12 @@ export default {
       this.updateTrail()
 
       this.renderer.render(this.scene, this.camera)
+
+      if(this.datos.length > 100) {
+        this.datos.shift()
+      }
+      this.datos.push(this.pendulum.angleAmplitude)
+     
     },
     stop(){
       cancelAnimationFrame(this.anFrmID)
