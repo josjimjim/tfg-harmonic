@@ -52,6 +52,19 @@
               </router-link>
             </div>
           </div>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Math tools
+            </a>
+            <div class="navbar-dropdown is-boxed">
+              <router-link to="/tools/numerical" class="navbar-item">
+                Numerical methods
+              </router-link>
+              <router-link to="/tools/agm" class="navbar-item">
+                Aritmetic-Geometric mean
+              </router-link>
+            </div>
+          </div>
           <router-link to="/about" class="navbar-item">
             About
           </router-link>

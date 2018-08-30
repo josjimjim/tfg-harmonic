@@ -1,7 +1,15 @@
 <template>
   <div>
-    <h1>About</h1>
-    <p>Here is some information. This is the about page</p>
+  <h3 class="title is-3">About</h3>
+    <div class="columns">
+      <div class="column is-half">
+        <div class="content has-text-justified">
+          <p>Project created by José María Jiménez Jiménez</p>
+          <br/>
+          <p>University of Seville, Applied Maths Department. 2018</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

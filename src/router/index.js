@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
+import Tools from '@/components/Tools'
 import About from '@/components/About'
 import SimplePendulum from '@/components/objects/SimplePendulum'
 import SpringPendulum from '@/components/objects/SpringPendulum'
@@ -19,6 +20,16 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/tools/numerical',
+      name: 'Tools',
+      component: Tools
+    },
+    {
+      path: '/tools/agm',
+      name: 'Tools',
+      component: Tools
     },
     {
       path: '/pendulum/simple',

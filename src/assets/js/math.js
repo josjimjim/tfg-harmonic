@@ -91,10 +91,10 @@ export function rungeKuttaFehlberg45(f, t, x, v, h){
   let z=x+k1*16/135+k3*6656/12825+k4*28561/56430-k5*9/50+k5*2/55;
 
   // Step size
-  if(Math.abs(z - x) > ERROR_TOLERANCE) {
-    s = Math.pow(ERROR_TOLERANCE * h / (2 * Math.abs(z - x)), 1/4);
-    h*=s;
-  }
+  // if(Math.abs(z - x) > ERROR_TOLERANCE) {
+  //   s = Math.pow(ERROR_TOLERANCE * h / (2 * Math.abs(z - x)), 1/4);
+  //   h*=s;
+  // }
 
   return [x, v, h];
 }

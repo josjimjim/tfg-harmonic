@@ -76,7 +76,7 @@ export default {
       status: {
         pendulum :{
           angle: 45,
-          velocity: Math.sqrt(9.81),
+          velocity: 0,
           length: 1.0,
           mass: 2.0
         },
