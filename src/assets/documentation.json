@@ -2,31 +2,150 @@
   "home": [
     {
       "text": {
-        "title": "",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et vestibulum magna. Etiam et felis quis ante aliquet sollicitudin. Donec suscipit ipsum quis sapien ultrices, eu ullamcorper nisi tempor. Cras rhoncus justo nec nunc rutrum tincidunt. Sed sit amet ipsum aliquam sapien interdum interdum. Vivamus fermentum ornare quam, non egestas leo consequat ut. Cras eleifend sapien in tempus posuere. Duis in varius eros. Ut interdum fringilla massa, quis consequat metus convallis non. In pretium nulla eros, id congue tellus tempor eget. Maecenas lobortis ligula lectus, eget vestibulum ante viverra ut. Ut viverra elit nec felis bibendum congue. Sed at dolor imperdiet, gravida felis quis, blandit enim. In iaculis turpis eros, non commodo arcu hendrerit et. In ut velit eget diam congue pharetra sed ut sem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla placerat imperdiet nulla eu bibendum. Maecenas viverra feugiat risus at fermentum. Integer at mi id lacus molestie pretium et nec tellus. Nam sollicitudin neque vel neque sagittis accumsan. Nunc mattis lacus nisl. Nulla sed orci vestibulum, cursus odio nec, fringilla tortor. Aenean sollicitudin sollicitudin erat luctus blandit. Maecenas id efficitur enim. Pellentesque luctus porttitor ex, et placerat enim malesuada suscipit. Sed dictum odio eget sollicitudin dictum. Sed non leo sit amet augue auctor consequat. Nam laoreet diam tincidunt, cursus orci id, efficitur mauris. Aliquam laoreet est felis. Quisque ex sapien, dictum vitae diam vitae, maximus varius lectus. Donec a sapien turpis. Vivamus volutpat dui id lorem ornare malesuada. Aliquam sit amet tellus ac ante ullamcorper facilisis quis vel justo. Aenean dapibus quam egestas, dapibus diam sit amet, finibus nulla. Sed eget semper ex, at consequat mi. Donec maximus placerat ipsum, ut porta nunc porta in. Ut nec ultricies massa. Praesent mattis congue tellus, ac iaculis libero aliquet ut. Vestibulum libero felis, vestibulum id magna vel, tempus cursus eros. Morbi tincidunt dictum velit, vitae dictum nunc ornare ac. Mauris at luctus nibh, nec ultrices tortor. Curabitur iaculis, erat sit amet rhoncus aliquet, velit turpis consectetur ante, vitae faucibus sapien tellus sit amet lacus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut mi eros, tristique ac venenatis id, egestas quis lectus. Pellentesque sed egestas augue. Ut eu fringilla lectus. Nunc non diam faucibus, convallis urna sed, suscipit est. Cras egestas quam lorem, ut blandit mauris molestie ac."
+        "title": "¿Qué es Harmonic?",
+        "content": "<b>Harmonic</b> es un proyecto realizado con el objetivo de llevar la física al mayor número de personas posible. En los apartados superiores se exponen diferentes modelos físicos, en este caso movimientos armónicos, expuestos y explicados a través de simulaciones."
       },
       "image": {
-        "src": "home-placeholder.png",
-        "alt": "Placeholder test"
+        "src": "",
+        "alt": ""
+      }
+    }, 
+    {
+      "text": {
+        "title": "",
+        "content": "La web se encuentra dividia en: <br/><ul><li><b>2D</b>: Movimientos en dos dimensiones</li><li><b>3D</b>: Movimientos en tres dimensiones</li><li><b>Math tools</b>: Información a cerca de los métodos matemáticos usados para realizar las simulaciones.</li><ul>"
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    }, 
+    {
+      "text": {
+        "title": "Movimiento armónico simple",
+        "content": "Antes de adentrarnos en las simulaciones, debemos conocer el concepto básico sobre el que todas ellas se sustentan. Un objeto realiza un movimiento armónico simple (MAS) cuando su desplazamiento en función del tiempo está definido por la siguiente expresión."
+      },
+      "image": {
+        "src": "formula-placeholder.png",
+        "alt": "Figure 1: Simple harmonic motion expression"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Siendo A, la amplitud del movimiento, w la frecuencia angular y phi el desplazamiento del ángulo, o desfase. El término wt+phi comprende el ángulo en el tiempo t, conocido como fase."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Este movimiento se realiza de manera periódica entre gracias al seno en la expresión. Y tras definir los términos podemos observar como A es un modulador de la amplitud del seno, que siempre se desplaza entre dos valores [1, -1], acotando el movimiento a +-A. Esta periodicidad se puede definir con la expresión P = 2pi/w"
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "La fuerza en un MAS es conservativa, es decir, la diferencia de energías potenciales final e inicial siempre es 0, en caso de no existir rozamiento. Además, la energía potencial será máxima en los extremos, x=A, siendo además correspondiente a la energía total del sistema. Por el contrario, en la posición x = 0, la energía potencial será 0. También la energía mecánica total, Ep + Ek, se mantendrá siempre constante"
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Un concepto importante respecto a un MAS es que nos encontramos ante un sistema lineal, en el que existe una relación directa entre velocidad y desplazamiento. Siempre existirá una fuerza igual y contraria que restaure el sistema a su estado inicial. Más adelante veremos esto representado en un espacio de fases."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Una vez entendidas las bases de un oscilador armónico podremos proseguir, ahora si, con el resto de modelos."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
       }
     }
   ],
   "simple-pendulum": [
     {
       "text": {
-        "title": "Lorem ipsum",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et vestibulum magna. Etiam et felis quis ante aliquet sollicitudin. Donec suscipit ipsum quis sapien ultrices, eu ullamcorper nisi tempor. Cras rhoncus justo nec nunc rutrum tincidunt. Sed sit amet ipsum aliquam sapien interdum interdum. Vivamus fermentum ornare quam, non egestas leo consequat ut. Cras eleifend sapien in tempus posuere. Duis in varius eros. Ut interdum fringilla massa, quis consequat metus convallis non. In pretium nulla eros, id congue tellus tempor eget. Maecenas lobortis ligula lectus, eget vestibulum ante viverra ut. Ut viverra elit nec felis bibendum congue. Sed at dolor imperdiet, gravida felis quis, blandit enim. In iaculis turpis eros, non commodo arcu hendrerit et. In ut velit eget diam congue pharetra sed ut sem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla placerat imperdiet nulla eu bibendum. Maecenas viverra feugiat risus at fermentum. Integer at mi id lacus molestie pretium et nec tellus. Nam sollicitudin neque vel neque sagittis accumsan. Nunc mattis lacus nisl. Nulla sed orci vestibulum, cursus odio nec, fringilla tortor. Aenean sollicitudin sollicitudin erat luctus blandit. Maecenas id efficitur enim. Pellentesque luctus porttitor ex, et placerat enim malesuada suscipit. Sed dictum odio eget sollicitudin dictum. Sed non leo sit amet augue auctor consequat. Nam laoreet diam tincidunt, cursus orci id, efficitur mauris. Aliquam laoreet est felis. Quisque ex sapien, dictum vitae diam vitae, maximus varius lectus. Donec a sapien turpis. Vivamus volutpat dui id lorem ornare malesuada. Aliquam sit amet tellus ac ante ullamcorper facilisis quis vel justo. Aenean dapibus quam egestas, dapibus diam sit amet, finibus nulla. Sed eget semper ex, at consequat mi. Donec maximus placerat ipsum, ut porta nunc porta in. Ut nec ultricies massa. Praesent mattis congue tellus, ac iaculis libero aliquet ut. Vestibulum libero felis, vestibulum id magna vel, tempus cursus eros. Morbi tincidunt dictum velit, vitae dictum nunc ornare ac. Mauris at luctus nibh, nec ultrices tortor. Curabitur iaculis, erat sit amet rhoncus aliquet, velit turpis consectetur ante, vitae faucibus sapien tellus sit amet lacus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut mi eros, tristique ac venenatis id, egestas quis lectus. Pellentesque sed egestas augue. Ut eu fringilla lectus. Nunc non diam faucibus, convallis urna sed, suscipit est. Cras egestas quam lorem, ut blandit mauris molestie ac."
+        "title": "Definicion",
+        "content": "Un péndulo simple es un oscilador armónico formado por un hilo rígido de longitud L y de masa despreciable del que cuelga una masa m, moviéndose de manera armónica alrededor de la normal al plano, con un ángulo theta respecto del eje perpendicular."
       },
       "image": {
         "src": "simple-pendulum.png",
         "alt": "Figure 1: Simple pendulum schema"
       }
     },
-
+    {
+      "text": {
+        "title": "Movimiento",
+        "content": "El péndulo simple se define mediante la siguiente expresión, que se obtiene a partir de la relación entre energía potencial y energía cinética. Usando el principio de conservación de la energía, podemos deducir mediante el lagrangniano del sistema que el resultado obtenido es una EDO de segundo orden."
+      },
+      "image": {
+        "src": "formula-placeholder.png",
+        "alt": "Figure 2: Equation of motion"
+      }
+    },
     {
       "text": {
         "title": "",
-        "content": "Vestibulum fringilla eros eget erat dignissim consequat. Nullam nec iaculis purus. Aenean feugiat erat nisi, in finibus urna aliquam nec. Mauris tempus a ex in ultricies. Fusce aliquam velit non est ornare, sit amet ornare metus tincidunt. Quisque est nisi, vehicula ac imperdiet at, laoreet vitae nisl. Etiam iaculis odio sit amet enim vulputate, a congue justo bibendum. Aenean luctus elementum rutrum. Curabitur congue, ligula tempor vehicula molestie, tortor arcu tincidunt eros, id ornare felis ligula et nulla. Suspendisse potenti. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam erat volutpat. Sed porta massa nisi, quis ultrices sem lobortis quis. Ut nec ultricies dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec iaculis sem at mi rhoncus, ut viverra lectus fermentum. Mauris ullamcorper, leo a dignissim bibendum, arcu eros ultrices libero, nec mollis velit lectus at quam. Morbi in facilisis magna, in sodales odio. Aenean consequat, sem in fringilla eleifend, diam mi posuere elit, nec condimentum lacus nisl eget augue."
+        "content": "La posición del péndulo en cualquier instante t viene dado por una composición de momentos armónicos en los ejes XY."
+      },
+      "image": {
+        "src": "formula-placeholder.png",
+        "alt": "Figure 3: Pendulum position"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Un péndulo simple es un sistema no lineal, ya que para valores del ángulo demasiado grandes, el sistema se vuelve inestable. ¿Y qué quiere decir esto? Significa que, si observamos el espacio de fases, existen valores de theta que hacen que el sistema no vuelva a su estado inicial, si no que se aleje de él, al contrario que si aplicamos valores muy pequeños, convirtiéndose en un sistema lineal. Esto es debido en parte a que el sistema puede rotar."
+      },
+      "image": {
+        "src": "home-placeholder.png",
+        "alt": "Figure 4: Phase space"
+      }
+    },
+    {
+      "text": {
+        "title": "Solucion exacta",
+        "content": "Conociendo la no linealidad del sistema, la dinámica del sistema se vuelve irresoluble por métodos tradicionales de cálculo, teniendo que recurrir a métodos de aproximación numérica, como por ejemplo los métodos de Runge-Kutta. La definición del periodo, el tiempo que tarda en volver a su estado inicial, también vendrá sujeta a diferentes condiciones, y será definida por la siguiente expresión. El término integral se conoce como integral elíptica de primera especie, que no es más que una manera de medir el arco recorrido en una elipse, siendo k el módulo elíptico o excentricidad del giro."
+      },
+      "image": {
+        "src": "formula-placeholder.png",
+        "alt": "Figure 5: Period formula"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Existen maneras de aproximar o resolver este tipo de integrales, como por ejemplo aproximando mediante series de Taylor o mediante el cálculo iterativo de la media aritmético-geométrica. Otra opción menos costosa puede ser usar algunas aproximaciones previamente calculadas del periodo, pero caben a cierto error. Y aun con la no linealidad, es posible encontrar una solución al sistema recurriendo al concepto de la integral elíptica. Necesitamos partir de la EDO inicial y a través de la energía se intenta linealizar el sistema, llegando a esta expresión."
+      },
+      "image": {
+        "src": "formula-placeholder.png",
+        "alt": "Figure 5: Exact formula"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Es una ecuación que, teóricamente, funciona de manera óptima mientras el ángulo tienda al mínimo. Como se puede observar, aparece un nuevo término en la función: el seno elliptico de jacobi, que define a qué altura de una elipse nos encontramos, sería el equivalente al seno trigonométrico en una circunferencia; y K(x), que es la integral elíptica de primera especie, la misma que en el periodo. El seno de jacobi también puede ser aproximado mediante la media aritmético-geométrica, aunque existen consideraciones que pueden aplicarse, como aproximaciones para ángulos muy pequeños o muy grandes, comportándose como un sistema lineal."
       },
       "image": {
         "src": "",
@@ -37,19 +156,58 @@
   "cradle-pendulum": [
     {
       "text": {
-        "title": "Lorem ipsum",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et vestibulum magna. Etiam et felis quis ante aliquet sollicitudin. Donec suscipit ipsum quis sapien ultrices, eu ullamcorper nisi tempor. Cras rhoncus justo nec nunc rutrum tincidunt. Sed sit amet ipsum aliquam sapien interdum interdum. Vivamus fermentum ornare quam, non egestas leo consequat ut. Cras eleifend sapien in tempus posuere. Duis in varius eros. Ut interdum fringilla massa, quis consequat metus convallis non. In pretium nulla eros, id congue tellus tempor eget. Maecenas lobortis ligula lectus, eget vestibulum ante viverra ut. Ut viverra elit nec felis bibendum congue. Sed at dolor imperdiet, gravida felis quis, blandit enim. In iaculis turpis eros, non commodo arcu hendrerit et. In ut velit eget diam congue pharetra sed ut sem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla placerat imperdiet nulla eu bibendum. Maecenas viverra feugiat risus at fermentum. Integer at mi id lacus molestie pretium et nec tellus. Nam sollicitudin neque vel neque sagittis accumsan. Nunc mattis lacus nisl. Nulla sed orci vestibulum, cursus odio nec, fringilla tortor. Aenean sollicitudin sollicitudin erat luctus blandit. Maecenas id efficitur enim. Pellentesque luctus porttitor ex, et placerat enim malesuada suscipit. Sed dictum odio eget sollicitudin dictum. Sed non leo sit amet augue auctor consequat. Nam laoreet diam tincidunt, cursus orci id, efficitur mauris. Aliquam laoreet est felis. Quisque ex sapien, dictum vitae diam vitae, maximus varius lectus. Donec a sapien turpis. Vivamus volutpat dui id lorem ornare malesuada. Aliquam sit amet tellus ac ante ullamcorper facilisis quis vel justo. Aenean dapibus quam egestas, dapibus diam sit amet, finibus nulla. Sed eget semper ex, at consequat mi. Donec maximus placerat ipsum, ut porta nunc porta in. Ut nec ultricies massa. Praesent mattis congue tellus, ac iaculis libero aliquet ut. Vestibulum libero felis, vestibulum id magna vel, tempus cursus eros. Morbi tincidunt dictum velit, vitae dictum nunc ornare ac. Mauris at luctus nibh, nec ultrices tortor. Curabitur iaculis, erat sit amet rhoncus aliquet, velit turpis consectetur ante, vitae faucibus sapien tellus sit amet lacus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut mi eros, tristique ac venenatis id, egestas quis lectus. Pellentesque sed egestas augue. Ut eu fringilla lectus. Nunc non diam faucibus, convallis urna sed, suscipit est. Cras egestas quam lorem, ut blandit mauris molestie ac."
+        "title": "Definicion",
+        "content": "Una representación cotidiana de un péndulo simple puede verse en un particular sistema denominado Cuna de Newton o Péndulo de Newton. Es un sistema formado por N péndulos simples que, en estado de reposo, permanecen juntos, pero en estado de movimiento, el choque entre los diferentes elementos produce un intercambio del momento que se ve reflejado en el clásico movimiento."
       },
       "image": {
         "src": "cradle-pendulum.png",
         "alt": "Figure 1: Newton's cradle schema"
       }
     },
-
     {
       "text": {
         "title": "",
-        "content": "Vestibulum fringilla eros eget erat dignissim consequat. Nullam nec iaculis purus. Aenean feugiat erat nisi, in finibus urna aliquam nec. Mauris tempus a ex in ultricies. Fusce aliquam velit non est ornare, sit amet ornare metus tincidunt. Quisque est nisi, vehicula ac imperdiet at, laoreet vitae nisl. Etiam iaculis odio sit amet enim vulputate, a congue justo bibendum. Aenean luctus elementum rutrum. Curabitur congue, ligula tempor vehicula molestie, tortor arcu tincidunt eros, id ornare felis ligula et nulla. Suspendisse potenti. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam erat volutpat. Sed porta massa nisi, quis ultrices sem lobortis quis. Ut nec ultricies dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec iaculis sem at mi rhoncus, ut viverra lectus fermentum. Mauris ullamcorper, leo a dignissim bibendum, arcu eros ultrices libero, nec mollis velit lectus at quam. Morbi in facilisis magna, in sodales odio. Aenean consequat, sem in fringilla eleifend, diam mi posuere elit, nec condimentum lacus nisl eget augue."
+        "content": "Y es tan sencillo como un intercambio de momento a través del choque. Para explicarlo se utilizará un esquema sencillo, considerando solo el eje horizontal."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "En un choque frontal de dos elementos con la misma masa y la misma aceleración, sin rozamiento, las fuerzas ejercidas resultará en 0, y a su vez, el momento ejercido también se hará nulo. Si esto no ocurriese, no se cumpliría con la conservación de la energía. Por tanto, podemos suponer que si uno de los elementos no ejerciera una fuerza igual y contraria a la del otro elemento, este traspasará su fuerza y momento al otro, para cumplir con que la relación de momentos sea conservativa."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Además de esto, debemos considerar que el choque será elástico, es decir, la energía cinética también se traspasa en el choque de manera equivalente, es decir, se conserva."
+      },
+      "image": {
+        "src": "formula-placeholder.png",
+        "alt": "Figure 2: Newton's cradle motion"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Con estas dos expresiones podemos conocer cómo se realiza el traspaso de momento de un cuerpo a otro tras un choque y la velocidad final resultante en el choque. Así por ejemplo en un sistema de 4 elementos, si dos se moviesen en dirección hacia el resto a una velocidad constante, tras el choque se produciría un traspaso de momento y energía cinética a los dos cuerpos que estaban en reposo, haciendo que estos comenzaran a moverse y los dos iniciales se detuvieran."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Volviendo al sistema armónico inicial, usando el mismo ejemplo de las cuatro bolas, solo necesitamos conocer la velocidad en el instante en el que los péndulos que se encontraran oscilando y la masa de estos para poner en marcha con una velocidad igual a los otros dos, contrarrestando la velocidad de los dos primeros."
       },
       "image": {
         "src": "",
@@ -106,30 +264,69 @@
   "spherical-pendulum": [
     {
       "text": {
-        "title": "Lorem ipsum",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et vestibulum magna. Etiam et felis quis ante aliquet sollicitudin. Donec suscipit ipsum quis sapien ultrices, eu ullamcorper nisi tempor. Cras rhoncus justo nec nunc rutrum tincidunt. Sed sit amet ipsum aliquam sapien interdum interdum. Vivamus fermentum ornare quam, non egestas leo consequat ut. Cras eleifend sapien in tempus posuere. Duis in varius eros. Ut interdum fringilla massa, quis consequat metus convallis non. In pretium nulla eros, id congue tellus tempor eget. Maecenas lobortis ligula lectus, eget vestibulum ante viverra ut. Ut viverra elit nec felis bibendum congue. Sed at dolor imperdiet, gravida felis quis, blandit enim. In iaculis turpis eros, non commodo arcu hendrerit et. In ut velit eget diam congue pharetra sed ut sem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla placerat imperdiet nulla eu bibendum. Maecenas viverra feugiat risus at fermentum. Integer at mi id lacus molestie pretium et nec tellus. Nam sollicitudin neque vel neque sagittis accumsan. Nunc mattis lacus nisl. Nulla sed orci vestibulum, cursus odio nec, fringilla tortor. Aenean sollicitudin sollicitudin erat luctus blandit. Maecenas id efficitur enim. Pellentesque luctus porttitor ex, et placerat enim malesuada suscipit. Sed dictum odio eget sollicitudin dictum. Sed non leo sit amet augue auctor consequat. Nam laoreet diam tincidunt, cursus orci id, efficitur mauris. Aliquam laoreet est felis. Quisque ex sapien, dictum vitae diam vitae, maximus varius lectus. Donec a sapien turpis. Vivamus volutpat dui id lorem ornare malesuada. Aliquam sit amet tellus ac ante ullamcorper facilisis quis vel justo. Aenean dapibus quam egestas, dapibus diam sit amet, finibus nulla. Sed eget semper ex, at consequat mi. Donec maximus placerat ipsum, ut porta nunc porta in. Ut nec ultricies massa. Praesent mattis congue tellus, ac iaculis libero aliquet ut. Vestibulum libero felis, vestibulum id magna vel, tempus cursus eros. Morbi tincidunt dictum velit, vitae dictum nunc ornare ac. Mauris at luctus nibh, nec ultrices tortor. Curabitur iaculis, erat sit amet rhoncus aliquet, velit turpis consectetur ante, vitae faucibus sapien tellus sit amet lacus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut mi eros, tristique ac venenatis id, egestas quis lectus. Pellentesque sed egestas augue. Ut eu fringilla lectus. Nunc non diam faucibus, convallis urna sed, suscipit est. Cras egestas quam lorem, ut blandit mauris molestie ac."
+        "title": "Definicion",
+        "content": "El péndulo esférico es un sistema similar al péndulo simple pero al que se ha añadido un grado de libertad. Un hilo rígido de longitud L y de masa despreciable del que cuelga una masa m, con un ángulo theta respecto del eje perpendicular que definirá la amplitud, la normal al plano XY en este caso; y un ángulo phi, que definirá la rotación realizada alrededor de la normal."
       },
       "image": {
         "src": "spherical-pendulum.png",
         "alt": "Figure 1: Spherical pendulum schema"
       }
     },
-
     {
       "text": {
         "title": "",
-        "content": "Vestibulum fringilla eros eget erat dignissim consequat. Nullam nec iaculis purus. Aenean feugiat erat nisi, in finibus urna aliquam nec. Mauris tempus a ex in ultricies. Fusce aliquam velit non est ornare, sit amet ornare metus tincidunt. Quisque est nisi, vehicula ac imperdiet at, laoreet vitae nisl. Etiam iaculis odio sit amet enim vulputate, a congue justo bibendum. Aenean luctus elementum rutrum. Curabitur congue, ligula tempor vehicula molestie, tortor arcu tincidunt eros, id ornare felis ligula et nulla. Suspendisse potenti. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam erat volutpat. Sed porta massa nisi, quis ultrices sem lobortis quis. Ut nec ultricies dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec iaculis sem at mi rhoncus, ut viverra lectus fermentum. Mauris ullamcorper, leo a dignissim bibendum, arcu eros ultrices libero, nec mollis velit lectus at quam. Morbi in facilisis magna, in sodales odio. Aenean consequat, sem in fringilla eleifend, diam mi posuere elit, nec condimentum lacus nisl eget augue."
+        "content": "Añadir una nueva coordenada hace replantear cómo debemos atacar el problema y, en este caso, el péndulo ha sido modelado mediante coordenadas esféricas. Esto resultará en ciertas condiciones más adelante."
+      },
+      "image": {
+        "src": "formula-placeholder.png",
+        "alt": "Figure 2: Spherical pendulum position"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Al igual que en el péndulo simple, la obtención de las ecuaciones que definen el movimiento del sistema partirán de la energía potencial y la energía cinética, construyendo con ellas el lagrangniano. Trás derivar por el ángulo de amplitud y el ángulo de rotación obtenemos las siguientes EDO."
+      },
+      "image": {
+        "src": "formula-placeholder.png",
+        "alt": "Figure 3: Equations of motion"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "El péndulo esférico actuará de la misma manera que lo hace un péndulo simple siempre y cuando no ejerzamos una fuerza de rotación, vphi diferente de 0. En caso contrario, el péndulo comenzará a oscilar, produciendo esas figura en forma de cuenco tan características. "
       },
       "image": {
         "src": "",
         "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Aun así podremos comprobar como uno de los términos se encuentra multiplicado por la cotangente de la amplitud, y es que existe el problema para este modelado de que la contangente tiende a infinito al acercarse a 0, por tanto, una vez aplicamos una fuerza de rotación, debemos considerar que no sea demasiado baja, ya que entonces el movimiento oscilatorio degenerará y no continuará con el movimiento."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "Pendulo de Focault",
+        "content": "Existe un caso especial del péndulo esférico, el cual es denominado, péndulo de Focault. Las oscilaciones producidas por este péndulo son debidas a la rotación de la tierra y a la inclinación que el péndulo tenga con respecto al eje terrestre. En este caso, las EDO que definen al péndulo esférico pueden ser sustituidas por una composición de movimientos armónicos simples para los ejes X e Y. Así que suponiendo un lugar en el planeta y teniendo en cuenta parámetros parámetros como la rotación de la tierra, podemos llegar hasta las ecuaciones que definen el movimiento del péndulo"
+      },
+      "image": {
+        "src": "formula-placeholder.png",
+        "alt": "Figure 4: Equations of motion"
       }
     }
   ],
   "conical-pendulum": [
     {
       "text": {
-        "title": "Definition",
+        "title": "Definicion",
         "content": "El péndulo cónico es un sistema similar al péndulo esférico. Una masa m que pende de una varilla ígida de lóngitud L y se desplaza con tres grados de libertad, una amplitud de valor theta en el eje Z y una rotación sobre el plano XY de valor phi."
       },
       "image": {
@@ -139,7 +336,7 @@
     },
     {
       "text": {
-        "title": "Motion",
+        "title": "Movimiento",
         "content": "Pero a diferencia del péndulo esférico, un péndulo cónico no realiza un movimiento armónico, si no un movimiento circular uniforme producido por una fuerza centrífuga que hará que el péndulo comience a rotar. Esta fuerza centrifuga es producida por un aumento de la velocidad de rotación, o frecuenca angular. Cuando esta velocidad alcanza un valor crítico, el péndulo abandona el estado de reposo y comienza a elevarse, girando alrededor del eje Z."
       },
       "image": {
@@ -171,23 +368,32 @@
   "spring-pendulum": [
     {
       "text": {
-        "title": "Lorem ipsum",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et vestibulum magna. Etiam et felis quis ante aliquet sollicitudin. Donec suscipit ipsum quis sapien ultrices, eu ullamcorper nisi tempor. Cras rhoncus justo nec nunc rutrum tincidunt. Sed sit amet ipsum aliquam sapien interdum interdum. Vivamus fermentum ornare quam, non egestas leo consequat ut. Cras eleifend sapien in tempus posuere. Duis in varius eros. Ut interdum fringilla massa, quis consequat metus convallis non. In pretium nulla eros, id congue tellus tempor eget. Maecenas lobortis ligula lectus, eget vestibulum ante viverra ut. Ut viverra elit nec felis bibendum congue. Sed at dolor imperdiet, gravida felis quis, blandit enim. In iaculis turpis eros, non commodo arcu hendrerit et. In ut velit eget diam congue pharetra sed ut sem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla placerat imperdiet nulla eu bibendum. Maecenas viverra feugiat risus at fermentum. Integer at mi id lacus molestie pretium et nec tellus. Nam sollicitudin neque vel neque sagittis accumsan. Nunc mattis lacus nisl. Nulla sed orci vestibulum, cursus odio nec, fringilla tortor. Aenean sollicitudin sollicitudin erat luctus blandit. Maecenas id efficitur enim. Pellentesque luctus porttitor ex, et placerat enim malesuada suscipit. Sed dictum odio eget sollicitudin dictum. Sed non leo sit amet augue auctor consequat. Nam laoreet diam tincidunt, cursus orci id, efficitur mauris. Aliquam laoreet est felis. Quisque ex sapien, dictum vitae diam vitae, maximus varius lectus. Donec a sapien turpis. Vivamus volutpat dui id lorem ornare malesuada. Aliquam sit amet tellus ac ante ullamcorper facilisis quis vel justo. Aenean dapibus quam egestas, dapibus diam sit amet, finibus nulla. Sed eget semper ex, at consequat mi. Donec maximus placerat ipsum, ut porta nunc porta in. Ut nec ultricies massa. Praesent mattis congue tellus, ac iaculis libero aliquet ut. Vestibulum libero felis, vestibulum id magna vel, tempus cursus eros. Morbi tincidunt dictum velit, vitae dictum nunc ornare ac. Mauris at luctus nibh, nec ultrices tortor. Curabitur iaculis, erat sit amet rhoncus aliquet, velit turpis consectetur ante, vitae faucibus sapien tellus sit amet lacus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut mi eros, tristique ac venenatis id, egestas quis lectus. Pellentesque sed egestas augue. Ut eu fringilla lectus. Nunc non diam faucibus, convallis urna sed, suscipit est. Cras egestas quam lorem, ut blandit mauris molestie ac."
+        "title": "Definicion",
+        "content": "Los movimientos amortiguados corresponden a movimientos armónicos simples. en los que existe una serie de fuerzas externas, producidas generalmente por un muelle, en la cual una “empuja” la masa a un ritmo constante k y otra que resiste la expansión del muelle, de igual constante pero de signo contrario, que devuelve al sistema a su estado inicial y lo mantienen en oscilación."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "El péndulo amortiguado es un oscilador armónico formado por un muelle de longitud L y masa despreciable del que pende una masa m. El muelle tiene una constante elástica k que le permite elongarse hasta una longitud n. Este sistema se mueve en los ejes XY, siendo modelado por la unión de dos modos de oscilación, la de un péndulo simple, en el movimiento oscilante; y la de un muelle elástico, en el movimiento de contracción."
       },
       "image": {
         "src": "spring-pendulum.png",
         "alt": "Figure 1: Spring pendulum schema"
       }
     },
-
     {
       "text": {
         "title": "",
-        "content": "Vestibulum fringilla eros eget erat dignissim consequat. Nullam nec iaculis purus. Aenean feugiat erat nisi, in finibus urna aliquam nec. Mauris tempus a ex in ultricies. Fusce aliquam velit non est ornare, sit amet ornare metus tincidunt. Quisque est nisi, vehicula ac imperdiet at, laoreet vitae nisl. Etiam iaculis odio sit amet enim vulputate, a congue justo bibendum. Aenean luctus elementum rutrum. Curabitur congue, ligula tempor vehicula molestie, tortor arcu tincidunt eros, id ornare felis ligula et nulla. Suspendisse potenti. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam erat volutpat. Sed porta massa nisi, quis ultrices sem lobortis quis. Ut nec ultricies dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec iaculis sem at mi rhoncus, ut viverra lectus fermentum. Mauris ullamcorper, leo a dignissim bibendum, arcu eros ultrices libero, nec mollis velit lectus at quam. Morbi in facilisis magna, in sodales odio. Aenean consequat, sem in fringilla eleifend, diam mi posuere elit, nec condimentum lacus nisl eget augue."
+        "content": "A diferencia del péndulo simple y debido a sus dos grados de libertad, se define por dos ecuaciones de movimiento, una que indica cómo varía el ángulo con respecto a la vertical y otra como varía la elongación del muelle. Estas expresiones se obtienen a través del lagrangniano que aúna las energías potenciales y cinéticas de los dos movimientos. La energía potencial del péndulo será 0 solo cuando el sistema esté en reposo, por ejemplo algún estado en el que la elongación x se encuentre a 0. Debido a la no linealidad del sistema, no puede una representación exacta del movimiento, por ello será necesario el uso de métodos numéricos de aproximación."
       },
       "image": {
-        "src": "",
-        "alt": ""
+        "src": "formula-placeholder.png",
+        "alt": "Figure 2: Equations of motion"
       }
     }
   ]

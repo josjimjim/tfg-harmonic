@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="title is-3">Home</h3>
+    <h3 class="title is-3">Inicio</h3>
     <div class="columns">
       <div class="column">
         <documentation type="home"></documentation>
