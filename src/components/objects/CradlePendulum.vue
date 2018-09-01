@@ -20,10 +20,9 @@
 import * as THREE from 'three'
 import CradleInput from '../inputs/CradleInput'
 import Documentation from '../Documentation'
+import {initContext, initAxis} from '@/assets/js/graphics.js'
+import {simplePendulum} from '@/assets/js/models.js'
 import {GRAVITY, circleColisionDetection, rungeKutta4} from '@/assets/js/math.js'
-
-const CANVAS_WIDTH = 500
-const CANVAS_HEIGHT = 400
 
 export default {
   name: 'cradle-pendulum',
@@ -51,12 +50,68 @@ export default {
     }
   },
   methods: {
-    pendulumEq(t, x, v){
-      var damping = 0
-      if(this.damping.active){
-        damping = (this.damping.value / this.pendulums[this.ballReference].mass * v)
+    initContext(){
+      let context = initContext()
+
+      this.renderer = context.renderer
+      this.camera = context.camera
+      this.controls = context.controls
+      this.canvas = context.cavas
+
+    },
+    initScene() {
+      this.scene = new THREE.Scene()
+      this.scene.background = new THREE.Color( 0xffffff )
+
+      this.initAxis()
+      this.initObject()
+
+      this.renderer.render( this.scene, this.camera )
+    },
+    initAxis() {
+      let axis = initAxis()
+
+      this.scene.add(axis)
+    },
+    initObject() {
+
+      let gap = 0
+      let material_circle = new THREE.MeshBasicMaterial( { color: 0x2469ff } )
+      let material_line = new THREE.LineBasicMaterial( { color: 0x000000 } )
+
+      for(let i = 0; i < this.pendulums.length; i++){
+
+        let geometry_circle = new THREE.CircleGeometry( this.pendulums[i].radius, 50 )
+        this.pendulums[i].circle = new THREE.Mesh( geometry_circle, material_circle )
+        this.pendulums[i].circle.position.x =  this.pendulums[i].length * Math.sin(this.pendulums[i].angle) - gap + this.totalGap/2
+        this.pendulums[i].circle.position.y = -this.pendulums[i].length * Math.cos(this.pendulums[i].angle) + this.pendulums[i].length/2
+
+        let geometry_line = new THREE.Geometry()
+        geometry_line.vertices.push(new THREE.Vector3( -gap + this.totalGap/2, this.pendulums[i].length / 2 , 0))
+        geometry_line.vertices.push(new THREE.Vector3( this.pendulums[i].circle.position.x, this.pendulums[i].circle.position.y, 0))
+        this.pendulums[i].line = new THREE.Line( geometry_line, material_line )
+
+        gap += this.pendulums[i].radius * 2 
+        this.scene.add(this.pendulums[i].line)
+        this.scene.add(this.pendulums[i].circle)
       }
-      return - GRAVITY * Math.sin(x) / this.pendulums[this.ballReference].length - damping
+
+      this.renderer.render( this.scene, this.camera )
+    },
+    enableDamping(active) {
+      this.damping.active = active
+    },
+    pendulumEq(t0, x0, v0){
+
+      let g = GRAVITY
+      let t = t0
+      let d = this.damping.active ? this.damping.value : 0
+      let m = this.pendulums[this.ballReference].mass
+      let l = this.pendulums[this.ballReference].length
+      let x = x0
+      let v = v0
+
+      return simplePendulum(g, t, d, m, l, x, v)
     },
     setStatus(status){
 
@@ -93,76 +148,6 @@ export default {
     },
     setAnimation(animate) {
       if(animate){ this.move() }else{ this.stop() }
-    },
-    enableDamping(active) {
-      this.damping.active = active
-    },
-    initContext(){
-      this.camera = new THREE.PerspectiveCamera(20, CANVAS_WIDTH/CANVAS_HEIGHT, 0.1, 1000)
-      this.camera.position.set(0, 0, 80)
-      this.camera.lookAt( new THREE.Vector3(0, 0, 0))
-
-      this.renderer = new THREE.WebGLRenderer()
-      this.renderer.setSize( CANVAS_WIDTH, CANVAS_HEIGHT)
-      this.renderer.sortObjects = false;
-      this.canvas = document.getElementById("canvas")
-      this.canvas.appendChild(this.renderer.domElement)
-
-    },
-    initScene() {
-      this.scene = new THREE.Scene()
-      this.scene.background = new THREE.Color( 0xffffff )
-
-      this.initAxis()
-      this.initObject()
-
-      this.renderer.render( this.scene, this.camera )
-    },
-    initAxis() {
-      var materialAxisX = new THREE.LineBasicMaterial( { color: 0xff0000 } )
-      var geometryAxisX = new THREE.Geometry()
-      geometryAxisX.vertices.push(new THREE.Vector3( 0, -50, 0) )
-      geometryAxisX.vertices.push(new THREE.Vector3( 0,  50, 0) )
-
-      var materialAxisY = new THREE.LineBasicMaterial( { color: 0x0000ff } )
-      var geometryAxisY = new THREE.Geometry()
-      geometryAxisY.vertices.push(new THREE.Vector3(-50, 0, 0) )
-      geometryAxisY.vertices.push(new THREE.Vector3( 50, 0, 0) )
-
-      var axisX = new THREE.Line( geometryAxisX, materialAxisX )
-      var axisY = new THREE.Line( geometryAxisY, materialAxisY )
-
-      var axis = new THREE.Object3D()
-      axis.add( axisX )
-      axis.add( axisY )
-
-      this.scene.add( axis )
-    },
-    initObject() {
-
-      let gap = 0
-      let material_circle = new THREE.MeshBasicMaterial( { color: 0x2469ff } )
-      let material_line = new THREE.LineBasicMaterial( { color: 0x000000 } )
-
-      for(let i = 0; i < this.pendulums.length; i++){
-
-        let geometry_circle = new THREE.CircleGeometry( this.pendulums[i].radius, 50 )
-        this.pendulums[i].circle = new THREE.Mesh( geometry_circle, material_circle )
-        this.pendulums[i].circle.position.x =  this.pendulums[i].length * Math.sin(this.pendulums[i].angle) - gap + this.totalGap/2
-        this.pendulums[i].circle.position.y = -this.pendulums[i].length * Math.cos(this.pendulums[i].angle) + this.pendulums[i].length/2
-
-        let geometry_line = new THREE.Geometry()
-        geometry_line.vertices.push(new THREE.Vector3( -gap + this.totalGap/2, this.pendulums[i].length / 2 , 0))
-        geometry_line.vertices.push(new THREE.Vector3( this.pendulums[i].circle.position.x, this.pendulums[i].circle.position.y, 0))
-        this.pendulums[i].line = new THREE.Line( geometry_line, material_line )
-
-        gap += this.pendulums[i].radius * 2 
-        this.scene.add(this.pendulums[i].line)
-        this.scene.add(this.pendulums[i].circle)
-      }
-
-      this.renderer.render( this.scene, this.camera )
- 
     },
     move() {
       this.animFrameID = requestAnimationFrame( this.move )

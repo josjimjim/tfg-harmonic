@@ -48,7 +48,7 @@
     </generic-input>
 
     <generic-input>
-      <button v-model="clapper.animate" v-text="clapper.text" @click="setAnimation" class="button"></button>
+      <button v-text="clapper.text" @click="setAnimation" class="button"></button>
     </generic-input>
   </div>
 </template>

@@ -24,11 +24,7 @@ require('three/examples/js/controls/OrbitControls.js');
 import ConicalInput from '../inputs/ConicalInput'
 import Documentation from '../Documentation'
 import {GRAVITY} from '@/assets/js/math.js'
-
-const CANVAS_WIDTH = 500
-const CANVAS_HEIGHT = 400
-
-const MAX_TRAIL_POINTS = 5000
+import {initContext, initAxis, initTrail, updateTrail} from "@/assets/js/graphics.js";
 
 export default {
   name: 'conical-pendulum',
@@ -62,37 +58,13 @@ export default {
     }
   },
   methods: {
-    setStatus(status){
-      this.pendulum.frequency = parseFloat(status.pendulum.frequency)
-      this.pendulum.mass = parseFloat(status.pendulum.mass)
-      this.pendulum.length = parseFloat(status.pendulum.length)
-
-      this.lineLength = this.pendulum.length * 5
-
-      if(this.scene != null) {
-        this.initScene()
-      }
-    },
-    setAnimation(animate) {
-      if(animate){ this.move() }else{ this.stop() }
-    },
-    enableTrail(active) {
-      this.trail = active
-      if(active){ this.trailReload = true }
-    },
     initContext(){
-      this.renderer = new THREE.WebGLRenderer()
-      this.renderer.setSize( CANVAS_WIDTH, CANVAS_HEIGHT)
-      this.renderer.sortObjects = false
+      let context = initContext(new THREE.Vector3(100, 20, 100), new THREE.Vector3(0, 0, 0), true)
 
-      this.camera = new THREE.PerspectiveCamera(20, CANVAS_WIDTH/CANVAS_HEIGHT, 0.1, 1000)
-      this.camera.position.set( 100, 20, 100 )
-      this.camera.lookAt( new THREE.Vector3(0, 0, 0))
-
-      this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement)
-
-      this.canvas = document.getElementById("canvas")
-      this.canvas.appendChild(this.renderer.domElement)
+      this.renderer = context.renderer
+      this.camera = context.camera
+      this.controls = context.controls
+      this.canvas = context.cavas
 
     },
     initScene() {
@@ -103,34 +75,11 @@ export default {
       this.initObject()
     },
     initAxis() {
-      var materialAxisX = new THREE.LineBasicMaterial( { color: 0xff0000 } )
-      var geometryAxisX = new THREE.Geometry()
-      geometryAxisX.vertices.push(new THREE.Vector3( 0, -50, 0) )
-      geometryAxisX.vertices.push(new THREE.Vector3( 0,  50, 0) )
+      let axis = initAxis(500, 500, 500, -17)
 
-      var materialAxisY = new THREE.LineBasicMaterial( { color: 0x0000ff } )
-      var geometryAxisY = new THREE.Geometry()
-      geometryAxisY.vertices.push(new THREE.Vector3(-50, -17, 0) )
-      geometryAxisY.vertices.push(new THREE.Vector3( 50, -17, 0) )
-
-      var materialAxisZ = new THREE.LineBasicMaterial( { color: 0x00ff00 } )
-      var geometryAxisZ = new THREE.Geometry()
-      geometryAxisZ.vertices.push(new THREE.Vector3( 0, -17, -50) )
-      geometryAxisZ.vertices.push(new THREE.Vector3( 0, -17, 50) )
-
-      var axisX = new THREE.Line( geometryAxisX, materialAxisX )
-      var axisY = new THREE.Line( geometryAxisY, materialAxisY )
-      var axisZ = new THREE.Line( geometryAxisZ, materialAxisZ )
-
-      var axis = new THREE.Object3D()
-      axis.add( axisX )
-      axis.add( axisY )
-      axis.add( axisZ )
-
-      this.scene.add( axis )
+      this.scene.add(axis)
     },
     initObject() {
-
       var geometry_sphere = new THREE.SphereGeometry( this.pendulum.mass / 2, 32, 32 )
       var material_sphere = new THREE.MeshBasicMaterial( { color: 0x2469ff } )
       this.sphere = new THREE.Mesh( geometry_sphere, material_sphere )
@@ -144,7 +93,7 @@ export default {
       geometry_line.vertices.push(new THREE.Vector3(this.sphere.position.x, this.sphere.position.y, this.sphere.position.z))
       this.line = new THREE.Line( geometry_line, material_line )
 
-      this.initTrail()
+      this.trailLine = initTrail(this.sphere.position);
 
       this.minimumFrequency = Math.sqrt(GRAVITY / this.pendulum.length)
 
@@ -153,6 +102,24 @@ export default {
       this.scene.add(this.sphere)
 
       this.renderer.render( this.scene, this.camera )
+    },
+    enableTrail(active) {
+      this.trail = active
+      if(active){ this.trailReload = true }
+    },
+    setStatus(status){
+      this.pendulum.frequency = parseFloat(status.pendulum.frequency)
+      this.pendulum.mass = parseFloat(status.pendulum.mass)
+      this.pendulum.length = parseFloat(status.pendulum.length)
+
+      this.lineLength = this.pendulum.length * 5
+
+      if(this.scene != null) {
+        this.initScene()
+      }
+    },
+    setAnimation(animate) {
+      if(animate){ this.move() }else{ this.stop() }
     },
     move() {
       this.anFrmID = requestAnimationFrame( this.move )
@@ -169,38 +136,16 @@ export default {
       this.line.geometry.vertices[ 1 ].z = this.sphere.position.z
       this.line.geometry.verticesNeedUpdate = true
 
-      this.updateTrail()
+      if (this.trail) {
+        let update = updateTrail(this.trailLine, this.sphere.position, this.trailReload)
+        this.trailLine.geometry.vertices = update.vertices
+        this.trailReload = update.trailReload
+      }
 
       this.renderer.render(this.scene, this.camera)
     },
     stop(){
       cancelAnimationFrame(this.anFrmID)
-    },
-    initTrail(){
-      var lineMaterial = new THREE.MeshBasicMaterial({color: 0xff8800 })
-      var geometry = new THREE.Geometry()
-      for (var i=0; i < MAX_TRAIL_POINTS; i++){
-        geometry.vertices.push(new THREE.Vector3(this.sphere.position.x, this.sphere.position.y, this.sphere.position.z))
-      }
-      this.trailLine = new THREE.Line(geometry, lineMaterial)
-      this.trailLine.geometry.dynamic = true
-    },
-    updateTrail(){
-       if(this.trail) {
-        if(this.trailReload) {
-          this.reloadTrail()
-          this.trailReload = false
-        }
-        this.trailLine.geometry.vertices.push(this.trailLine.geometry.vertices.shift())
-        this.trailLine.geometry.vertices[MAX_TRAIL_POINTS - 1] = new THREE.Vector3(this.sphere.position.x, this.sphere.position.y, this.sphere.position.z)
-        this.trailLine.geometry.verticesNeedUpdate = true
-      }
-    },
-    reloadTrail() {
-      for (var i=0; i < MAX_TRAIL_POINTS; i++){
-        this.trailLine.geometry.vertices[i] = new THREE.Vector3(this.sphere.position.x, this.sphere.position.y, this.sphere.position.z)
-        this.trailLine.geometry.verticesNeedUpdate = true
-      }
     }
   },
   mounted() {
