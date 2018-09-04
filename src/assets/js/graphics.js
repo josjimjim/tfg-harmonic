@@ -4,7 +4,8 @@ require('three/examples/js/controls/OrbitControls.js');
 
 export const CANVAS_WIDTH = 500;
 export const CANVAS_HEIGHT = 400;
-export const MAX_TRAIL_POINTS = 5000
+export const MAX_TRAIL_POINTS = 5000;
+export const MAX_CHART_POINTS = 1000;
 
 /**
  * Three.js context initializer.
@@ -118,3 +119,4 @@ export function updateTrail(trailLine, position, trailReload){
         trailReload: trailReload
     }
 }
+

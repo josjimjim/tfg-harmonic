@@ -7,7 +7,7 @@ export const NUMERICAL_METHODS = [
   {method:'rungeKuttaFehlberg45', name: 'Runge-Kutta-Fehlberg 4&5 Steps'}
 ];
 
-export const ERROR_TOLERANCE = 0.0002;
+export const ERROR_TOLERANCE = 1e-5;
 
 /**
  * Factorial calculus
@@ -56,7 +56,7 @@ export function euler(f, t, x, v, h) {
 }
 
 /**
- * Numerical approximation for second order differential equations using Heunn method.
+ * Numerical approximation for second order differential equations using Heun method.
  * 
  * @param {*} f Input function 
  * @param {*} t Time
@@ -119,6 +119,33 @@ export function rungeKutta4(f, t, x, v, h) {
  * @return Tuple of three elements that contains next x, next v and the step
  */
 export function rungeKuttaFehlberg45(f, t, x, v, h) {
+
+  let hMax = 0.3;
+  let hMin = 0.01;
+
+  let sols = rkf45(f, t, x, v, h)
+
+  let error = Math.abs(sols[0] - sols[2]);
+
+  // Step size
+  while( error > ERROR_TOLERANCE) {
+    h = 0.9 * Math.min(Math.max(h * Math.pow(ERROR_TOLERANCE * h / (2 * error), 0.25), hMin), hMax);
+    sols = rkf45(f, t, x, v, h);
+    error = Math.abs(sols[0] - sols[2]);
+
+    console.log(error)
+    console.log(error > ERROR_TOLERANCE)
+    
+  }
+  h = Math.min(Math.max(h * Math.pow(ERROR_TOLERANCE * h / (2 * error), 0.25), hMin), hMax);
+  
+  return [sols[0], sols[1], h];
+}
+
+function rkf45(f, t, x, v, h){
+  let hMax = 0.3;
+  let hMin = 0.001;
+
   let k1, k2, k3, k4, k5, k6;
   let l1, l2, l3, l4, l5, l6;
   let s;
@@ -136,19 +163,14 @@ export function rungeKuttaFehlberg45(f, t, x, v, h) {
   k6 = h * (v - l1 * 8 / 27 + l2 * 2 - l3 * 3544 / 2565 + l4 * 1859 / 4104 - l5 * 11 / 40);
   l6 = h * f(t + h / 2, x - k1 * 8 / 27 + k2 * 2 - k3 * 3544 / 2565 + k4 * 1859 / 4104 - k5 * 11 / 40, v - l1 * 8 / 27 + l2 * 2 - l3 * 3544 / 2565 + l4 * 1859 / 4104 - l5 * 11 / 40);
 
-  x += (k1 * 25 / 216 + k3 * 1408 / 2565 + k4 * 2197 / 4101 - k5 / 5);
-  v += (l1 * 25 / 216 + l3 * 1408 / 2565 + l4 * 2197 / 4101 - l5 / 5);
+  let x4 = x + (k1 * 25 / 216 + k3 * 1408 / 2565 + k4 * 2197 / 4101 - k5 / 5);
+  let v4 = v + (l1 * 25 / 216 + l3 * 1408 / 2565 + l4 * 2197 / 4101 - l5 / 5);
 
   // Comparative solution
-  let z = x + k1 * 16 / 135 + k3 * 6656 / 12825 + k4 * 28561 / 56430 - k5 * 9 / 50 + k5 * 2 / 55;
+  let x5 = x + k1 * 16 / 135 + k3 * 6656 / 12825 + k4 * 28561 / 56430 - k5 * 9 / 50 + k6 * 2 / 55;
+  let v5 = x + l1 * 16 / 135 + l3 * 6656 / 12825 + l4 * 28561 / 56430 - l5 * 9 / 50 + l6 * 2 / 55;
 
-  // Step size
-  // if(Math.abs(z - x) > ERROR_TOLERANCE) {
-  //   s = Math.pow(ERROR_TOLERANCE * h / (2 * Math.abs(z - x)), 1/4);
-  //   h*=s;
-  // }
-
-  return [x, v, h];
+  return [x4,v4,x5,v5];
 }
 
 /**
@@ -158,22 +180,18 @@ export function rungeKuttaFehlberg45(f, t, x, v, h) {
  * @param {*} x Pendulum initial position
  * @return Tuple of three elements that contains next x, next v and next time
  */
-export function pendulumSimpleExact(t, x) {
+export function pendulumSimpleExact(t0, x0, v0) {
 
-  // Velocity
-  let e = Math.sqrt(9.81) * Math.PI / 2;
-  let f = 1 / k(Math.pow(Math.sin(x / 2), 2));
-  let v = e * f;
+  let k = Math.pow(Math.sin(Math.PI/4 / 2), 2);
+  let w = Math.sqrt(GRAVITY/1.0)
+  let e = ellipticK(k) ;
 
-  // Angle
-  let a = Math.sin(x / 2);
-  let b = k(Math.pow(Math.sin(x / 2), 2));
-  let c = v * t;
-  let d = Math.pow(Math.sin(x / 2), 2);
+  let x = 2 * Math.asin(Math.sqrt(k) * sn(e - w * t0, k));
+  //let v = Math.sqrt(2 * Math.pow(w, 2) * (Math.cos(x) - Math.cos(Math.PI/4)) + Math.pow(0, 2));
 
-  x = 2 * Math.asin(a * sn(b - c, d))
-
-  return [x, v, t]
+  console.log("X: "+x)
+  // console.log("V: "+v)
+  return [x, 0, 0]
 }
 
 /**
@@ -196,7 +214,7 @@ export function sn(u, k) {
  * 
  * @param {*} x Amplitude 
  */
-export function k(x) {
+export function ellipticK(x) {
   let a0 = 1;
   let g0 = Math.sqrt(1 - x);
   return Math.PI/ (2 * agm(a0, g0));
@@ -213,7 +231,7 @@ export function agm(a0, b0) {
   let a = a0;
   let b = b0;
 
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 50; i++) {
     a = 1 / 2 * (a + b)
     b = Math.sqrt(a * b)
   }

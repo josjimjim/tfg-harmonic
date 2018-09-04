@@ -396,6 +396,54 @@
         "alt": "Figure 2: Equations of motion"
       }
     }
+  ],
+  "euler": [
+    {
+      "text": {
+        "title": "Definicion",
+        "content": "Los movimientos amortiguados corresponden a movimientos armónicos simples. en los que existe una serie de fuerzas externas, producidas generalmente por un muelle, en la cual una “empuja” la masa a un ritmo constante k y otra que resiste la expansión del muelle, de igual constante pero de signo contrario, que devuelve al sistema a su estado inicial y lo mantienen en oscilación."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    }
+  ],
+  "heun": [
+    {
+      "text": {
+        "title": "Definicion",
+        "content": "Los movimientos amortiguados corresponden a movimientos armónicos simples. en los que existe una serie de fuerzas externas, producidas generalmente por un muelle, en la cual una “empuja” la masa a un ritmo constante k y otra que resiste la expansión del muelle, de igual constante pero de signo contrario, que devuelve al sistema a su estado inicial y lo mantienen en oscilación."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    }
+  ],
+  "rungeKutta4": [
+    {
+      "text": {
+        "title": "Definicion",
+        "content": "Los movimientos amortiguados corresponden a movimientos armónicos simples. en los que existe una serie de fuerzas externas, producidas generalmente por un muelle, en la cual una “empuja” la masa a un ritmo constante k y otra que resiste la expansión del muelle, de igual constante pero de signo contrario, que devuelve al sistema a su estado inicial y lo mantienen en oscilación."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    }
+  ],
+  "rungeKuttaFehlberg45": [
+    {
+      "text": {
+        "title": "Definicion",
+        "content": "Los movimientos amortiguados corresponden a movimientos armónicos simples. en los que existe una serie de fuerzas externas, producidas generalmente por un muelle, en la cual una “empuja” la masa a un ritmo constante k y otra que resiste la expansión del muelle, de igual constante pero de signo contrario, que devuelve al sistema a su estado inicial y lo mantienen en oscilación."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    }
   ]
 
 }

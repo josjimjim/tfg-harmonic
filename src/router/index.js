@@ -22,14 +22,10 @@ export default new Router({
       component: Home
     },
     {
-      path: '/tools/numerical',
+      path: '/tools/:type',
       name: 'Tools',
-      component: Tools
-    },
-    {
-      path: '/tools/agm',
-      name: 'Tools',
-      component: Tools
+      component: Tools, 
+      props: true
     },
     {
       path: '/pendulum/simple',

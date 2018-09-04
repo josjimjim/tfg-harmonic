@@ -5,9 +5,10 @@
       <div class="column is-half">
         <div id="canvas"></div>
       </div>
-      <!-- <div class="column is-half">
-        <div id="chart" style="width:600px height:400px"></div>
-      </div> -->
+      <div class="column is-half">
+        <chart id="chart1" :input="chartValue1"></chart>
+        <chart id="chart2" :input="chartValue2"></chart>
+      </div>
     </div>
     <div class="columns">
       <spherical-input class="column" @setStatus="setStatus" @setAnimation="setAnimation"
@@ -23,23 +24,25 @@
 
 <script>
 import * as THREE from "three"
-window.THREE = THREE
-require("three/examples/js/controls/OrbitControls.js")
-import echarts from "echarts"
 import SphericalInput from "../inputs/SphericalInput"
+import Chart from "../Chart"
 import Documentation from "../Documentation"
 import { sphericalPendulum } from "@/assets/js/models.js"
 import { GRAVITY, rungeKutta4 } from "@/assets/js/math.js"
-import {initContext, initAxis, initTrail, updateTrail} from "@/assets/js/graphics.js"
+import {initContext, initAxis, initTrail, updateTrail, addChartItem} from "@/assets/js/graphics.js"
+
 
 export default {
   name: "spherical-pendulum",
   components: {
+    "chart": Chart,
     "spherical-input": SphericalInput,
-    documentation: Documentation
+    "documentation": Documentation
   },
   data() {
     return {
+      anFrmID: null,
+
       scene: null,
       camera: null,
       renderer: null,
@@ -50,11 +53,13 @@ export default {
       line: null,
 
       trail: false,
-      trailLine: null,
+      trailLine: [],
       trailReload: false,
 
-      chart: null,
-      datos: [],
+      chartValue1: [],
+      chartValueAux1: [],
+      chartValue2: [],
+      chartValueAux2: [],
 
       time: 0,
       step: 0,
@@ -62,7 +67,6 @@ export default {
 
       lineLength: null,
 
-      anFrmID: null
     }
   },
   methods: {
@@ -104,6 +108,8 @@ export default {
       this.sphere.position.z = this.lineLength * Math.sin(this.pendulum.angleAmplitude) * Math.cos(this.pendulum.angleRotation)
 
       this.trailLine = initTrail(this.sphere.position)
+      this.chartValue1.push({name:"0", value:[this.time, this.pendulum.angleAmplitude]})
+      this.chartValue2.push({name:"0", value:[this.pendulum.velocityAmplitude, this.pendulum.angleAmplitude]})
 
       this.scene.add(this.trailLine)
       this.scene.add(this.line)
@@ -189,6 +195,18 @@ export default {
         this.trailLine.geometry.vertices = update.vertices
         this.trailReload = update.trailReload
       }
+
+      this.chartValueAux1.push({name:"0", value:[this.time,this.pendulum.angleAmplitude]})
+      if(this.chartValueAux1.length == 25) {
+          this.chartValue1 = this.chartValueAux1
+          this.chartValueAux1 = []
+      }
+      this.chartValueAux2.push({name:"0", value:[this.pendulum.velocityAmplitude,this.pendulum.angleAmplitude]})
+      if(this.chartValueAux2.length == 25) {
+          this.chartValue2 = this.chartValueAux2
+          this.chartValueAux2 = []
+      }
+
       this.renderer.render(this.scene, this.camera)
     },
     stop() {
@@ -197,8 +215,9 @@ export default {
   },
   mounted() {
     this.initContext()
-    this.initScene()
+    this.initScene()  
   }
+  
 }
 </script>
 <style>
