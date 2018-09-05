@@ -57,7 +57,7 @@
               Math tools
             </a>
             <div class="navbar-dropdown is-boxed">
-              <router-link to="/tools/numerical" class="navbar-item">
+              <router-link to="/tools/euler" class="navbar-item">
                 Numerical methods
               </router-link>
               <router-link to="/tools/agm" class="navbar-item">

@@ -20,9 +20,9 @@ import doc from '@/assets/documentation.json'
 export default {
   name: 'documentation',
   props: ['type'],
-  data() {
-    return {
-      docum: doc[this.type]
+  computed: {
+    docum(){
+      return doc[this.type]
     }
   }
 }

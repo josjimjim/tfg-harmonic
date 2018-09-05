@@ -180,18 +180,27 @@ function rkf45(f, t, x, v, h){
  * @param {*} x Pendulum initial position
  * @return Tuple of three elements that contains next x, next v and next time
  */
-export function pendulumSimpleExact(t0, x0, v0) {
+export function pendulumSimpleExact(t, x0, v0, l) {
 
-  let k = Math.pow(Math.sin(Math.PI/4 / 2), 2);
-  let w = Math.sqrt(GRAVITY/1.0)
+  let k = Math.pow(Math.sin(x0 / 2), 2);
+  let w0 = Math.sqrt(GRAVITY/l)
   let e = ellipticK(k) ;
 
-  let x = 2 * Math.asin(Math.sqrt(k) * sn(e - w * t0, k));
+  let wx0 = Math.PI*w0/ 2*e
+
+  let x = 2 * Math.asin(Math.sqrt(k) * sn(e - wx0 * t, k));
+  let v = v0
   //let v = Math.sqrt(2 * Math.pow(w, 2) * (Math.cos(x) - Math.cos(Math.PI/4)) + Math.pow(0, 2));
 
-  console.log("X: "+x)
+  // console.log("t  : "+t)
+  // console.log("k  : "+k)
+  // console.log("w0 : "+w0)
+  // console.log("e  : "+e)
+  // console.log("wx0: "+wx0)
+  // console.log("x  : "+x)
+  // console.log("\n")
   // console.log("V: "+v)
-  return [x, 0, 0]
+  return [x, v, 0.005]
 }
 
 /**
@@ -200,14 +209,14 @@ export function pendulumSimpleExact(t0, x0, v0) {
  * @param {*} u - Amplitude
  * @param {*} k - Elliptic modulus
  */
-export function sn(u, k) {
-  let a = u;
-  let b = (1 + Math.pow(k, 2)) * Math.pow(u, 3) / fact(3);
-  let c = (1 + 14 * Math.pow(k, 2) + Math.pow(k, 4)) * Math.pow(u, 5) / fact(5);
-  let d = (1 + 135 * Math.pow(k, 2) + 135 * Math.pow(k, 4) + Math.pow(k, 6)) * Math.pow(u, 7) / fact(7);
+// export function sn(u, k) {
+//   let a = u;
+//   let b = (1 + Math.pow(k, 2)) * Math.pow(u, 3) / fact(3);
+//   let c = (1 + 14 * Math.pow(k, 2) + Math.pow(k, 4)) * Math.pow(u, 5) / fact(5);
+//   let d = (1 + 135 * Math.pow(k, 2) + 135 * Math.pow(k, 4) + Math.pow(k, 6)) * Math.pow(u, 7) / fact(7);
 
-  return a - b + c - d;
-}
+//   return a - b + c - d;
+// }
 
 /**
  * Complete elliptic integral of the first kind approximated by arithmetic-geometric mean.
@@ -240,59 +249,59 @@ export function agm(a0, b0) {
 }
 
 
-// function agm2(a0, b0, c0) {
-//   let i;
-//   let a = a0;
-//   let b = b0; 
-//   let c = c0; 
-//   let aB = [];
-//   let bB = [];
-//   let cB = [];
+function agm2(a0, b0, c0) {
+  let i;
+  let a = a0;
+  let b = b0; 
+  let c = c0; 
+  let aB = [];
+  let bB = [];
+  let cB = [];
   
-//   for(i=0; i<10; i++) {
-//       a = (a + b)/2;
-//       b = Math.sqrt(a * b);
-//       c = (a - b)/2;
+  for(i=0; i<30; i++) {
+      a = (a + b)/2;
+      b = Math.sqrt(a * b);
+      c = (a - b)/2;
       
-//       aB.push(a);
-//       bB.push(b);
-//       cB.push(c);
-//   }
+      aB.push(a);
+      bB.push(b);
+      cB.push(c);
+  }
   
-//   return {
-//       n: i,
-//       a: a,
-//       b: b,
-//       c: c,
-//       aB: aB,
-//       bB: bB,
-//       cB: cB
-//   };
-// }
+  return {
+      n: i,
+      a: a,
+      b: b,
+      c: c,
+      aB: aB,
+      bB: bB,
+      cB: cB
+  };
+}
 
-// function am(u, k) {
+function am(u, k) {
   
-//   if(k < 0.15){
-//       return u - 0.25*k*(u - 0.5*Math.sin(2.0*u));
-//   }
-//   if((1 - k) < 0.15){
-//       let t = Math.tanh(u);
-//       return Math.asin(t) + 0.25*(1-k)*(t - u*(1 - Math.pow(t,2)))*Math.cosh(u);
-//   }
+  if(k < 0.15){
+      return u - 0.25*k*(u - 0.5*Math.sin(2.0*u));
+  }
+  if((1 - k) < 0.15){
+      let t = Math.tanh(u);
+      return Math.asin(t) + 0.25*(1-k)*(t - u*(1 - Math.pow(t,2)))*Math.cosh(u);
+  }
   
-//   let met = agm2(1, Math.sqrt(1 - k), Math.sqrt(k));
-//   let phi = Math.pow(2, met.n) * met.a * u; 
+  let met = agm2(1, Math.sqrt(1 - k), Math.sqrt(k));
+  let phi = Math.pow(2, met.n) * met.a * u; 
   
-//   for(let i=met.n-1; i>=0; i--) {
-//       phi = 0.5 * (phi + Math.asin(Math.sin(phi) * met.cB[i] / met.aB[i]));
-//   }
+  for(let i=met.n-1; i>=0; i--) {
+      phi = 0.5 * (phi + Math.asin(Math.sin(phi) * met.cB[i] / met.aB[i]));
+  }
   
-//   return phi;
-// }
+  return phi;
+}
 
-// function sn2(u, k) {
-//   return Math.sin(am(u, k));
-// }
+function sn(u, k) {
+  return Math.sin(am(u, k));
+}
 
 export function circleColisionDetection(ball1, ball2, bounce = 0){
   let dx = Math.abs(ball1.circle.position.x - ball2.circle.position.x);

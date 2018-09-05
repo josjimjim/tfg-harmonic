@@ -400,8 +400,18 @@
   "euler": [
     {
       "text": {
-        "title": "Definicion",
-        "content": "Los movimientos amortiguados corresponden a movimientos armónicos simples. en los que existe una serie de fuerzas externas, producidas generalmente por un muelle, en la cual una “empuja” la masa a un ritmo constante k y otra que resiste la expansión del muelle, de igual constante pero de signo contrario, que devuelve al sistema a su estado inicial y lo mantienen en oscilación."
+        "title": "Euler Method",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor varius, viverra est at, laoreet turpis. Phasellus id nulla elit. Quisque fringilla nisi sit amet elit tempor, id tincidunt velit sodales. Nulla id consequat nulla. Vivamus porta placerat sem nec facilisis. Pellentesque consectetur placerat mi vel placerat. Sed vel eros mollis, vestibulum mi non, luctus purus. Donec et molestie nisl, sed euismod nunc. Phasellus at porta purus."
+      },
+      "image": {
+        "src": "formula-placeholder.png",
+        "alt": "Placeholder"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Vestibulum purus elit, semper at rhoncus at, tempus quis lacus. Morbi volutpat in lectus et posuere. Quisque ut tincidunt nunc. Praesent dolor dui, rhoncus sed vestibulum nec, tempus et libero. Morbi vel condimentum lacus. Donec ac purus sed neque volutpat rhoncus. Phasellus sit amet est vitae felis feugiat feugiat. Fusce in dolor accumsan lorem malesuada dictum vel vitae magna. Vestibulum sit amet pharetra massa, eu lobortis sem. Sed in sollicitudin velit, sit amet vulputate lorem. Donec risus odio, facilisis id nibh sit amet, semper posuere sapien. Mauris gravida tortor quis ex egestas interdum. Proin quis posuere ante, eget volutpat neque. Aliquam mi lectus, molestie sit amet risus sollicitudin, rhoncus porta tortor. Duis sed elit a velit pellentesque elementum nec non urna. Praesent risus ligula, egestas ut ultrices sed, elementum finibus urna."
       },
       "image": {
         "src": "",
@@ -412,8 +422,18 @@
   "heun": [
     {
       "text": {
-        "title": "Definicion",
-        "content": "Los movimientos amortiguados corresponden a movimientos armónicos simples. en los que existe una serie de fuerzas externas, producidas generalmente por un muelle, en la cual una “empuja” la masa a un ritmo constante k y otra que resiste la expansión del muelle, de igual constante pero de signo contrario, que devuelve al sistema a su estado inicial y lo mantienen en oscilación."
+        "title": "Heun's Method",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor varius, viverra est at, laoreet turpis. Phasellus id nulla elit. Quisque fringilla nisi sit amet elit tempor, id tincidunt velit sodales. Nulla id consequat nulla. Vivamus porta placerat sem nec facilisis. Pellentesque consectetur placerat mi vel placerat. Sed vel eros mollis, vestibulum mi non, luctus purus. Donec et molestie nisl, sed euismod nunc. Phasellus at porta purus."
+      },
+      "image": {
+        "src": "formula-placeholder.png",
+        "alt": "Placeholder"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Vestibulum purus elit, semper at rhoncus at, tempus quis lacus. Morbi volutpat in lectus et posuere. Quisque ut tincidunt nunc. Praesent dolor dui, rhoncus sed vestibulum nec, tempus et libero. Morbi vel condimentum lacus. Donec ac purus sed neque volutpat rhoncus. Phasellus sit amet est vitae felis feugiat feugiat. Fusce in dolor accumsan lorem malesuada dictum vel vitae magna. Vestibulum sit amet pharetra massa, eu lobortis sem. Sed in sollicitudin velit, sit amet vulputate lorem. Donec risus odio, facilisis id nibh sit amet, semper posuere sapien. Mauris gravida tortor quis ex egestas interdum. Proin quis posuere ante, eget volutpat neque. Aliquam mi lectus, molestie sit amet risus sollicitudin, rhoncus porta tortor. Duis sed elit a velit pellentesque elementum nec non urna. Praesent risus ligula, egestas ut ultrices sed, elementum finibus urna."
       },
       "image": {
         "src": "",
@@ -424,8 +444,18 @@
   "rungeKutta4": [
     {
       "text": {
-        "title": "Definicion",
-        "content": "Los movimientos amortiguados corresponden a movimientos armónicos simples. en los que existe una serie de fuerzas externas, producidas generalmente por un muelle, en la cual una “empuja” la masa a un ritmo constante k y otra que resiste la expansión del muelle, de igual constante pero de signo contrario, que devuelve al sistema a su estado inicial y lo mantienen en oscilación."
+        "title": "Runge-Kutta 4th Order",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor varius, viverra est at, laoreet turpis. Phasellus id nulla elit. Quisque fringilla nisi sit amet elit tempor, id tincidunt velit sodales. Nulla id consequat nulla. Vivamus porta placerat sem nec facilisis. Pellentesque consectetur placerat mi vel placerat. Sed vel eros mollis, vestibulum mi non, luctus purus. Donec et molestie nisl, sed euismod nunc. Phasellus at porta purus."
+      },
+      "image": {
+        "src": "formula-placeholder.png",
+        "alt": "Placeholder"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Vestibulum purus elit, semper at rhoncus at, tempus quis lacus. Morbi volutpat in lectus et posuere. Quisque ut tincidunt nunc. Praesent dolor dui, rhoncus sed vestibulum nec, tempus et libero. Morbi vel condimentum lacus. Donec ac purus sed neque volutpat rhoncus. Phasellus sit amet est vitae felis feugiat feugiat. Fusce in dolor accumsan lorem malesuada dictum vel vitae magna. Vestibulum sit amet pharetra massa, eu lobortis sem. Sed in sollicitudin velit, sit amet vulputate lorem. Donec risus odio, facilisis id nibh sit amet, semper posuere sapien. Mauris gravida tortor quis ex egestas interdum. Proin quis posuere ante, eget volutpat neque. Aliquam mi lectus, molestie sit amet risus sollicitudin, rhoncus porta tortor. Duis sed elit a velit pellentesque elementum nec non urna. Praesent risus ligula, egestas ut ultrices sed, elementum finibus urna."
       },
       "image": {
         "src": "",
@@ -436,8 +466,40 @@
   "rungeKuttaFehlberg45": [
     {
       "text": {
-        "title": "Definicion",
-        "content": "Los movimientos amortiguados corresponden a movimientos armónicos simples. en los que existe una serie de fuerzas externas, producidas generalmente por un muelle, en la cual una “empuja” la masa a un ritmo constante k y otra que resiste la expansión del muelle, de igual constante pero de signo contrario, que devuelve al sistema a su estado inicial y lo mantienen en oscilación."
+        "title": "Runge-Kutta-Fehlberg 4th & 5th Order",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor varius, viverra est at, laoreet turpis. Phasellus id nulla elit. Quisque fringilla nisi sit amet elit tempor, id tincidunt velit sodales. Nulla id consequat nulla. Vivamus porta placerat sem nec facilisis. Pellentesque consectetur placerat mi vel placerat. Sed vel eros mollis, vestibulum mi non, luctus purus. Donec et molestie nisl, sed euismod nunc. Phasellus at porta purus."
+      },
+      "image": {
+        "src": "formula-placeholder.png",
+        "alt": "Placeholder"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Vestibulum purus elit, semper at rhoncus at, tempus quis lacus. Morbi volutpat in lectus et posuere. Quisque ut tincidunt nunc. Praesent dolor dui, rhoncus sed vestibulum nec, tempus et libero. Morbi vel condimentum lacus. Donec ac purus sed neque volutpat rhoncus. Phasellus sit amet est vitae felis feugiat feugiat. Fusce in dolor accumsan lorem malesuada dictum vel vitae magna. Vestibulum sit amet pharetra massa, eu lobortis sem. Sed in sollicitudin velit, sit amet vulputate lorem. Donec risus odio, facilisis id nibh sit amet, semper posuere sapien. Mauris gravida tortor quis ex egestas interdum. Proin quis posuere ante, eget volutpat neque. Aliquam mi lectus, molestie sit amet risus sollicitudin, rhoncus porta tortor. Duis sed elit a velit pellentesque elementum nec non urna. Praesent risus ligula, egestas ut ultrices sed, elementum finibus urna."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    }
+  ],
+  "agm": [
+    {
+      "text": {
+        "title": "Arithmetic-Geometric Mean",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor varius, viverra est at, laoreet turpis. Phasellus id nulla elit. Quisque fringilla nisi sit amet elit tempor, id tincidunt velit sodales. Nulla id consequat nulla. Vivamus porta placerat sem nec facilisis. Pellentesque consectetur placerat mi vel placerat. Sed vel eros mollis, vestibulum mi non, luctus purus. Donec et molestie nisl, sed euismod nunc. Phasellus at porta purus."
+      },
+      "image": {
+        "src": "formula-placeholder.png",
+        "alt": "Placeholder"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Vestibulum purus elit, semper at rhoncus at, tempus quis lacus. Morbi volutpat in lectus et posuere. Quisque ut tincidunt nunc. Praesent dolor dui, rhoncus sed vestibulum nec, tempus et libero. Morbi vel condimentum lacus. Donec ac purus sed neque volutpat rhoncus. Phasellus sit amet est vitae felis feugiat feugiat. Fusce in dolor accumsan lorem malesuada dictum vel vitae magna. Vestibulum sit amet pharetra massa, eu lobortis sem. Sed in sollicitudin velit, sit amet vulputate lorem. Donec risus odio, facilisis id nibh sit amet, semper posuere sapien. Mauris gravida tortor quis ex egestas interdum. Proin quis posuere ante, eget volutpat neque. Aliquam mi lectus, molestie sit amet risus sollicitudin, rhoncus porta tortor. Duis sed elit a velit pellentesque elementum nec non urna. Praesent risus ligula, egestas ut ultrices sed, elementum finibus urna."
       },
       "image": {
         "src": "",

@@ -153,10 +153,18 @@ export default {
       this.animFrameID = requestAnimationFrame( this.move )
 
       let gap = 0
+      let nextStep = null
       for(let i = 0; i < this.pendulums.length; i++){
         this.ballReference = i;
 
-        let nextStep = rungeKutta4(this.pendulumEq, this.time, this.pendulums[i].angle, this.pendulums[i].velocity, this.step)
+        for(let j = 0; j < this.pendulums.length; j++){
+          if(i!=j && this.pendulums[i].velocity != 0 && circleColisionDetection(this.pendulums[i], this.pendulums[j], 0)){
+            let newVelocity = this.pendulums[j].velocity
+            this.pendulums[j].velocity = this.pendulums[i].velocity
+            this.pendulums[i].velocity = newVelocity
+          }
+        }
+        nextStep = rungeKutta4(this.pendulumEq, this.time, this.pendulums[i].angle, this.pendulums[i].velocity, this.step)
 
         this.pendulums[i].angle = parseFloat(nextStep[0])
         this.pendulums[i].velocity = parseFloat(nextStep[1])
@@ -168,14 +176,7 @@ export default {
 
         this.time += parseFloat(nextStep[2])
         this.step = parseFloat(nextStep[2])
-
-        for(let j = 0; j < this.pendulums.length; j++){
-          if(i!=j && this.pendulums[i].velocity != 0 && circleColisionDetection(this.pendulums[i], this.pendulums[j], 0)){
-            this.pendulums[j].velocity = this.pendulums[i].velocity
-            this.pendulums[i].velocity = 0
-          }
-        }
-
+        
         gap += this.pendulums[i].radius * 2 
       }      
 

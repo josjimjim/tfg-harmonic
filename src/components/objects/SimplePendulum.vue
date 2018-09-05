@@ -47,7 +47,10 @@ export default {
       trail: false,
 
       numericalMethodSelected: '',
-      nextStep: null
+      nextStep: null,
+
+      angle0: 0,
+      velocity0: 0,
     }
   },
   methods: {
@@ -114,9 +117,13 @@ export default {
       this.damping.value = status.damping.value
       this.damping.active = status.damping.active
 
+      this.time = 0
       this.step = parseFloat(status.step)
 
       this.numericalMethodSelected = status.numericalMethodSelected
+
+      this.angle0 = this.pendulum.angle
+      this.velocity0 = this.pendulum.velocity
 
       if(this.scene != null) {
         this.initScene()
@@ -135,8 +142,8 @@ export default {
         this.time += parseFloat(this.nextStep[2])
         this.step = parseFloat(this.nextStep[2])
       }else{
-        this.nextStep = pendulumSimpleExact(this.time, this.pendulum.angle, this.pendulum.velocity)
-        this.time+=0.005
+        this.nextStep = pendulumSimpleExact(this.time, this.angle0, this.velocity0, this.pendulum.length)
+        this.time += parseFloat(this.nextStep[2])
       }
 
       this.pendulum.angle = parseFloat(this.nextStep[0])
