@@ -20,9 +20,9 @@
 import * as THREE from 'three'
 import CradleInput from '../inputs/CradleInput'
 import Documentation from '../Documentation'
-import {initContext, initAxis} from '@/assets/js/graphics.js'
+import {initContext, initAxis, circleColisionDetection} from '@/assets/js/graphics.js'
 import {simplePendulum} from '@/assets/js/models.js'
-import {GRAVITY, circleColisionDetection, rungeKutta4} from '@/assets/js/math.js'
+import {GRAVITY, rungeKutta4} from '@/assets/js/math.js'
 
 export default {
   name: 'cradle-pendulum',
@@ -129,7 +129,7 @@ export default {
           mass: parseFloat(status.pendulum.mass),
           momentum: parseFloat(status.pendulum.mass) * vec,
           radius: parseFloat(status.pendulum.mass) / 2,
-          length: 5.0,
+          length: 10.0,
           circle: null,
           line: null
         })
@@ -154,16 +154,38 @@ export default {
 
       let gap = 0
       let nextStep = null
-      for(let i = 0; i < this.pendulums.length; i++){
-        this.ballReference = i;
+      let n = this.pendulums.length
+      for(let i = 0; i < n; i++){
 
-        for(let j = 0; j < this.pendulums.length; j++){
-          if(i!=j && this.pendulums[i].velocity != 0 && circleColisionDetection(this.pendulums[i], this.pendulums[j], 0)){
-            let newVelocity = this.pendulums[j].velocity
-            this.pendulums[j].velocity = this.pendulums[i].velocity
-            this.pendulums[i].velocity = newVelocity
+        let collide, toCollide
+        if(i==0) {
+          collide = 0
+          toCollide = 1
+        } else if(i==(n-1)) {
+          collide = 4
+          toCollide = 3
+        } else {
+          if(this.pendulums[i].angle>0){
+            collide = i
+            toCollide = i+1
+          }
+          else{
+            collide = n-i
+            toCollide = n-(i+1)
           }
         }
+        
+        let noMove = this.pendulums[collide].angle == 0 && this.pendulums[toCollide].angle == 0
+
+        if(!noMove && circleColisionDetection(this.pendulums[collide], this.pendulums[toCollide], -0.3)){
+          
+          this.pendulums[collide].velocity = (this.pendulums[collide].velocity * (this.pendulums[collide].mass - this.pendulums[toCollide].mass) + 2*this.pendulums[toCollide].mass*this.pendulums[toCollide].velocity) / (this.pendulums[collide].mass + this.pendulums[toCollide].mass)
+          this.pendulums[toCollide].velocity = (this.pendulums[toCollide].velocity * (this.pendulums[toCollide].mass - this.pendulums[collide].mass) + 2*this.pendulums[collide].mass*this.pendulums[collide].velocity) / (this.pendulums[collide].mass + this.pendulums[toCollide].mass)
+        }
+
+
+
+
         nextStep = rungeKutta4(this.pendulumEq, this.time, this.pendulums[i].angle, this.pendulums[i].velocity, this.step)
 
         this.pendulums[i].angle = parseFloat(nextStep[0])

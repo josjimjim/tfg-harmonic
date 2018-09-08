@@ -1,26 +1,26 @@
 <template>
   <div>
-    <generic-input label="Frecuency">
+    <generic-input label="Frecuencia">
       <input type="range" min="0" max="10" step="0.1" v-model="status.pendulum.frequency"
-      @change="setStatus" class="slider" placeholder="Frequency">
+      @change="setStatus" class="slider is-small">
       <span v-text="status.pendulum.frequency"></span>
     </generic-input>
 
-    <generic-input label="Length">
+    <generic-input label="Longitud">
       <input type="range" min="1" max="3" step="0.5" v-model="status.pendulum.length"
-      @change="setStatus" class="slider" placeholder="Length">
+      @change="setStatus" class="slider is-small">
       <span v-text="status.pendulum.length"></span>
     </generic-input>
 
-    <generic-input label="Mass">
+    <generic-input label="Masa">
       <input type="range" min="1" max="5" step="1" v-model="status.pendulum.mass"
-      @change="setStatus" class="slider" placeholder="Mass">
+      @change="setStatus" class="slider is-small">
       <span v-text="status.pendulum.mass"></span>
     </generic-input>
 
     <generic-input label="">
-      <input id="enableTrail" type="checkbox" name="enableTrail" @click="enableTrail" class="switch is-rtl is-small">
-      <label for="enableTrail">Enable trail</label>
+      <input id="enableTrail" type="checkbox" name="enableTrail" @click="enableTrail" class="switch is-small">
+      <label for="enableTrail">Activar traza</label>
     </generic-input>
 
     <generic-input>
@@ -49,7 +49,7 @@ export default {
       },
       clapper: {
         animate: false,
-        text: 'Start'
+        text: 'Iniciar'
       }
     }
   },
@@ -59,7 +59,7 @@ export default {
     },
     setAnimation(){
       this.clapper.animate = !this.clapper.animate
-      this.clapper.text = this.clapper.animate ? 'Stop' : 'Start'
+      this.clapper.text = this.clapper.animate ? 'Detener' : 'Iniciar'
 
       this.$emit('setAnimation', this.clapper.animate)
     },

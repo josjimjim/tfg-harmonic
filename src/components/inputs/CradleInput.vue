@@ -1,45 +1,45 @@
 <template>
   <div>
 
-    <generic-input label="Position">
+    <generic-input label="Bolas elevadas">
       <input type="range" min="1" max="5" step="1" v-model="status.position"
-            @change="setStatus" class="slider" placeholder="Position">
+            @change="setStatus" class="slider is-small">
       <span v-text="status.position"></span>
     </generic-input>
 
-    <generic-input label="Angle">
+    <generic-input label="Ángulo">
       <input type="range" min="0" max="179" step="1" v-model="status.pendulum.angle"
-            @change="setStatus" class="slider" placeholder="Angle">
+            @change="setStatus" class="slider is-small">
       <span v-text="status.pendulum.angle"></span>
     </generic-input>
 
-    <generic-input label="Velocity">
-      <input type="range" min="0" max="20" step="0.5" v-model="status.pendulum.velocity"
-            @change="setStatus" class="slider" placeholder="Velocity">
+    <generic-input label="Velocidad">
+      <input type="range" min="0" max="5" step="0.5" v-model="status.pendulum.velocity"
+            @change="setStatus" class="slider is-small">
       <span v-text="status.pendulum.velocity"></span>
     </generic-input>
 
-    <generic-input label="Mass">
+    <generic-input label="Masa">
       <input type="range" min="0.5" max="5" step="0.5" v-model="status.pendulum.mass"
-            @change="setStatus" class="slider" placeholder="Mass">
+            @change="setStatus" class="slider is-small">
       <span v-text="status.pendulum.mass"></span>
     </generic-input>
 
-    <generic-input label="Step">
+    <generic-input label="Paso">
       <input type="range" min="0.01" max="0.5" step="0.01" v-model="status.step"
-            @change="setStatus" class="slider" placeholder="Step">
+            @change="setStatus" class="slider is-small">
       <span v-text="status.step"></span>
     </generic-input>
 
-    <generic-input label="Damping">
+    <generic-input label="Rozamiento">
       <input type="range" min="0.05" max="0.5" step="0.05" v-model="status.damping.value"
-            @change="setStatus" class="slider" placeholder="Damping">
+            @change="setStatus" class="slider is-small">
       <span v-text="status.damping.value"></span>
     </generic-input>
 
     <generic-input label="">
-      <input id="enableDamping" type="checkbox" name="enableDamping" @click="enableDamping" class="switch is-rtl is-small">
-      <label for="enableDamping">Enable damping</label>
+      <input id="enableDamping" type="checkbox" name="enableDamping" @click="enableDamping" class="switch is-small">
+      <label for="enableDamping">Activar rozamiento</label>
 
     </generic-input>
 
@@ -75,7 +75,7 @@ export default {
       },
       clapper: {
         animate: false,
-        text: 'Start'
+        text: 'Iniciar'
       }
     }
   },
@@ -85,7 +85,7 @@ export default {
     },
     setAnimation(){
       this.clapper.animate = !this.clapper.animate
-      this.clapper.text = this.clapper.animate ? 'Stop' : 'Start'
+      this.clapper.text = this.clapper.animate ? 'Detener' : 'Iniciar'
 
       this.$emit('setAnimation', this.clapper.animate)
     },

@@ -1,13 +1,13 @@
 /**
  * Simple pendulum acceleration equation
  * 
- * @param {*} g - Gravity
- * @param {*} t - Time
- * @param {*} d - Damping
- * @param {*} m - Mass
- * @param {*} l - Length
- * @param {*} x - Angle
- * @param {*} v - Velocity
+ * @param {Number} g - Gravity
+ * @param {Number} t - Time
+ * @param {Number} d - Damping
+ * @param {Number} m - Mass
+ * @param {Number} l - Length
+ * @param {Number} x - Angle
+ * @param {Number} v - Velocity
  * @return Pendulum acceleration
  */
 export function simplePendulum(g, t, d, m, l, x, v) {
@@ -15,19 +15,44 @@ export function simplePendulum(g, t, d, m, l, x, v) {
 }
 
 /**
+ * Simple pendulum potential energy
+ * 
+ * @param {Number} g - Gravity
+ * @param {Number} m - Mass
+ * @param {Number} l - Length
+ * @param {Number} x - Angle 
+ * @return Potential energy
+ */
+export function simEnergyP(g, m, l, x) {
+    return m * g * l * (1 - Math.cos(x));
+}
+
+/**
+ * Simple pendulum kinetic energy
+ * 
+ * @param {Number} m - Mass
+ * @param {Number} x - Angle 
+ * @param {Number} v - Velocity 
+ * @return Kinetic energy
+ */
+export function simEnergyK(m, l, v) {
+    return 0.5 * m * Math.pow(l, 2) * Math.pow(v, 2);
+}
+
+/**
  * Spring pendulum acceleration equations
  * 
- * @param {*} eq - Equation selector. Ball: 1, Spring: 2
- * @param {*} g - Gravity
- * @param {*} t - Time
- * @param {*} d - Damping
- * @param {*} m - Mass
- * @param {*} l - Length
- * @param {*} k - Stiffness
- * @param {*} x1 - Angle
- * @param {*} v1 - Velocity
- * @param {*} x2 - Elongation
- * @param {*} v2 - Elongation velocity
+ * @param {Number} eq - Equation selector. Ball: 1, Spring: 2
+ * @param {Number} g - Gravity
+ * @param {Number} t - Time
+ * @param {Number} d - Damping
+ * @param {Number} m - Mass
+ * @param {Number} l - Length
+ * @param {Number} k - Stiffness
+ * @param {Number} x1 - Angle
+ * @param {Number} v1 - Velocity
+ * @param {Number} x2 - Elongation
+ * @param {Number} v2 - Elongation velocity
  * @return Pendulum acceleration
  */
 export function springPendulum(eq, g, t, d, m, l, k, x1, v1, x2, v2) {
@@ -54,20 +79,49 @@ export function springPendulum(eq, g, t, d, m, l, k, x1, v1, x2, v2) {
 }
 
 /**
+ * Spring pendulum potential energy
+ * 
+ * @param {Number} g - Gravity
+ * @param {Number} m - Mass
+ * @param {Number} l - Length
+ * @param {Number} k - Stiffness
+ * @param {Number} x1 - Angle
+ * @param {Number} x2 - Elongation
+ * @return Potential energy
+ */
+export function sprEnergyP(g, m, l, k, x1, x2) {
+    return m * g * (l + x2) * Math.cos(x1) + 0.5 * k * Math.pow(x2, 2);
+}
+
+/**
+ * Spring pendulum kinetic energy
+ * 
+ * @param {Number} m - Mass
+ * @param {Number} l - Length
+ * @param {Number} v1 - Velocity
+ * @param {Number} x2 - Elongation
+ * @param {Number} v2 - Elongation velocity
+ * @return Kinetic energy
+ */
+export function sprEnergyK(m, l, v1, x2, v2) {
+    return 0.5 * m * (Math.pow(v2, 2) + Math.pow(l + x2, 2) * Math.pow(v1, 2));
+}
+
+/**
  * Double pendulum acceleration equations
  * 
- * @param {*} eq - Equation selector. Top: 1, Bottom: 2
- * @param {*} g - Gravity
- * @param {*} t - Time
- * @param {*} d - Damping
- * @param {*} m1 - Top pendulum mass
- * @param {*} l1 - Top pendulum length
- * @param {*} x1 - Top pendulum angle
- * @param {*} v1 - Top pendulum velocity
- * @param {*} m2 - Bottom pendulum mass
- * @param {*} l2 - Bottom pendulum length
- * @param {*} x2 - Bottom pendulum angle
- * @param {*} v2 - Bottom pendulum velocity
+ * @param {Number} eq - Equation selector. Top: 1, Bottom: 2
+ * @param {Number} g - Gravity
+ * @param {Number} t - Time
+ * @param {Number} d - Damping
+ * @param {Number} m1 - Top pendulum mass
+ * @param {Number} l1 - Top pendulum length
+ * @param {Number} x1 - Top pendulum angle
+ * @param {Number} v1 - Top pendulum velocity
+ * @param {Number} m2 - Bottom pendulum mass
+ * @param {Number} l2 - Bottom pendulum length
+ * @param {Number} x2 - Bottom pendulum angle
+ * @param {Number} v2 - Bottom pendulum velocity
  * @return Pendulum acceleration
  */
 export function doublePendulum(eq, g, t, d, m1, l1, x1, v1, m2, l2, x2, v2) {
@@ -98,24 +152,61 @@ export function doublePendulum(eq, g, t, d, m1, l1, x1, v1, m2, l2, x2, v2) {
 }
 
 /**
+ * Double pendulum potential energy
+ * 
+ * @param {Number} g - Gravity
+ * @param {Number} m1 - Top pendulum mass
+ * @param {Number} l1 - Top pendulum length
+ * @param {Number} x1 - Top pendulum angle
+ * @param {Number} m2 - Bottom pendulum mass
+ * @param {Number} l2 - Bottom pendulum length
+ * @param {Number} x2 - Bottom pendulum angle
+ * @return Potential energy
+ */
+export function dblEnergyP(g, m1, l1, x1, m2, l2, x2) {
+    let topEP = - (m1 + m2) * g * l1 * Math.cos(x1);
+    let botEP = - m2 * g * l2 * Math.cos(x2);
+    return topEP + botEP;
+}
+
+/**
+ * Double pendulum kinetic energy
+ * 
+ * @param {Number} m1 - Top pendulum mass
+ * @param {Number} l1 - Top pendulum length
+ * @param {Number} x1 - Top pendulum angle
+ * @param {Number} v1 - Top pendulum velocity
+ * @param {Number} m2 - Bottom pendulum mass
+ * @param {Number} l2 - Bottom pendulum length
+ * @param {Number} x2 - Bottom pendulum angle
+ * @param {Number} v2 - Bottom pendulum velocity
+ * @return Kinetic energy
+ */
+export function dblEnergyK(m1, l1, x1, v1, m2, l2, x2, v2) {
+    let topEK = 0.5 * m1 * Math.pow(l1, 2) * Math.pow(v1, 2);
+    let botEK = 0.5 * m2 * (Math.pow(l1, 2) * Math.pow(v1, 2) + Math.pow(l2, 2) * Math.pow(v2, 2) + 2 * l1 * l2 * v1 * v2 * Math.cos(x1 - x2));
+    return topEK + botEK;
+}
+
+/**
  * Triple pendulum acceleration equations
  * 
- * @param {*} eq - Equation selector. Amplitude: 1, Rotation: 2
- * @param {*} g - Gravity
- * @param {*} t - Time
- * @param {*} d - Damping
- * @param {*} m1 - Top pendulum mass
- * @param {*} l1 - Top pendulum length
- * @param {*} x1 - Top pendulum angle
- * @param {*} v1 - Top pendulum velocity
- * @param {*} m2 - Middle pendulum mass
- * @param {*} l2 - Middle pendulum length
- * @param {*} x2 - Middle pendulum angle
- * @param {*} v2 - Middle pendulum velocity
- * @param {*} m3 - Bottom pendulum mass
- * @param {*} l3 - Bottom pendulum length
- * @param {*} x3 - Bottom pendulum angle
- * @param {*} v3 - Bottom pendulum velocity
+ * @param {Number} eq - Equation selector. Amplitude: 1, Rotation: 2
+ * @param {Number} g - Gravity
+ * @param {Number} t - Time
+ * @param {Number} d - Damping
+ * @param {Number} m1 - Top pendulum mass
+ * @param {Number} l1 - Top pendulum length
+ * @param {Number} x1 - Top pendulum angle
+ * @param {Number} v1 - Top pendulum velocity
+ * @param {Number} m2 - Middle pendulum mass
+ * @param {Number} l2 - Middle pendulum length
+ * @param {Number} x2 - Middle pendulum angle
+ * @param {Number} v2 - Middle pendulum velocity
+ * @param {Number} m3 - Bottom pendulum mass
+ * @param {Number} l3 - Bottom pendulum length
+ * @param {Number} x3 - Bottom pendulum angle
+ * @param {Number} v3 - Bottom pendulum velocity
  * @return Pendulum acceleration
  */
 export function triplePendulum(eq, g, t, d, m1, l1, x1, v1, m2, l2, x2, v2, m3, l3, x3, v3) {
@@ -176,17 +267,64 @@ export function triplePendulum(eq, g, t, d, m1, l1, x1, v1, m2, l2, x2, v2, m3, 
 }
 
 /**
+ * Triple pendulum potential energy
+ * 
+ * @param {Number} g - Gravity
+ * @param {Number} m1 - Top pendulum mass
+ * @param {Number} l1 - Top pendulum length
+ * @param {Number} x1 - Top pendulum angle
+ * @param {Number} m2 - Middle pendulum mass
+ * @param {Number} l2 - Middle pendulum length
+ * @param {Number} x2 - Middle pendulum angle
+ * @param {Number} m3 - Bottom pendulum mass
+ * @param {Number} l3 - Bottom pendulum length
+ * @param {Number} x3 - Bottom pendulum angle
+ * @return Potential energy
+ */
+export function trpEnergyP(g, m1, l1, x1, m2, l2, x2, m3, l3, x3) {
+    let a = g * (l1 + l2 + l3) * (m1 + m2 + m3);
+    let b = - g * l1 * (m1 + m2 + m3) * Math.cos(x1);
+    let c = - g * l2 * (m2 + m3) * Math.cos(x2);
+    let d = - g * l3 * m3 * Math.cos(x3);
+    return a + b + c + d;
+}
+
+/**
+ * Triple pendulum kinetic energy
+ * 
+ * @param {Number} m1 - Top pendulum mass
+ * @param {Number} l1 - Top pendulum length
+ * @param {Number} x1 - Top pendulum angle
+ * @param {Number} v1 - Top pendulum velocity
+ * @param {Number} m2 - Middle pendulum mass
+ * @param {Number} l2 - Middle pendulum length
+ * @param {Number} x2 - Middle pendulum angle
+ * @param {Number} v2 - Middle pendulum velocity
+ * @param {Number} m3 - Bottom pendulum mass
+ * @param {Number} l3 - Bottom pendulum length
+ * @param {Number} x3 - Bottom pendulum angle
+ * @param {Number} v3 - Bottom pendulum velocity
+ * @return Kinetic energy
+ */
+export function trpEnergyK(m1, l1, x1, v1, m2, l2, x2, v2, m3, l3, x3, v3) {
+    let a = Math.pow(l1, 2) * Math.pow(v1, 2);
+    let b = a + Math.pow(l2, 2) * Math.pow(v2, 2) + 2 * l1 * l2 * Math.pow(v1, 2) * Math.pow(v2, 2) * Math.cos(x1 - x2);
+    let c = b + Math.pow(l3, 2) * Math.pow(v3, 2) + 2 * l1 * l3 * v1 * v3 * Math.cos(x1 - x3) + 2 * l2 * l3 * v2 * v3 * Math.cos(x2 - x3)
+    return (0.5 * m1 * a) + (0.5 * m2 * b) + (0.5 * m3 * c);
+}
+
+/**
  * Spherical pendulum acceleration equations
  * 
- * @param {*} g - Gravity
- * @param {*} t - Time
- * @param {*} d - Damping
- * @param {*} m - Mass
- * @param {*} l - Length
- * @param {*} x1 - Amplitude angle 
- * @param {*} v1 - Amplitude velocity
- * @param {*} x2 - Rotation angle
- * @param {*} v2 - Rotation velocity
+ * @param {Number} g - Gravity
+ * @param {Number} t - Time
+ * @param {Number} d - Damping
+ * @param {Number} m - Mass
+ * @param {Number} l - Length
+ * @param {Number} x1 - Amplitude angle 
+ * @param {Number} v1 - Amplitude velocity
+ * @param {Number} x2 - Rotation angle
+ * @param {Number} v2 - Rotation velocity
  * @return Pendulum acceleration
  */
 export function sphericalPendulum(eq, g, t, d, m, l, x1, v1, x2, v2) {
@@ -204,4 +342,31 @@ export function sphericalPendulum(eq, g, t, d, m, l, x1, v1, x2, v2) {
         default: result = amp;
     }
     return result;
+}
+
+/**
+ * Spherical pendulum potential energy
+ * 
+ * @param {Number} g - Gravity
+ * @param {Number} m - Mass
+ * @param {Number} l - Length
+ * @param {Number} x1 - Amplitude angle 
+ * @return Potential energy
+ */
+export function sphEnergyP(g, m, l, x1) {
+    return -m * g * l * Math.cos(x1);
+}
+
+/**
+ * Spherical pendulum kinetic energy
+ * 
+ * @param {Number} m - Mass
+ * @param {Number} l - Length
+ * @param {Number} x1 - Amplitude angle 
+ * @param {Number} v1 - Amplitude velocity 
+ * @param {Number} v2 - Rotational velocity 
+ * @return Kinetic energy
+ */
+export function sphEnergyK(m, l, x1, v1, v2) {
+    return 0.5 * m * Math.pow(l, 2) * (Math.pow(v1, 2) + Math.pow(Math.sin(x1), 2) * Math.pow(v2, 2));
 }

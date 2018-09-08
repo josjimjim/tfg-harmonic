@@ -1,76 +1,86 @@
 <template>
   <div>
-    <generic-input label="Angle 1">
-      <input type="range" min="0" max="360" step="1" v-model="status.pendulum1.angle"
-      @change="setStatus" class="slider" placeholder="Angle">
-      <span v-text="status.pendulum1.angle"></span>
-    </generic-input>
+    <div class="columns">
+      
+      <div class="column">
+        <generic-input label="Áng. 1">
+          <input type="range" min="0" max="360" step="1" v-model="status.pendulum1.angle"
+          @change="setStatus" class="slider is-small">
+          <span v-text="status.pendulum1.angle"></span>
+        </generic-input>
 
-    <generic-input label="Velocity 1">
-      <input type="range" min="0" max="20" step="0.5" v-model="status.pendulum1.velocity"
-      @change="setStatus" class="slider" placeholder="Velocity">
-      <span v-text="status.pendulum1.velocity"></span>
-    </generic-input>
+        <generic-input label="Vel. 1">
+          <input type="range" min="0" max="20" step="0.5" v-model="status.pendulum1.velocity"
+          @change="setStatus" class="slider is-small">
+          <span v-text="status.pendulum1.velocity"></span>
+        </generic-input>
 
-    <generic-input label="Length 1">
-      <input type="range" min="1" max="3" step="0.2" v-model="status.pendulum1.length"
-      @change="setStatus" class="slider" placeholder="Length">
-      <span v-text="status.pendulum1.length"></span>
-    </generic-input>
+        <generic-input label="Long. 1">
+          <input type="range" min="1" max="3" step="0.2" v-model="status.pendulum1.length"
+          @change="setStatus" class="slider is-small">
+          <span v-text="status.pendulum1.length"></span>
+        </generic-input>
 
-    <generic-input label="Mass 1">
-      <input type="range" min="0.5" max="5" step="0.5" v-model="status.pendulum1.mass"
-      @change="setStatus" class="slider" placeholder="Mass">
-      <span v-text="status.pendulum1.mass"></span>
-    </generic-input>
+        <generic-input label="Masa 1">
+          <input type="range" min="0.5" max="5" step="0.5" v-model="status.pendulum1.mass"
+          @change="setStatus" class="slider is-small">
+          <span v-text="status.pendulum1.mass"></span>
+        </generic-input>
+      </div>
 
-    <generic-input label="Angle 2">
-      <input type="range" min="0" max="360" step="1" v-model="status.pendulum2.angle"
-      @change="setStatus" class="slider" placeholder="Angle">
-      <span v-text="status.pendulum2.angle"></span>
-    </generic-input>
+      <div class="column">
+        <generic-input label="Áng. 2">
+          <input type="range" min="0" max="360" step="1" v-model="status.pendulum2.angle"
+          @change="setStatus" class="slider is-small">
+          <span v-text="status.pendulum2.angle"></span>
+        </generic-input>
 
-    <generic-input label="Velocity 2">
-      <input type="range" min="0" max="20" step="0.5" v-model="status.pendulum2.velocity"
-      @change="setStatus" class="slider" placeholder="Velocity">
-      <span v-text="status.pendulum2.velocity"></span>
-    </generic-input>
+        <generic-input label="Vel. 2">
+          <input type="range" min="0" max="20" step="0.5" v-model="status.pendulum2.velocity"
+          @change="setStatus" class="slider is-small">
+          <span v-text="status.pendulum2.velocity"></span>
+        </generic-input>
 
-    <generic-input label="Length 2">
-      <input type="range" min="1" max="3" step="0.2" v-model="status.pendulum2.length"
-      @change="setStatus" class="slider" placeholder="Length">
-      <span v-text="status.pendulum2.length"></span>
-    </generic-input>
+        <generic-input label="Long. 2">
+          <input type="range" min="1" max="3" step="0.2" v-model="status.pendulum2.length"
+          @change="setStatus" class="slider is-small">
+          <span v-text="status.pendulum2.length"></span>
+        </generic-input>
 
-    <generic-input label="Mass 2">
-      <input type="range" min="0.5" max="5" step="0.5" v-model="status.pendulum2.mass"
-      @change="setStatus" class="slider" placeholder="Mass">
-      <span v-text="status.pendulum2.mass"></span>
-    </generic-input>
+        <generic-input label="Masa 2">
+          <input type="range" min="0.5" max="5" step="0.5" v-model="status.pendulum2.mass"
+          @change="setStatus" class="slider is-small">
+          <span v-text="status.pendulum2.mass"></span>
+        </generic-input>
+      </div>
 
-    <generic-input label="Step">
-      <input type="range" min="0.01" max="0.5" step="0.01" v-model="status.step"
-      @change="setStatus" class="slider" placeholder="Step">
-      <span v-text="status.step"></span>
-    </generic-input>
+      <div class="column">
+        <generic-input label="Paso">
+          <input type="range" min="0.01" max="0.5" step="0.01" v-model="status.step"
+          @change="setStatus" class="slider is-small">
+          <span v-text="status.step"></span>
+        </generic-input>
 
-    <generic-input label="Damping">
-      <input type="range" min="0.05" max="0.5" step="0.05" v-model="status.damping.value"
-            @change="setStatus" class="slider" placeholder="Damping">
-      <span v-text="status.damping.value"></span>
-    </generic-input>
+        <generic-input label="Rozamiento">
+          <input type="range" min="0.05" max="0.5" step="0.05" v-model="status.damping.value"
+                @change="setStatus" class="slider is-small">
+          <span v-text="status.damping.value"></span>
+        </generic-input>
 
-    <generic-input label="">
-      <input id="enableDamping" type="checkbox" name="enableDamping" @click="enableDamping" class="switch is-rtl is-small">
-      <label for="enableDamping">Enable damping</label>
+        <generic-input label="">
+          <input id="enableDamping" type="checkbox" name="enableDamping" @click="enableDamping" class="switch is-small">
+          <label for="enableDamping">Activar rozamiento</label>
 
-      <input id="enableTrail" type="checkbox" name="enableTrail" @click="enableTrail" class="switch is-rtl is-small" checked="checked">
-      <label for="enableTrail">Enable trail</label>
-    </generic-input>
+          <input id="enableTrail" type="checkbox" name="enableTrail" @click="enableTrail" class="switch is-small" checked="checked">
+          <label for="enableTrail">Activar traza</label>
+        </generic-input>
 
-    <generic-input>
-      <button v-text="clapper.text" @click="setAnimation" class="button"></button>
-    </generic-input>
+        <generic-input>
+          <button v-text="clapper.text" @click="setAnimation" class="button"></button>
+        </generic-input>
+      </div>
+
+    </div>
   </div>
 </template>
 
@@ -106,7 +116,7 @@ export default {
       trail: true,
       clapper: {
         animate: false,
-        text: 'Start'
+        text: 'Iniciar'
       }
     }
   },
@@ -116,7 +126,7 @@ export default {
     },
     setAnimation(){
       this.clapper.animate = !this.clapper.animate
-      this.clapper.text = this.clapper.animate ? 'Stop' : 'Start'
+      this.clapper.text = this.clapper.animate ? 'Detener' : 'Iniciar'
 
       this.$emit('setAnimation', this.clapper.animate)
     },

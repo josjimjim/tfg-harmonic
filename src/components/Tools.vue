@@ -3,11 +3,8 @@
     <h3 class="title is-3">Tools</h3>
     <div v-if="numericalMethods != null" class="tabs">
       <ul>
-        <li v-for="(numMeth,index) in numericalMethods" 
-        :id="index" 
-        :key="numMeth.method" 
-        :value="numMeth.method" :class="{'is-active' : clicked == index}" 
-        @click="show(numMeth.method, index)">
+        <li v-for="(numMeth,index) in numericalMethods" :id="index" :key="index" :value="numMeth.method" 
+            :class="{'is-active' : clicked == index}" @click="show(numMeth.method, index)">
             <a >{{ numMeth.name }}</a>
         </li>
       </ul>

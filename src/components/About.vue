@@ -4,9 +4,9 @@
     <div class="columns">
       <div class="column is-half">
         <div class="content has-text-justified">
-          <p>Project created by José María Jiménez Jiménez</p>
+          <p>Proyecto desarrollado por José María Jiménez Jiménez</p>
           <br/>
-          <p>University of Seville, Applied Maths Department. 2018</p>
+          <p>Universidad de Sevilla, Departamento de Matemáticas aplicadas. 2018</p>
         </div>
       </div>
     </div>

@@ -1,13 +1,13 @@
 export const GRAVITY = 9.81;
 
 export const NUMERICAL_METHODS = [
-  {method:'euler', name: 'Euler Method'},
-  {method:'heun', name: 'Heun\'s Method'},
-  {method:'rungeKutta4', name: 'Runge-Kutta 4 Steps'},
-  {method:'rungeKuttaFehlberg45', name: 'Runge-Kutta-Fehlberg 4&5 Steps'}
+  {method:'euler', name: 'Método de Heuler'},
+  {method:'heun', name: 'Método de Heun'},
+  {method:'rungeKutta4', name: 'Runge-Kutta de 4º Orden'},
+  {method:'rungeKuttaFehlberg45', name: 'Runge-Kutta-Fehlberg 4º & 5º Orden'}
 ];
 
-export const ERROR_TOLERANCE = 1e-5;
+export const ERROR_TOLERANCE = 1e-3;
 
 /**
  * Factorial calculus
@@ -131,11 +131,7 @@ export function rungeKuttaFehlberg45(f, t, x, v, h) {
   while( error > ERROR_TOLERANCE) {
     h = 0.9 * Math.min(Math.max(h * Math.pow(ERROR_TOLERANCE * h / (2 * error), 0.25), hMin), hMax);
     sols = rkf45(f, t, x, v, h);
-    error = Math.abs(sols[0] - sols[2]);
-
-    console.log(error)
-    console.log(error > ERROR_TOLERANCE)
-    
+    error = Math.abs(sols[0] - sols[2]);    
   }
   h = Math.min(Math.max(h * Math.pow(ERROR_TOLERANCE * h / (2 * error), 0.25), hMin), hMax);
   
@@ -301,12 +297,4 @@ function am(u, k) {
 
 function sn(u, k) {
   return Math.sin(am(u, k));
-}
-
-export function circleColisionDetection(ball1, ball2, bounce = 0){
-  let dx = Math.abs(ball1.circle.position.x - ball2.circle.position.x);
-  let dy = Math.abs(ball1.circle.position.y - ball2.circle.position.y);
-  let distance = Math.sqrt(dx * dx + dy * dy);
-
-  return distance < ball1.radius + ball2.radius - 2* bounce;
 }

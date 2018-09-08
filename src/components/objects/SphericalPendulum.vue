@@ -2,18 +2,32 @@
   <div>
     <h3 class="title is-3">Spherical pendulum</h3>
     <div class="columns">
+
       <div class="column is-half">
         <div id="canvas"></div>
       </div>
-      <div class="column is-half">
-        <chart id="chart1" :input="chartValue1"></chart>
-        <chart id="chart2" :input="chartValue2"></chart>
+
+      <div class="column is-half">   
+        <div class="tabs">
+          <ul>
+            <li v-for="(chart, index) in ['Energia', 'Fase']" :key="index" :value="chart.type" 
+                :class="{'is-active' : clicked == index}" @click="showChart(index)">
+                <a >{{ chart }}</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <energy-chart :input="energy" v-if="clicked == 0"></energy-chart>
+          <phase-chart :input="phase"  v-if="clicked == 1"></phase-chart>
+        </div>
       </div>
     </div>
+
     <div class="columns">
       <spherical-input class="column" @setStatus="setStatus" @setAnimation="setAnimation"
       @enableTrail="enableTrail"></spherical-input>
     </div>
+
     <div class="columns">
       <div class="column">
         <documentation type="spherical-pendulum"></documentation>
@@ -25,19 +39,22 @@
 <script>
 import * as THREE from "three"
 import SphericalInput from "../inputs/SphericalInput"
-import Chart from "../Chart"
 import Documentation from "../Documentation"
-import { sphericalPendulum } from "@/assets/js/models.js"
+import { sphericalPendulum, sphEnergyP, sphEnergyK } from "@/assets/js/models.js"
 import { GRAVITY, rungeKutta4 } from "@/assets/js/math.js"
 import {initContext, initAxis, initTrail, updateTrail, addChartItem} from "@/assets/js/graphics.js"
+import EnergyChart from '../charts/EnergyChart.vue'
+import PhaseChart from '../charts/PhaseChart.vue'
 
+const MAX_CHART_VALUES = 25
 
 export default {
   name: "spherical-pendulum",
   components: {
-    "chart": Chart,
     "spherical-input": SphericalInput,
-    "documentation": Documentation
+    "documentation": Documentation,
+    "energy-chart": EnergyChart,
+    "phase-chart": PhaseChart
   },
   data() {
     return {
@@ -56,10 +73,20 @@ export default {
       trailLine: [],
       trailReload: false,
 
-      chartValue1: [],
-      chartValueAux1: [],
-      chartValue2: [],
-      chartValueAux2: [],
+      // Charts variables
+      clicked: 0,
+      energy: {
+        time: [],
+        potential: [],
+        kinetic: []
+      },
+      energyAux: {
+        time: [],
+        potential: [],
+        kinetic: []
+      },
+      phase: [],
+      phaseAux: [],
 
       time: 0,
       step: 0,
@@ -108,8 +135,11 @@ export default {
       this.sphere.position.z = this.lineLength * Math.sin(this.pendulum.angleAmplitude) * Math.cos(this.pendulum.angleRotation)
 
       this.trailLine = initTrail(this.sphere.position)
-      this.chartValue1.push({name:"0", value:[this.time, this.pendulum.angleAmplitude]})
-      this.chartValue2.push({name:"0", value:[this.pendulum.velocityAmplitude, this.pendulum.angleAmplitude]})
+      
+      this.energy.time.push(this.time)
+      this.energy.potential.push(sphEnergyP(GRAVITY, this.pendulum.mass, this.pendulum.length, this.pendulum.angleAmplitude))
+      this.energy.kinetic.push(sphEnergyK(this.pendulum.mass, this.pendulum.length, this.pendulum.angleAmplitude, this.pendulum.velocityAmplitude, this.pendulum.velocityRotation))
+      this.phase.push([this.pendulum.angleAmplitude, this.pendulum.velocityAmplitude])
 
       this.scene.add(this.trailLine)
       this.scene.add(this.line)
@@ -122,6 +152,9 @@ export default {
       if (active) {
         this.trailReload = true
       }
+    },
+    showChart(index) {
+      this.clicked = index
     },
     pendulumAmplitudeEq(t0, x0, v0) {
       let g = GRAVITY
@@ -196,15 +229,23 @@ export default {
         this.trailReload = update.trailReload
       }
 
-      this.chartValueAux1.push({name:"0", value:[this.time,this.pendulum.angleAmplitude]})
-      if(this.chartValueAux1.length == 25) {
-          this.chartValue1 = this.chartValueAux1
-          this.chartValueAux1 = []
+      this.energyAux.time.push(this.time)
+      this.energyAux.potential.push(sphEnergyP(GRAVITY, this.pendulum.mass, this.pendulum.length, this.pendulum.angleAmplitude))
+      this.energyAux.kinetic.push(sphEnergyK(this.pendulum.mass, this.pendulum.length, this.pendulum.angleAmplitude, this.pendulum.velocityAmplitude, this.pendulum.velocityRotation))
+      this.phaseAux.push([this.pendulum.angleAmplitude, this.pendulum.velocityAmplitude])
+
+      if(this.energyAux.time.length == MAX_CHART_VALUES) {
+        this.energy = this.energyAux
+        this.energyAux = {
+          time: [],
+          potential: [],
+          kinetic: []
+        }
       }
-      this.chartValueAux2.push({name:"0", value:[this.pendulum.velocityAmplitude,this.pendulum.angleAmplitude]})
-      if(this.chartValueAux2.length == 25) {
-          this.chartValue2 = this.chartValueAux2
-          this.chartValueAux2 = []
+      
+      if(this.phaseAux.length == MAX_CHART_VALUES) {
+        this.phase = this.phaseAux
+        this.phaseAux = []
       }
 
       this.renderer.render(this.scene, this.camera)
@@ -216,6 +257,9 @@ export default {
   mounted() {
     this.initContext()
     this.initScene()  
+  },
+  beforeDestroy() {
+    this.stop()
   }
   
 }

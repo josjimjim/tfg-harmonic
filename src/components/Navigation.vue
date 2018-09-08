@@ -15,7 +15,7 @@
       <div id="navbarExampleTransparentExample" :class="{'is-active': isActive}" class="navbar-menu">
         <div class="navbar-start">
           <router-link to="/" class="navbar-item">
-            Home
+            Inicio
           </router-link>
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
@@ -23,19 +23,19 @@
             </a>
             <div class="navbar-dropdown is-boxed">
               <router-link to="/pendulum/simple" class="navbar-item">
-                Simple pendulum
+                Péndulo simple
               </router-link>
               <router-link to="/pendulum/spring" class="navbar-item">
-                Spring pendulum
+                Péndulo amortiguado
               </router-link>
               <router-link to="/pendulum/cradle" class="navbar-item">
-                Newton's cradle
+                Cuna de Newton
               </router-link>
               <router-link to="/pendulum/double" class="navbar-item">
-                Double pendulum
+                Péndulo doble
               </router-link>
               <router-link to="/pendulum/triple" class="navbar-item">
-                Triple pendulum
+                Péndulo triple
               </router-link>
             </div>
           </div>
@@ -45,23 +45,23 @@
             </a>
             <div class="navbar-dropdown is-boxed">
               <router-link to="/pendulum/spherical" class="navbar-item">
-                Spherical pendulum
+                Péndulo esférico
               </router-link>
               <router-link to="/pendulum/conical" class="navbar-item">
-                Conical pendulum
+                Péndulo cónico
               </router-link>
             </div>
           </div>
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
-              Math tools
+              Herramientas
             </a>
             <div class="navbar-dropdown is-boxed">
               <router-link to="/tools/euler" class="navbar-item">
-                Numerical methods
+                Métodos numéricos
               </router-link>
               <router-link to="/tools/agm" class="navbar-item">
-                Aritmetic-Geometric mean
+                Media aritmético-geométrica
               </router-link>
             </div>
           </div>

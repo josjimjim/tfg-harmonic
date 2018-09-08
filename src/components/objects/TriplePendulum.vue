@@ -1,18 +1,39 @@
 <template>
   <div>
     <h3 class="title is-3">Triple pendulum</h3>
+
     <div class="columns">
       <div class="column is-half">
         <div id="canvas"></div>
       </div>
-      <triple-input class="column is-quarter" @setStatus="setStatus" @setAnimation="setAnimation"
+
+      <div class="column is-half">   
+        <div class="tabs">
+          <ul>
+            <li v-for="(chart, index) in ['Energia', 'Fase']" :key="index" :value="chart.type" 
+                :class="{'is-active' : clicked == index}" @click="showChart(index)">
+                <a >{{ chart }}</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <energy-chart :input="energy" v-if="clicked == 0"></energy-chart>
+          <phase-chart :input="phase"  v-if="clicked == 1"></phase-chart>
+        </div>
+      </div>
+    </div>
+         
+    <div class="columns">
+      <triple-input class="column" @setStatus="setStatus" @setAnimation="setAnimation"
       @enableDamping="enableDamping" @enableTrail="enableTrail"></triple-input>
     </div>
+
     <div class="columns">
       <div class="column">
         <documentation type="triple-pendulum"></documentation>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -20,9 +41,15 @@
 import * as THREE from 'three'
 import TripleInput from '../inputs/TripleInput'
 import Documentation from '../Documentation'
-import {triplePendulum} from '@/assets/js/models.js'
+import {triplePendulum, trpEnergyP, trpEnergyK} from '@/assets/js/models.js'
 import {GRAVITY, rungeKutta4, euler} from '@/assets/js/math.js'
 import {initContext, initAxis, initTrail, updateTrail} from "@/assets/js/graphics.js";
+import EnergyChart from '../charts/EnergyChart.vue'
+import PhaseChart from '../charts/PhaseChart.vue'
+
+const RADIUS_SCALE = 0.5
+const LENGTH_SCALE = 5
+const MAX_CHART_VALUES = 25
 
 function normalizeAngle(angle) {
   return angle % 360
@@ -32,7 +59,9 @@ export default {
   name: 'double-pendulum',
   components: {
     'triple-input': TripleInput,
-    'documentation': Documentation
+    'documentation': Documentation,
+    "energy-chart": EnergyChart,
+    "phase-chart": PhaseChart
   },
   data() {
     return {
@@ -60,12 +89,21 @@ export default {
       line2: null,
       line3: null,
 
-      circleRadius1: null,
-      circleRadius2: null,
-      circleRadius3: null,
-      lineLength1: null,
-      lineLength2: null,
-      lineLength3: null
+      // Charts variables
+      clicked: 0,
+      energy: {
+        time: [],
+        potential: [],
+        kinetic: []
+      },
+      energyAux: {
+        time: [],
+        potential: [],
+        kinetic: []
+      },
+      phase: [],
+      phaseAux: []
+
     }
   },
   methods: {
@@ -91,40 +129,61 @@ export default {
       this.scene.add(axis)
     },
     initObject() {
-      var material_circle = new THREE.MeshBasicMaterial( { color: 0x2469ff } )
 
-      var geometry_circle1 = new THREE.CircleGeometry( this.circleRadius1, 32 )
+      let m1 = this.pendulum1.mass
+      let l1 = this.pendulum1.length
+      let x1 = this.pendulum1.angle
+      let v1 = this.pendulum1.velocity
+
+      let m2 = this.pendulum2.mass
+      let l2 = this.pendulum2.length
+      let x2 = this.pendulum2.angle
+      let v2 = this.pendulum2.velocity
+
+      let m3 = this.pendulum3.mass
+      let l3 = this.pendulum3.length
+      let x3 = this.pendulum3.angle
+      let v3 = this.pendulum3.velocity
+
+      let material_circle = new THREE.MeshBasicMaterial( { color: 0x2469ff } )
+
+      let geometry_circle1 = new THREE.CircleGeometry( m1 * RADIUS_SCALE, 32 )
       this.circle1 = new THREE.Mesh( geometry_circle1, material_circle )
-      this.circle1.position.x =  this.lineLength1 * Math.sin(this.pendulum1.angle)
-      this.circle1.position.y = -this.lineLength1 * Math.cos(this.pendulum1.angle)
+      this.circle1.position.x =  (l1 * LENGTH_SCALE) * Math.sin(x1)
+      this.circle1.position.y = -(l1 * LENGTH_SCALE) * Math.cos(x1)
 
-      var geometry_circle2 = new THREE.CircleGeometry( this.circleRadius2, 32 )
+      let geometry_circle2 = new THREE.CircleGeometry( m2 * RADIUS_SCALE, 32 )
       this.circle2 = new THREE.Mesh( geometry_circle2, material_circle )
-      this.circle2.position.x = this.circle1.position.x + this.lineLength2 * Math.sin(this.pendulum2.angle)
-      this.circle2.position.y = this.circle1.position.y - this.lineLength2 * Math.cos(this.pendulum2.angle)
+      this.circle2.position.x = this.circle1.position.x + (l2 * LENGTH_SCALE) * Math.sin(x2)
+      this.circle2.position.y = this.circle1.position.y - (l2 * LENGTH_SCALE) * Math.cos(x2)
 
-      var geometry_circle3 = new THREE.CircleGeometry( this.circleRadius3, 32 )
+      let geometry_circle3 = new THREE.CircleGeometry( m3 * RADIUS_SCALE, 32 )
       this.circle3 = new THREE.Mesh( geometry_circle3, material_circle )
-      this.circle3.position.x = this.circle2.position.x + this.lineLength3 * Math.sin(this.pendulum3.angle)
-      this.circle3.position.y = this.circle2.position.y - this.lineLength3 * Math.cos(this.pendulum3.angle)
+      this.circle3.position.x = this.circle2.position.x + (l3 * LENGTH_SCALE) * Math.sin(x3)
+      this.circle3.position.y = this.circle2.position.y - (l3 * LENGTH_SCALE) * Math.cos(x3)
 
-      var geometry_line1 = new THREE.Geometry()
-      var material_line = new THREE.LineBasicMaterial( { color: 0x000000 } )
+      let geometry_line1 = new THREE.Geometry()
+      let material_line = new THREE.LineBasicMaterial( { color: 0x000000 } )
       geometry_line1.vertices.push(new THREE.Vector3(0, 0, 0))
       geometry_line1.vertices.push(new THREE.Vector3(this.circle1.position.x, this.circle1.position.y, 0))
       this.line1 = new THREE.Line( geometry_line1, material_line )
 
-      var geometry_line2 = new THREE.Geometry()
+      let geometry_line2 = new THREE.Geometry()
       geometry_line2.vertices.push(new THREE.Vector3(this.circle1.position.x, this.circle1.position.y, 0))
       geometry_line2.vertices.push(new THREE.Vector3(this.circle2.position.x, this.circle2.position.y, 0))
       this.line2 = new THREE.Line( geometry_line2, material_line )
 
-      var geometry_line3 = new THREE.Geometry()
+      let geometry_line3 = new THREE.Geometry()
       geometry_line3.vertices.push(new THREE.Vector3(this.circle2.position.x, this.circle2.position.y, 0))
       geometry_line3.vertices.push(new THREE.Vector3(this.circle3.position.x, this.circle3.position.y, 0))
       this.line3 = new THREE.Line( geometry_line3, material_line )
 
       this.trailLine = initTrail(this.circle3.position);
+
+      this.energy.time.push(this.time)
+      this.energy.potential.push(trpEnergyP(GRAVITY, m1, l1, x1, m2, l2, x2, m3, l3, x3))
+      this.energy.kinetic.push(trpEnergyK(m1, l1, x1, v1, m2, l2, x2, v2, m3, l3, x3, v3))
+      this.phase.push([x3, v3])
 
       this.scene.add(this.trailLine)
       this.scene.add(this.line1)
@@ -142,6 +201,9 @@ export default {
     enableTrail(active) {
       this.trail = active
       if(active) { this.trailReload = true }
+    },
+    showChart(index) {
+      this.clicked = index
     },
     pendulumEq31(t0, x0, v0) {
       let g = GRAVITY
@@ -237,13 +299,6 @@ export default {
       this.damping.value = status.damping.value
       this.damping.active = status.damping.active
 
-      this.circleRadius1 = this.pendulum1.mass / 2
-      this.circleRadius2 = this.pendulum2.mass / 2
-      this.circleRadius3 = this.pendulum3.mass / 2
-      this.lineLength1 = this.pendulum1.length * 5
-      this.lineLength2 = this.pendulum2.length * 5
-      this.lineLength3 = this.pendulum3.length * 5
-
       this.step = parseFloat(status.step)
 
       if(this.scene != null) {
@@ -256,31 +311,46 @@ export default {
     move() {
       this.animFrameID = requestAnimationFrame( this.move )
 
-      var nextStep1 = euler(this.pendulumEq31, this.time, this.pendulum1.angle, this.pendulum1.velocity, this.step)
+      let m1 = this.pendulum1.mass
+      let l1 = this.pendulum1.length
+      let x1 = this.pendulum1.angle
+      let v1 = this.pendulum1.velocity
+
+      let m2 = this.pendulum2.mass
+      let l2 = this.pendulum2.length
+      let x2 = this.pendulum2.angle
+      let v2 = this.pendulum2.velocity
+
+      let m3 = this.pendulum3.mass
+      let l3 = this.pendulum3.length
+      let x3 = this.pendulum3.angle
+      let v3 = this.pendulum3.velocity
+
+      let nextStep1 = euler(this.pendulumEq31, this.time, x1, v1, this.step)
       this.pendulum1.angle = parseFloat(nextStep1[0])
       this.pendulum1.velocity = parseFloat(nextStep1[1])
-      this.circle1.position.x =  this.lineLength1 * Math.sin(this.pendulum1.angle)
-      this.circle1.position.y = -this.lineLength1 * Math.cos(this.pendulum1.angle)
+      this.circle1.position.x =  (l1 * LENGTH_SCALE) * Math.sin(x1)
+      this.circle1.position.y = -(l1 * LENGTH_SCALE) * Math.cos(x1)
       this.line1.geometry.vertices[ 1 ].x = this.circle1.position.x
       this.line1.geometry.vertices[ 1 ].y = this.circle1.position.y
       this.line1.geometry.verticesNeedUpdate = true
       
-      var nextStep2 = euler(this.pendulumEq32, this.time, this.pendulum2.angle, this.pendulum2.velocity, this.step)
+      let nextStep2 = euler(this.pendulumEq32, this.time, x2, v2, this.step)
       this.pendulum2.angle = parseFloat(nextStep2[0])
       this.pendulum2.velocity = parseFloat(nextStep2[1])
-      this.circle2.position.x = this.circle1.position.x + this.lineLength2 * Math.sin(this.pendulum2.angle)
-      this.circle2.position.y = this.circle1.position.y - this.lineLength2 * Math.cos(this.pendulum2.angle)
+      this.circle2.position.x = this.circle1.position.x + (l2 * LENGTH_SCALE) * Math.sin(x2)
+      this.circle2.position.y = this.circle1.position.y - (l2 * LENGTH_SCALE) * Math.cos(x2)
       this.line2.geometry.vertices[ 0 ].x = this.circle1.position.x
       this.line2.geometry.vertices[ 0 ].y = this.circle1.position.y
       this.line2.geometry.vertices[ 1 ].x = this.circle2.position.x
       this.line2.geometry.vertices[ 1 ].y = this.circle2.position.y
       this.line2.geometry.verticesNeedUpdate = true
 
-      var nextStep3 = euler(this.pendulumEq33, this.time, this.pendulum3.angle, this.pendulum3.velocity, this.step)
+      let nextStep3 = euler(this.pendulumEq33, this.time, x3, v3, this.step)
       this.pendulum3.angle = parseFloat(nextStep3[0])
       this.pendulum3.velocity = parseFloat(nextStep3[1])
-      this.circle3.position.x = this.circle2.position.x + this.lineLength3 * Math.sin(this.pendulum3.angle)
-      this.circle3.position.y = this.circle2.position.y - this.lineLength3 * Math.cos(this.pendulum3.angle)
+      this.circle3.position.x = this.circle2.position.x + (l3 * LENGTH_SCALE) * Math.sin(x3)
+      this.circle3.position.y = this.circle2.position.y - (l3 * LENGTH_SCALE) * Math.cos(x3)
       this.line3.geometry.vertices[ 0 ].x = this.circle2.position.x
       this.line3.geometry.vertices[ 0 ].y = this.circle2.position.y
       this.line3.geometry.vertices[ 1 ].x = this.circle3.position.x
@@ -293,6 +363,25 @@ export default {
         let update = updateTrail(this.trailLine, this.circle3.position, this.trailReload)
         this.trailLine.geometry.vertices = update.vertices
         this.trailReload = update.trailReload
+      }
+
+      // CHARTS UPDATE
+      this.energyAux.time.push(this.time)
+      this.energyAux.potential.push(trpEnergyP(GRAVITY, m1, l1, x1, m2, l2, x2, m3, l3, x3))
+      this.energyAux.kinetic.push(trpEnergyK(m1, l1, x1, v1, m2, l2, x2, v2, m3, l3, x3, v3))
+      this.phaseAux.push([x3, v3])
+
+      if(this.energyAux.time.length == MAX_CHART_VALUES) {
+        this.energy = this.energyAux
+        this.energyAux = {
+          time: [],
+          potential: [],
+          kinetic: []
+        }
+      }
+      if(this.phaseAux.length == MAX_CHART_VALUES) {
+        this.phase = this.phaseAux
+        this.phaseAux = []
       }
 
       this.renderer.render( this.scene, this.camera )
