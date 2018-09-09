@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="title is-3">Spring pendulum</h3>
+    <h3 class="title is-3">Péndulo amortiguado</h3>
 
     <div class="columns">
 

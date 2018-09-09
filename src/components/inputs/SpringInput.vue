@@ -21,7 +21,7 @@
         </generic-input>
 
         <generic-input label="Velocidad">
-          <input type="range" min="0" max="5" step="0.1" v-model="status.pendulum.velocity"
+          <input type="range" min="0" max="5" step="0.5" v-model="status.pendulum.velocity"
                 @change="setStatus" class="slider is-small">
           <span v-text="status.pendulum.velocity"></span>
         </generic-input>
@@ -49,7 +49,7 @@
         </generic-input>
 
         <generic-input label="Paso">
-          <input type="range" min="0.01" max="0.5" step="0.01" v-model="status.step"
+          <input type="range" min="0.01" max="0.1" step="0.01" v-model="status.step"
                 @change="setStatus" class="slider is-small">
           <span v-text="status.step"></span>
         </generic-input>

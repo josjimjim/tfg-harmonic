@@ -1,5 +1,16 @@
 <template>
   <div>
+
+    <generic-input label="Método">
+      <div class="select">
+        <select v-model="status.numericalMethodSelected" @change="setStatus">
+          <option v-for="(numMeth, index) in numericalMethods" :key="index" :value="numMeth.method">
+            {{ numMeth.name }}
+          </option>
+        </select>
+      </div>
+    </generic-input>
+    
     <div class="columns">
       
       <div class="column">
@@ -10,7 +21,7 @@
         </generic-input>
 
         <generic-input label="Vel. 1">
-          <input type="range" min="0" max="20" step="0.5" v-model="status.pendulum1.velocity"
+          <input type="range" min="0" max="5" step="0.5" v-model="status.pendulum1.velocity"
           @change="setStatus" class="slider is-small">
           <span v-text="status.pendulum1.velocity"></span>
         </generic-input>
@@ -36,7 +47,7 @@
         </generic-input>
 
         <generic-input label="Vel. 2">
-          <input type="range" min="0" max="20" step="0.5" v-model="status.pendulum2.velocity"
+          <input type="range" min="0" max="5" step="0.5" v-model="status.pendulum2.velocity"
           @change="setStatus" class="slider is-small">
           <span v-text="status.pendulum2.velocity"></span>
         </generic-input>
@@ -56,7 +67,7 @@
 
       <div class="column">
         <generic-input label="Paso">
-          <input type="range" min="0.01" max="0.5" step="0.01" v-model="status.step"
+          <input type="range" min="0.01" max="0.1" step="0.01" v-model="status.step"
           @change="setStatus" class="slider is-small">
           <span v-text="status.step"></span>
         </generic-input>
@@ -86,6 +97,7 @@
 
 <script>
 import GenericInput from './GenericInput'
+import {NUMERICAL_METHODS} from '@/assets/js/math.js'
 
 export default {
   name: 'double-input',
@@ -111,13 +123,17 @@ export default {
           value: 0.1,
           active: false
         },
-        step: 0.01
+        step: 0.01,
+
+        numericalMethodSelected: 'rungeKutta4'
       },
       trail: true,
       clapper: {
         animate: false,
         text: 'Iniciar'
-      }
+      },
+
+      numericalMethods: NUMERICAL_METHODS
     }
   },
   methods: {

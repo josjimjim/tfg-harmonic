@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="title is-3">Triple pendulum</h3>
+    <h3 class="title is-3">Péndulo triple</h3>
 
     <div class="columns">
       <div class="column is-half">
@@ -42,7 +42,7 @@ import * as THREE from 'three'
 import TripleInput from '../inputs/TripleInput'
 import Documentation from '../Documentation'
 import {triplePendulum, trpEnergyP, trpEnergyK} from '@/assets/js/models.js'
-import {GRAVITY, rungeKutta4, euler} from '@/assets/js/math.js'
+import {GRAVITY, numericalResolution} from '@/assets/js/math.js'
 import {initContext, initAxis, initTrail, updateTrail} from "@/assets/js/graphics.js";
 import EnergyChart from '../charts/EnergyChart.vue'
 import PhaseChart from '../charts/PhaseChart.vue'
@@ -81,6 +81,9 @@ export default {
       trail: true,
       trailLine: null,
       trailReload: false,
+
+      numericalMethodSelected: '',
+      nextStep: null,
 
       circle1: null,
       circle2: null,
@@ -299,6 +302,8 @@ export default {
       this.damping.value = status.damping.value
       this.damping.active = status.damping.active
 
+      this.numericalMethodSelected = status.numericalMethodSelected
+
       this.step = parseFloat(status.step)
 
       if(this.scene != null) {
@@ -326,7 +331,7 @@ export default {
       let x3 = this.pendulum3.angle
       let v3 = this.pendulum3.velocity
 
-      let nextStep1 = euler(this.pendulumEq31, this.time, x1, v1, this.step)
+      let nextStep1 = numericalResolution(this.pendulumEq31, this.time, x1, v1, this.step)[this.numericalMethodSelected]
       this.pendulum1.angle = parseFloat(nextStep1[0])
       this.pendulum1.velocity = parseFloat(nextStep1[1])
       this.circle1.position.x =  (l1 * LENGTH_SCALE) * Math.sin(x1)
@@ -335,7 +340,7 @@ export default {
       this.line1.geometry.vertices[ 1 ].y = this.circle1.position.y
       this.line1.geometry.verticesNeedUpdate = true
       
-      let nextStep2 = euler(this.pendulumEq32, this.time, x2, v2, this.step)
+      let nextStep2 = numericalResolution(this.pendulumEq32, this.time, x2, v2, this.step)[this.numericalMethodSelected]
       this.pendulum2.angle = parseFloat(nextStep2[0])
       this.pendulum2.velocity = parseFloat(nextStep2[1])
       this.circle2.position.x = this.circle1.position.x + (l2 * LENGTH_SCALE) * Math.sin(x2)
@@ -346,7 +351,7 @@ export default {
       this.line2.geometry.vertices[ 1 ].y = this.circle2.position.y
       this.line2.geometry.verticesNeedUpdate = true
 
-      let nextStep3 = euler(this.pendulumEq33, this.time, x3, v3, this.step)
+      let nextStep3 = numericalResolution(this.pendulumEq33, this.time, x3, v3, this.step)[this.numericalMethodSelected]
       this.pendulum3.angle = parseFloat(nextStep3[0])
       this.pendulum3.velocity = parseFloat(nextStep3[1])
       this.circle3.position.x = this.circle2.position.x + (l3 * LENGTH_SCALE) * Math.sin(x3)
@@ -357,7 +362,8 @@ export default {
       this.line3.geometry.vertices[ 1 ].y = this.circle3.position.y
       this.line3.geometry.verticesNeedUpdate = true
 
-      this.time += this.step
+      this.time += parseFloat(nextStep1[2])
+      this.step = parseFloat(nextStep1[2])
 
       if (this.trail) {
         let update = updateTrail(this.trailLine, this.circle3.position, this.trailReload)

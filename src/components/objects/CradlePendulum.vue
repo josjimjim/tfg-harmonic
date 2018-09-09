@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="title is-3">Newton's cradle</h3>
+    <h3 class="title is-3">Cuna de Newton</h3>
     <div class="columns">
       <div class="column is-half">
         <div id="canvas"></div>
@@ -23,6 +23,8 @@ import Documentation from '../Documentation'
 import {initContext, initAxis, circleColisionDetection} from '@/assets/js/graphics.js'
 import {simplePendulum} from '@/assets/js/models.js'
 import {GRAVITY, rungeKutta4} from '@/assets/js/math.js'
+
+const PENETRATION = -0.2
 
 export default {
   name: 'cradle-pendulum',
@@ -131,7 +133,8 @@ export default {
           radius: parseFloat(status.pendulum.mass) / 2,
           length: 10.0,
           circle: null,
-          line: null
+          line: null,
+          collisions: []
         })
 
         this.step = parseFloat(status.step)
@@ -150,57 +153,44 @@ export default {
       if(animate){ this.move() }else{ this.stop() }
     },
     move() {
+
       this.animFrameID = requestAnimationFrame( this.move )
-
+      
       let gap = 0
-      let nextStep = null
       let n = this.pendulums.length
+
+
+      let nextStep = null
       for(let i = 0; i < n; i++){
-
-        let collide, toCollide
-        if(i==0) {
-          collide = 0
-          toCollide = 1
-        } else if(i==(n-1)) {
-          collide = 4
-          toCollide = 3
-        } else {
-          if(this.pendulums[i].angle>0){
-            collide = i
-            toCollide = i+1
-          }
-          else{
-            collide = n-i
-            toCollide = n-(i+1)
-          }
-        }
-        
-        let noMove = this.pendulums[collide].angle == 0 && this.pendulums[toCollide].angle == 0
-
-        if(!noMove && circleColisionDetection(this.pendulums[collide], this.pendulums[toCollide], -0.3)){
-          
-          this.pendulums[collide].velocity = (this.pendulums[collide].velocity * (this.pendulums[collide].mass - this.pendulums[toCollide].mass) + 2*this.pendulums[toCollide].mass*this.pendulums[toCollide].velocity) / (this.pendulums[collide].mass + this.pendulums[toCollide].mass)
-          this.pendulums[toCollide].velocity = (this.pendulums[toCollide].velocity * (this.pendulums[toCollide].mass - this.pendulums[collide].mass) + 2*this.pendulums[collide].mass*this.pendulums[collide].velocity) / (this.pendulums[collide].mass + this.pendulums[toCollide].mass)
-        }
-
-
-
-
         nextStep = rungeKutta4(this.pendulumEq, this.time, this.pendulums[i].angle, this.pendulums[i].velocity, this.step)
-
         this.pendulums[i].angle = parseFloat(nextStep[0])
         this.pendulums[i].velocity = parseFloat(nextStep[1])
+        this.time += parseFloat(nextStep[2])
         this.pendulums[i].circle.position.x =  this.pendulums[i].length * Math.sin(this.pendulums[i].angle) - gap + this.totalGap/2
         this.pendulums[i].circle.position.y = -this.pendulums[i].length * Math.cos(this.pendulums[i].angle) + this.pendulums[i].length/2
+
         this.pendulums[i].line.geometry.vertices[ 1 ].x = this.pendulums[i].circle.position.x
         this.pendulums[i].line.geometry.vertices[ 1 ].y = this.pendulums[i].circle.position.y
         this.pendulums[i].line.geometry.verticesNeedUpdate = true
 
-        this.time += parseFloat(nextStep[2])
         this.step = parseFloat(nextStep[2])
         
         gap += this.pendulums[i].radius * 2 
-      }      
+      }     
+
+      for (let i = 0; i < n; i++) {  
+        for (let j = i + 1; j < n; j++) {  
+          if (circleColisionDetection(this.pendulums[i], this.pendulums[j], PENETRATION)) {
+            
+            let u1 = this.pendulums[i].velocity
+            let u2 = this.pendulums[j].velocity
+            
+            this.pendulums[i].velocity = (u1 * (this.pendulums[i].mass - this.pendulums[j].mass) + 2 * this.pendulums[j].mass * u2) / (this.pendulums[i].mass + this.pendulums[j].mass)
+            this.pendulums[j].velocity = (u2 * (this.pendulums[j].mass - this.pendulums[i].mass) + 2 * this.pendulums[i].mass * u1) / (this.pendulums[i].mass + this.pendulums[j].mass)
+        
+          }
+        }
+      }
 
       this.renderer.render( this.scene, this.camera )
     },

@@ -120,11 +120,11 @@ export function updateTrail(trailLine, position, trailReload){
     }
 }
 
-export function circleColisionDetection(ball1, ball2, bounce = 0){
+export function circleColisionDetection(ball1, ball2, penetration = 0){
     let dx = Math.abs(ball1.circle.position.x - ball2.circle.position.x);
     let dy = Math.abs(ball1.circle.position.y - ball2.circle.position.y);
     let distance = Math.sqrt(dx * dx + dy * dy);
   
-    return distance - bounce < ball1.radius + ball2.radius;
+    return distance - penetration < ball1.radius + ball2.radius;
   }
 

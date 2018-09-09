@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="title is-3">Conical pendulum</h3>
+    <h3 class="title is-3">Péndulo cónico</h3>
     <div class="columns">
       <div class="column is-half">
         <div id="canvas"></div>

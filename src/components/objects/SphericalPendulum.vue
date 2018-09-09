@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="title is-3">Spherical pendulum</h3>
+    <h3 class="title is-3">Péndulo esférico</h3>
     <div class="columns">
 
       <div class="column is-half">
@@ -41,11 +41,13 @@ import * as THREE from "three"
 import SphericalInput from "../inputs/SphericalInput"
 import Documentation from "../Documentation"
 import { sphericalPendulum, sphEnergyP, sphEnergyK } from "@/assets/js/models.js"
-import { GRAVITY, rungeKutta4 } from "@/assets/js/math.js"
+import { GRAVITY, numericalResolution } from "@/assets/js/math.js"
 import {initContext, initAxis, initTrail, updateTrail, addChartItem} from "@/assets/js/graphics.js"
 import EnergyChart from '../charts/EnergyChart.vue'
 import PhaseChart from '../charts/PhaseChart.vue'
 
+const RADIUS_SCALE = 0.5
+const LENGTH_SCALE = 5
 const MAX_CHART_VALUES = 25
 
 export default {
@@ -66,12 +68,19 @@ export default {
       canvas: null,
       controls: null,
 
+      time: 0,
+      step: 0,
+      pendulum: {},
+
       sphere: null,
       line: null,
 
-      trail: false,
+      trail: true,
       trailLine: [],
       trailReload: false,
+
+      numericalMethodSelected: '',
+      nextStep: null,
 
       // Charts variables
       clicked: 0,
@@ -86,13 +95,7 @@ export default {
         kinetic: []
       },
       phase: [],
-      phaseAux: [],
-
-      time: 0,
-      step: 0,
-      pendulum: {},
-
-      lineLength: null,
+      phaseAux: []
 
     }
   },
@@ -118,28 +121,36 @@ export default {
       this.scene.add(axis)
     },
     initObject() {
-      var material_line = new THREE.LineBasicMaterial({ color: 0x000000 })
-      var geometry_line = new THREE.Geometry()
+
+      let m = this.pendulum.mass
+      let l = this.pendulum.length
+      let x1 = this.pendulum.angleAmplitude
+      let v1 = this.pendulum.velocityAmplitude
+      let x2 = this.pendulum.angleRotation
+      let v2 = this.pendulum.velocityRotation
+
+      let material_line = new THREE.LineBasicMaterial({ color: 0x000000 })
+      let geometry_line = new THREE.Geometry()
       geometry_line.vertices.push(new THREE.Vector3(0, 0, 0))
       geometry_line.vertices.push(new THREE.Vector3(
-        this.lineLength * Math.sin(this.pendulum.angleAmplitude) * Math.sin(this.pendulum.angleRotation),
-        -this.lineLength * Math.cos(this.pendulum.angleAmplitude),
-        this.lineLength * Math.sin(this.pendulum.angleAmplitude) * Math.cos(this.pendulum.angleRotation)))
+          (l * LENGTH_SCALE) * Math.sin(x1) * Math.sin(x2),
+        - (l * LENGTH_SCALE) * Math.cos(x1),
+          (l * LENGTH_SCALE) * Math.sin(x1) * Math.cos(x2)))
       this.line = new THREE.Line(geometry_line, material_line)
 
-      var geometry_sphere = new THREE.SphereGeometry(this.pendulum.mass / 2, 32, 32)
-      var material_sphere = new THREE.MeshBasicMaterial({ color: 0x2469ff })
+      let geometry_sphere = new THREE.SphereGeometry(m * RADIUS_SCALE, 32, 32)
+      let material_sphere = new THREE.MeshBasicMaterial({ color: 0x2469ff })
       this.sphere = new THREE.Mesh(geometry_sphere, material_sphere)
-      this.sphere.position.x = this.lineLength * Math.sin(this.pendulum.angleAmplitude) * Math.sin(this.pendulum.angleRotation)
-      this.sphere.position.y = -this.lineLength * Math.cos(this.pendulum.angleAmplitude)
-      this.sphere.position.z = this.lineLength * Math.sin(this.pendulum.angleAmplitude) * Math.cos(this.pendulum.angleRotation)
+      this.sphere.position.x =   (l * LENGTH_SCALE) * Math.sin(x1) * Math.sin(x2)
+      this.sphere.position.y = - (l * LENGTH_SCALE) * Math.cos(x1)
+      this.sphere.position.z =   (l * LENGTH_SCALE) * Math.sin(x1) * Math.cos(x2)
 
       this.trailLine = initTrail(this.sphere.position)
       
       this.energy.time.push(this.time)
-      this.energy.potential.push(sphEnergyP(GRAVITY, this.pendulum.mass, this.pendulum.length, this.pendulum.angleAmplitude))
-      this.energy.kinetic.push(sphEnergyK(this.pendulum.mass, this.pendulum.length, this.pendulum.angleAmplitude, this.pendulum.velocityAmplitude, this.pendulum.velocityRotation))
-      this.phase.push([this.pendulum.angleAmplitude, this.pendulum.velocityAmplitude])
+      this.energy.potential.push(sphEnergyP(GRAVITY, m, l, x1))
+      this.energy.kinetic.push(sphEnergyK(m, l, x1, v1, v2))
+      this.phase.push([x1, v1])
 
       this.scene.add(this.trailLine)
       this.scene.add(this.line)
@@ -149,9 +160,7 @@ export default {
     },
     enableTrail(active) {
       this.trail = active
-      if (active) {
-        this.trailReload = true
-      }
+      if(active) { this.trailReload = true }
     },
     showChart(index) {
       this.clicked = index
@@ -192,7 +201,7 @@ export default {
 
       this.step = parseFloat(status.step)
 
-      this.lineLength = this.pendulum.length * 5
+      this.numericalMethodSelected = status.numericalMethodSelected
 
       if (this.scene != null) {
         this.initScene()
@@ -204,17 +213,24 @@ export default {
     move() {
       this.anFrmID = requestAnimationFrame(this.move)
 
-      var nextStep1 = rungeKutta4(this.pendulumAmplitudeEq, this.time, this.pendulum.angleAmplitude, this.pendulum.velocityAmplitude, this.step)
+      let m = this.pendulum.mass
+      let l = this.pendulum.length
+      let x1 = this.pendulum.angleAmplitude
+      let v1 = this.pendulum.velocityAmplitude
+      let x2 = this.pendulum.angleRotation
+      let v2 = this.pendulum.velocityRotation
+
+      let nextStep1 = numericalResolution(this.pendulumAmplitudeEq, this.time, x1, v1, this.step)[this.numericalMethodSelected]
       this.pendulum.angleAmplitude = nextStep1[0]
       this.pendulum.velocityAmplitude = nextStep1[1]
 
-      var nextStep2 = rungeKutta4(this.pendulumRotationEq, this.time, this.pendulum.angleRotation, this.pendulum.velocityRotation, this.step)
+      let nextStep2 = numericalResolution(this.pendulumRotationEq, this.time, x2, v2, this.step)[this.numericalMethodSelected]
       this.pendulum.angleRotation = nextStep2[0]
       this.pendulum.velocityRotation = nextStep2[1]
 
-      this.sphere.position.x = this.lineLength * Math.sin(this.pendulum.angleAmplitude) * Math.sin(this.pendulum.angleRotation)
-      this.sphere.position.y = -this.lineLength * Math.cos(this.pendulum.angleAmplitude)
-      this.sphere.position.z = this.lineLength * Math.sin(this.pendulum.angleAmplitude) * Math.cos(this.pendulum.angleRotation)
+      this.sphere.position.x =  (l * LENGTH_SCALE) * Math.sin(x1) * Math.sin(x2)
+      this.sphere.position.y = -(l * LENGTH_SCALE) * Math.cos(x1)
+      this.sphere.position.z =  (l * LENGTH_SCALE) * Math.sin(x1) * Math.cos(x2)
 
       this.line.geometry.vertices[1].x = this.sphere.position.x
       this.line.geometry.vertices[1].y = this.sphere.position.y
@@ -230,9 +246,9 @@ export default {
       }
 
       this.energyAux.time.push(this.time)
-      this.energyAux.potential.push(sphEnergyP(GRAVITY, this.pendulum.mass, this.pendulum.length, this.pendulum.angleAmplitude))
-      this.energyAux.kinetic.push(sphEnergyK(this.pendulum.mass, this.pendulum.length, this.pendulum.angleAmplitude, this.pendulum.velocityAmplitude, this.pendulum.velocityRotation))
-      this.phaseAux.push([this.pendulum.angleAmplitude, this.pendulum.velocityAmplitude])
+      this.energyAux.potential.push(sphEnergyP(GRAVITY, m, l, x1))
+      this.energyAux.kinetic.push(sphEnergyK(m, l, x1, v1, v2))
+      this.phaseAux.push([x1, v1])
 
       if(this.energyAux.time.length == MAX_CHART_VALUES) {
         this.energy = this.energyAux

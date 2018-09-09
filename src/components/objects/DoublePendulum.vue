@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="title is-3">Double pendulum</h3>
+    <h3 class="title is-3">Péndulo doble</h3>
 
     <div class="columns">
 
@@ -43,7 +43,7 @@ import * as THREE from 'three'
 import DoubleImput from '../inputs/DoubleInput'
 import Documentation from '../Documentation'
 import {doublePendulum, dblEnergyP, dblEnergyK} from '@/assets/js/models.js'
-import {GRAVITY, rungeKutta4} from '@/assets/js/math.js'
+import {GRAVITY, numericalResolution} from '@/assets/js/math.js'
 import {initContext, initAxis, initTrail, updateTrail} from "@/assets/js/graphics.js"
 import EnergyChart from '../charts/EnergyChart.vue'
 import PhaseChart from '../charts/PhaseChart.vue'
@@ -77,6 +77,9 @@ export default {
       trail: true,
       trailLine: null,
       trailReload: false,
+
+      numericalMethodSelected: '',
+      nextStep: null,
 
       circle1: null,
       circle2: null,
@@ -234,6 +237,8 @@ export default {
       this.damping.value = status.damping.value
       this.damping.active = status.damping.active
 
+      this.numericalMethodSelected = status.numericalMethodSelected
+
       this.step = parseFloat(status.step)
 
       if(this.scene != null) {
@@ -256,7 +261,7 @@ export default {
       let x2 = this.pendulum2.angle
       let v2 = this.pendulum2.velocity
 
-      let nextStep1 = rungeKutta4(this.pendulumUpEq, this.time, x1, v1, this.step)
+      let nextStep1 = numericalResolution(this.pendulumUpEq, this.time, x1, v1, this.step)[this.numericalMethodSelected]
       this.pendulum1.angle = parseFloat(nextStep1[0])
       this.pendulum1.velocity = parseFloat(nextStep1[1])
       this.circle1.position.x =  (l1 * LENGTH_SCALE) * Math.sin(x1)
@@ -265,7 +270,7 @@ export default {
       this.line1.geometry.vertices[ 1 ].y = this.circle1.position.y
       this.line1.geometry.verticesNeedUpdate = true
 
-      let nextStep2 = rungeKutta4(this.pendulumDwEq, this.time, x2, v2, this.step)
+      let nextStep2 = numericalResolution(this.pendulumDwEq, this.time, x2, v2, this.step)[this.numericalMethodSelected]
       this.pendulum2.angle = parseFloat(nextStep2[0])
       this.pendulum2.velocity = parseFloat(nextStep2[1])
       this.circle2.position.x = this.circle1.position.x + (l2 * LENGTH_SCALE) * Math.sin(x2)

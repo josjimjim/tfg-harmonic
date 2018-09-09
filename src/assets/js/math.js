@@ -1,13 +1,15 @@
 export const GRAVITY = 9.81;
 
 export const NUMERICAL_METHODS = [
-  {method:'euler', name: 'Método de Heuler'},
+  {method:'euler', name: 'Método de Euler'},
   {method:'heun', name: 'Método de Heun'},
   {method:'rungeKutta4', name: 'Runge-Kutta de 4º Orden'},
   {method:'rungeKuttaFehlberg45', name: 'Runge-Kutta-Fehlberg 4º & 5º Orden'}
 ];
 
-export const ERROR_TOLERANCE = 1e-3;
+export const H_MAX = 0.3;
+export const H_MIN = 0.01;
+export const ERROR_TOLERANCE = 1e-5;
 
 /**
  * Factorial calculus
@@ -119,28 +121,24 @@ export function rungeKutta4(f, t, x, v, h) {
  * @return Tuple of three elements that contains next x, next v and the step
  */
 export function rungeKuttaFehlberg45(f, t, x, v, h) {
-
-  let hMax = 0.3;
-  let hMin = 0.01;
-
   let sols = rkf45(f, t, x, v, h)
-
   let error = Math.abs(sols[0] - sols[2]);
 
-  // Step size
-  while( error > ERROR_TOLERANCE) {
-    h = 0.9 * Math.min(Math.max(h * Math.pow(ERROR_TOLERANCE * h / (2 * error), 0.25), hMin), hMax);
-    sols = rkf45(f, t, x, v, h);
-    error = Math.abs(sols[0] - sols[2]);    
+  let i = 0;
+  while( i<100) {
+    if(error > ERROR_TOLERANCE) {
+      h = 0.9 * Math.min(Math.max(h * Math.pow(ERROR_TOLERANCE * h / (2 * error), 0.25), H_MIN), H_MAX);
+      sols = rkf45(f, t, x, v, h);
+      error = Math.abs(sols[0] - sols[2]);    
+    }
+    i++;
   }
-  h = Math.min(Math.max(h * Math.pow(ERROR_TOLERANCE * h / (2 * error), 0.25), hMin), hMax);
+  h = Math.min(Math.max(h * Math.pow(ERROR_TOLERANCE * h / (2 * error), 0.25), H_MIN), H_MAX);
   
   return [sols[0], sols[1], h];
 }
 
 function rkf45(f, t, x, v, h){
-  let hMax = 0.3;
-  let hMin = 0.001;
 
   let k1, k2, k3, k4, k5, k6;
   let l1, l2, l3, l4, l5, l6;

@@ -73,7 +73,6 @@ export default {
       step: 0,
       pendulum: {},
       damping: {},
-      trail: false,
 
       numericalMethodSelected: '',
       nextStep: null,
@@ -213,6 +212,9 @@ export default {
       this.line.geometry.vertices[ 1 ].x = this.circle.position.x
       this.line.geometry.vertices[ 1 ].y = this.circle.position.y
       this.line.geometry.verticesNeedUpdate = true
+
+      x = this.pendulum.angle
+      v = this.pendulum.velocity
 
       // CHARTS UPDATE
       this.energyAux.time.push(this.time)
