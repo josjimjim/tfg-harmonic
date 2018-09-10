@@ -75,7 +75,7 @@ export default {
       sphere: null,
       line: null,
 
-      trail: true,
+      trail: false,
       trailLine: [],
       trailReload: false,
 
@@ -160,7 +160,9 @@ export default {
     },
     enableTrail(active) {
       this.trail = active
-      if(active) { this.trailReload = true }
+      if (active) {
+        this.trailReload = true
+      }
     },
     showChart(index) {
       this.clicked = index
@@ -220,30 +222,33 @@ export default {
       let x2 = this.pendulum.angleRotation
       let v2 = this.pendulum.velocityRotation
 
-      let nextStep1 = numericalResolution(this.pendulumAmplitudeEq, this.time, x1, v1, this.step)[this.numericalMethodSelected]
-      this.pendulum.angleAmplitude = nextStep1[0]
-      this.pendulum.velocityAmplitude = nextStep1[1]
+      if(x1!=0) {
 
-      let nextStep2 = numericalResolution(this.pendulumRotationEq, this.time, x2, v2, this.step)[this.numericalMethodSelected]
-      this.pendulum.angleRotation = nextStep2[0]
-      this.pendulum.velocityRotation = nextStep2[1]
+        let nextStep1 = numericalResolution(this.pendulumAmplitudeEq, this.time, x1, v1, this.step)[this.numericalMethodSelected]
+        this.pendulum.angleAmplitude = nextStep1[0]
+        this.pendulum.velocityAmplitude = nextStep1[1]
 
-      this.sphere.position.x =  (l * LENGTH_SCALE) * Math.sin(x1) * Math.sin(x2)
-      this.sphere.position.y = -(l * LENGTH_SCALE) * Math.cos(x1)
-      this.sphere.position.z =  (l * LENGTH_SCALE) * Math.sin(x1) * Math.cos(x2)
+        let nextStep2 = numericalResolution(this.pendulumRotationEq, this.time, x2, v2, this.step)[this.numericalMethodSelected]
+        this.pendulum.angleRotation = nextStep2[0]
+        this.pendulum.velocityRotation = nextStep2[1]
 
-      this.line.geometry.vertices[1].x = this.sphere.position.x
-      this.line.geometry.vertices[1].y = this.sphere.position.y
-      this.line.geometry.vertices[1].z = this.sphere.position.z
-      this.line.geometry.verticesNeedUpdate = true
+        this.sphere.position.x =  (l * LENGTH_SCALE) * Math.sin(x1) * Math.sin(x2)
+        this.sphere.position.y = -(l * LENGTH_SCALE) * Math.cos(x1)
+        this.sphere.position.z =  (l * LENGTH_SCALE) * Math.sin(x1) * Math.cos(x2)
+
+        this.line.geometry.vertices[1].x = this.sphere.position.x
+        this.line.geometry.vertices[1].y = this.sphere.position.y
+        this.line.geometry.vertices[1].z = this.sphere.position.z
+        this.line.geometry.verticesNeedUpdate = true
+
+        if (this.trail) {
+          let update = updateTrail(this.trailLine, this.sphere.position, this.trailReload)
+          this.trailLine.geometry.vertices = update.vertices
+          this.trailReload = update.trailReload
+        }
+      }
 
       this.time += this.step
-
-      if (this.trail) {
-        let update = updateTrail(this.trailLine, this.sphere.position, this.trailReload)
-        this.trailLine.geometry.vertices = update.vertices
-        this.trailReload = update.trailReload
-      }
 
       this.energyAux.time.push(this.time)
       this.energyAux.potential.push(sphEnergyP(GRAVITY, m, l, x1))

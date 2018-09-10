@@ -20,14 +20,12 @@
           <span v-text="status.pendulum.angleAmplitude"></span>
         </generic-input>
 
-        <generic-input label="Vel. amplitud">
+        <!-- <generic-input label="Vel. amplitud">
           <input type="range" min="0" max="5" step="0.5" v-model="status.pendulum.velocityAmplitude"
           @change="setStatus" class="slider is-small">
           <span v-text="status.pendulum.velocityAmplitude"></span>
-        </generic-input>
+        </generic-input> -->
 
-      </div>
-      <div class="column">
 
         <generic-input label="Rotación">
           <input type="range" min="0" max="360" step="1" v-model="status.pendulum.angleRotation"
@@ -35,14 +33,14 @@
           <span v-text="status.pendulum.angleRotation"></span>
         </generic-input>
 
+      </div>
+      <div class="column">
+
         <generic-input label="Vel. rotación">
           <input type="range" min="0" max="5" step="0.5" v-model="status.pendulum.velocityRotation"
           @change="setStatus" class="slider is-small" placeholder="Velocity rotation">
           <span v-text="status.pendulum.velocityRotation"></span>
         </generic-input>
-
-      </div>
-      <div class="column">
 
         <generic-input label="Longitud">
           <input type="range" min="1" max="3" step="0.2" v-model="status.pendulum.length"
@@ -50,20 +48,23 @@
           <span v-text="status.pendulum.length"></span>
         </generic-input>
 
+      </div>
+      <div class="column">
+
         <generic-input label="Masa">
           <input type="range" min="0.5" max="5" step="0.5" v-model="status.pendulum.mass"
           @change="setStatus" class="slider is-small">
           <span v-text="status.pendulum.mass"></span>
         </generic-input>
 
-      </div>
-      <div class="column">
-
         <generic-input label="Paso">
           <input type="range" min="0.01" max="0.1" step="0.01" v-model="status.step"
           @change="setStatus" class="slider is-small">
           <span v-text="status.step"></span>
         </generic-input>
+
+      </div>
+      <div class="column">
 
         <generic-input label="">
           <input id="enableTrail" type="checkbox" name="enableTrail" @click="enableTrail" class="switch is-small">
