@@ -61,13 +61,15 @@ export default {
   },
   data() {
     return {
+      anFrmID: null,
+      animate: false,
+
       scene: null,
       camera: null,
       renderer: null,
       canvas: null,
       circle: null,
       line: null,
-      animFrameID: null,
 
       time: 0,
       step: 0,
@@ -92,13 +94,15 @@ export default {
         potential: [],
         kinetic: []
       },
-      phase: [],
-      phaseAux: []
+      phase: {
+        value: null,
+        animate: false
+      },
     }
   },
   methods: {
     initContext(){
-      let context = initContext()
+      let context = initContext("canvas")
 
       this.renderer = context.renderer
       this.camera = context.camera
@@ -142,7 +146,7 @@ export default {
       this.energy.time.push(this.time)
       this.energy.potential.push(simEnergyP(GRAVITY, m, l, x))
       this.energy.kinetic.push(simEnergyK(m, l, v))
-      this.phase.push([x, v])
+      this.phase.value = {x: x, y: v, z: 0}
 
       this.scene.add(this.line)
       this.scene.add(this.circle)
@@ -186,64 +190,72 @@ export default {
       }
     },
     setAnimation(animate) {
-      if(animate){ this.move() }else{ this.stop() }
+      this.animate = animate  
+      this.phase.animate = animate
+      if(this.anFrmID == null){
+        this.move()
+      }
     },
     move() {
-      this.animFrameID = requestAnimationFrame( this.move )
+      this.anFrmID = requestAnimationFrame( this.move )
 
-      let m = this.pendulum.mass
-      let l = this.pendulum.length
-      let x = this.pendulum.angle
-      let v = this.pendulum.velocity
+      if(this.animate){
+        let m = this.pendulum.mass
+        let l = this.pendulum.length
+        let x = this.pendulum.angle
+        let v = this.pendulum.velocity
 
-      if(this.numericalMethodSelected != 'pendulumExact'){
-        this.nextStep = numericalResolution(this.pendulumEq, this.time, x, v, this.step)[this.numericalMethodSelected]
+        if(x!=0) {
+          if(this.numericalMethodSelected != 'pendulumExact'){
+            this.nextStep = numericalResolution(this.pendulumEq, this.time, x, v, this.step)[this.numericalMethodSelected]
 
-        this.time += parseFloat(this.nextStep[2])
-        this.step = parseFloat(this.nextStep[2])
-      }else{
-        this.nextStep = pendulumSimpleExact(this.time, this.angle0, this.velocity0, this.pendulum.length)
-        this.time += parseFloat(this.nextStep[2])
-      }
-      this.pendulum.angle = parseFloat(this.nextStep[0])
-      this.pendulum.velocity = parseFloat(this.nextStep[1])
-      this.circle.position.x =  l * Math.sin(this.pendulum.angle)
-      this.circle.position.y = -l * Math.cos(this.pendulum.angle)
-      this.line.geometry.vertices[ 1 ].x = this.circle.position.x
-      this.line.geometry.vertices[ 1 ].y = this.circle.position.y
-      this.line.geometry.verticesNeedUpdate = true
+            this.time += parseFloat(this.nextStep[2])
+            this.step = parseFloat(this.nextStep[2])
+          }else{
+            this.nextStep = pendulumSimpleExact(this.time, this.angle0, this.velocity0, this.pendulum.length)
+            this.time += parseFloat(this.nextStep[2])
+          }
+          this.pendulum.angle = parseFloat(this.nextStep[0])
+          this.pendulum.velocity = parseFloat(this.nextStep[1])
+          this.circle.position.x =  l * Math.sin(this.pendulum.angle)
+          this.circle.position.y = -l * Math.cos(this.pendulum.angle)
+          this.line.geometry.vertices[ 1 ].x = this.circle.position.x
+          this.line.geometry.vertices[ 1 ].y = this.circle.position.y
+          this.line.geometry.verticesNeedUpdate = true
 
-      x = this.pendulum.angle
-      v = this.pendulum.velocity
+          x = this.pendulum.angle
+          v = this.pendulum.velocity
 
-      // CHARTS UPDATE
-      this.energyAux.time.push(this.time)
-      this.energyAux.potential.push(simEnergyP(GRAVITY, m, l, x))
-      this.energyAux.kinetic.push(simEnergyK(m, l, v))
-      this.phaseAux.push([x, v])
+          // CHARTS UPDATE
+          this.energyAux.time.push(this.time)
+          this.energyAux.potential.push(simEnergyP(GRAVITY, m, l, x))
+          this.energyAux.kinetic.push(simEnergyK(m, l, v))
+          this.phase.value = {x: x, y: v, z: 0}
 
-      if(this.energyAux.time.length == MAX_CHART_VALUES) {
-        this.energy = this.energyAux
-        this.energyAux = {
-          time: [],
-          potential: [],
-          kinetic: []
+          if(this.energyAux.time.length == MAX_CHART_VALUES) {
+            this.energy = this.energyAux
+            this.energyAux = {
+              time: [],
+              potential: [],
+              kinetic: []
+            }
+          }
         }
-      }
-      if(this.phaseAux.length == MAX_CHART_VALUES) {
-        this.phase = this.phaseAux
-        this.phaseAux = []
       }
 
       this.renderer.render( this.scene, this.camera )
     },
     stop(){
-      cancelAnimationFrame(this.animFrameID)
+      cancelAnimationFrame(this.anFrmID)
     }
   },
   mounted() {
     this.initContext()
-    this.initScene()
+    this.initScene() 
+    this.move()
+  },
+  beforeDestroy() {
+    this.stop()
   }
 }
 </script>

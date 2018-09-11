@@ -29,13 +29,13 @@
 
       <div class="column">
         <generic-input label="Dureza">
-          <input type="range" min="5" max="15" step="0.05" v-model="status.pendulum.stiffness"
+          <input type="range" min="5" max="10" step="0.05" v-model="status.pendulum.stiffness"
                 @change="setStatus" class="slider is-small">
           <span v-text="status.pendulum.stiffness"></span>
         </generic-input>
 
         <generic-input label="Elongación">
-          <input type="range" min="-4" max="10" step="0.1" v-model="status.pendulum.elongation"
+          <input type="range" min="-4" max="5" step="0.1" v-model="status.pendulum.elongation"
                 @change="setStatus" class="slider is-small">
           <span v-text="status.pendulum.elongation"></span>
         </generic-input>

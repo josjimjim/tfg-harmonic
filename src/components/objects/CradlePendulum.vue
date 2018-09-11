@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     initContext(){
-      let context = initContext()
+      let context = initContext("canvas")
 
       this.renderer = context.renderer
       this.camera = context.camera

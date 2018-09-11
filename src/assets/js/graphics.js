@@ -10,17 +10,19 @@ export const MAX_CHART_POINTS = 1000;
 /**
  * Three.js context initializer.
  * 
- * @param {*} position Camera position.
- * @param {*} lookAt Camera look at point.
- * @param {*} rotation Enable controls rotation.
+ * @param {THREE.Vector3} position Camera position. Default = (0, 0, 100).
+ * @param {THREE.Vector3} lookAt Camera look at point. Default = (0, 0, 0).
+ * @param {Boolean} rotation Enable controls rotation. Default = false.
+ * @param {Number} width Render and canvas width. Default = CANVAS_WIDTH.
+ * @param {Number} height Render and canvas height. Default = CANVAS_HEIGHT.
  * @return Renderer, Camera, Controls and Canvas.
  */
-export function initContext(position = new THREE.Vector3(0, 0, 100), lookAt = new THREE.Vector3(0, 0, 0), rotation = false) {
+export function initContext(canvasID, position = new THREE.Vector3(0, 0, 100), lookAt = new THREE.Vector3(0, 0, 0), rotation = false, width = CANVAS_WIDTH, height = CANVAS_HEIGHT) {
     let renderer = new THREE.WebGLRenderer();
-    renderer.setSize(CANVAS_WIDTH, CANVAS_HEIGHT);
+    renderer.setSize(width, height);
     renderer.sortObjects = false;
 
-    let camera = new THREE.PerspectiveCamera(20, CANVAS_WIDTH / CANVAS_HEIGHT, 0.1, 1000);
+    let camera = new THREE.PerspectiveCamera(20, width / height, 0.1, 1000);
     camera.position.set(position.x, position.y, position.z);
     camera.lookAt(lookAt);
 
@@ -29,7 +31,7 @@ export function initContext(position = new THREE.Vector3(0, 0, 100), lookAt = ne
     controls.maxDistance = 900;
     controls.enableRotate = rotation;
 
-    let canvas = document.getElementById("canvas");
+    let canvas = document.getElementById(canvasID);
     canvas.appendChild(renderer.domElement);
 
     return {
@@ -43,10 +45,10 @@ export function initContext(position = new THREE.Vector3(0, 0, 100), lookAt = ne
 /**
  * 3D axis initializer
  * 
- * @param {*} x X axis length [-x, +x].
- * @param {*} y Y axis length [-y, +y].
- * @param {*} z Z axis length [-z, +z].
- * @param {*} offset XZ height
+ * @param {Number} x X axis length [-x, +x].
+ * @param {Number} y Y axis length [-y, +y].
+ * @param {Number} z Z axis length [-z, +z].
+ * @param {Number} offset XZ height
  * @return 3D axis
  */
 export function initAxis(x = 500, y = 500, z = 0, offset = 0) {
@@ -78,13 +80,65 @@ export function initAxis(x = 500, y = 500, z = 0, offset = 0) {
 }
 
 /**
+ * 3D axis initializer for charts
+ * 
+ * @param {Number} x X axis length [-x, +x].
+ * @param {Number} y Y axis length [-y, +y].
+ * @param {Number} z Z axis length [-z, +z].
+ * @param {Number} offset XZ height
+ * @return 3D axis
+ */
+export function initChartAxis(x = 500, y = 500, z = 0, offset = 0) {
+    let materialAxis = new THREE.LineBasicMaterial({ color: 0xd3d3d3 });
+
+    let geometryAxisX = new THREE.Geometry();
+    geometryAxisX.vertices.push(new THREE.Vector3(-x, offset, 0));
+    geometryAxisX.vertices.push(new THREE.Vector3(x, offset, 0));
+
+    let geometryAxisY = new THREE.Geometry();
+    geometryAxisY.vertices.push(new THREE.Vector3(0, -y, 0));
+    geometryAxisY.vertices.push(new THREE.Vector3(0, y, 0));
+
+    let geometryAxisZ = new THREE.Geometry();
+    geometryAxisZ.vertices.push(new THREE.Vector3(0, offset, -z));
+    geometryAxisZ.vertices.push(new THREE.Vector3(0, offset, z));
+
+    let axisX = new THREE.Line(geometryAxisX, materialAxis);
+    let axisY = new THREE.Line(geometryAxisY, materialAxis);
+    let axisZ = new THREE.Line(geometryAxisZ, materialAxis);
+
+    for(let i = -x; i < x; i+=0.5){
+        let geometryMarkX = new THREE.Geometry();
+        geometryMarkX.vertices.push(new THREE.Vector3(i,  0.05, 0));
+        geometryMarkX.vertices.push(new THREE.Vector3(i, -0.05, 0));
+        let markX = new THREE.Line(geometryMarkX, materialAxis);
+        axisX.add(markX)
+    } 
+
+    for(let i = -y; i < y; i+=0.5){
+        let geometryMarkY = new THREE.Geometry();
+        geometryMarkY.vertices.push(new THREE.Vector3( 0.05, i, 0));
+        geometryMarkY.vertices.push(new THREE.Vector3(-0.05, i, 0));
+        let markY = new THREE.Line(geometryMarkY, materialAxis);
+        axisY.add(markY)
+    } 
+
+    let axis = new THREE.Object3D();
+    axis.add(axisX);
+    axis.add(axisY);
+    axis.add(axisZ);
+
+    return axis;
+}
+
+/**
  * Pendulum trail initializer.
  * 
- * @param {*} position - Initial trail position points.
+ * @param {Number} position - Initial trail position points.
  * @return Trail object.
  */
-export function initTrail(position){
-    let lineMaterial = new THREE.MeshBasicMaterial({color: 0xff8800 });
+export function initTrail(position, color = 0xff8800){
+    let lineMaterial = new THREE.MeshBasicMaterial({color: color});
     let geometry = new THREE.Geometry();
     for (let i=0; i < MAX_TRAIL_POINTS; i++){
         geometry.vertices.push(new THREE.Vector3(position.x, position.y, position.z));
@@ -98,9 +152,9 @@ export function initTrail(position){
 /**
  * Add a new point to the trail. If trail is not enabled then points are reloaded.
  * 
- * @param {*} trailLine - Pendulum trail line.
- * @param {*} position - New point to add.
- * @param {*} trailReload - Reload trail line.
+ * @param {Number[]} trailLine - Pendulum trail line.
+ * @param {THREE.Vector3} position - New point to add.
+ * @param {Boolean} trailReload - Reload trail line.
  * @return Object with the complete list of vertices and the next status of trailReload.
  */
 export function updateTrail(trailLine, position, trailReload){
@@ -120,6 +174,14 @@ export function updateTrail(trailLine, position, trailReload){
     }
 }
 
+/**
+ * Detect a collision between two pendulum objects if the distance is less than both radius added
+ * 
+ * @param {Object} ball1 Pendulum one
+ * @param {Object} ball2 Pendulum two
+ * @param {Numbre} penetration Pentration index in colision.
+ * @return True if colides. False otherwise.
+ */
 export function circleColisionDetection(ball1, ball2, penetration = 0){
     let dx = Math.abs(ball1.circle.position.x - ball2.circle.position.x);
     let dy = Math.abs(ball1.circle.position.y - ball2.circle.position.y);

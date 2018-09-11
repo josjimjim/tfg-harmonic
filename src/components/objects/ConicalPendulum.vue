@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     initContext(){
-      let context = initContext(new THREE.Vector3(100, 20, 100), new THREE.Vector3(0, 0, 0), true)
+      let context = initContext("canvas", new THREE.Vector3(100, 20, 100), new THREE.Vector3(0, 0, 0), true)
 
       this.renderer = context.renderer
       this.camera = context.camera

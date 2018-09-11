@@ -2,11 +2,9 @@
   <div>
     <h3 class="title is-3">Péndulo esférico</h3>
     <div class="columns">
-
       <div class="column is-half">
         <div id="canvas"></div>
       </div>
-
       <div class="column is-half">   
         <div class="tabs">
           <ul>
@@ -18,16 +16,14 @@
         </div>
         <div>
           <energy-chart :input="energy" v-if="clicked == 0"></energy-chart>
-          <phase-chart :input="phase"  v-if="clicked == 1"></phase-chart>
+          <phase-chart :input="phase" v-if="clicked == 1"></phase-chart>
         </div>
       </div>
     </div>
-
     <div class="columns">
       <spherical-input class="column" @setStatus="setStatus" @setAnimation="setAnimation"
       @enableTrail="enableTrail"></spherical-input>
     </div>
-
     <div class="columns">
       <div class="column">
         <documentation type="spherical-pendulum"></documentation>
@@ -42,7 +38,7 @@ import SphericalInput from "../inputs/SphericalInput"
 import Documentation from "../Documentation"
 import { sphericalPendulum, sphEnergyP, sphEnergyK } from "@/assets/js/models.js"
 import { GRAVITY, numericalResolution } from "@/assets/js/math.js"
-import {initContext, initAxis, initTrail, updateTrail, addChartItem} from "@/assets/js/graphics.js"
+import {initContext, initAxis, initTrail, updateTrail} from "@/assets/js/graphics.js"
 import EnergyChart from '../charts/EnergyChart.vue'
 import PhaseChart from '../charts/PhaseChart.vue'
 
@@ -61,6 +57,7 @@ export default {
   data() {
     return {
       anFrmID: null,
+      animate: false,
 
       scene: null,
       camera: null,
@@ -94,14 +91,16 @@ export default {
         potential: [],
         kinetic: []
       },
-      phase: [],
-      phaseAux: []
+      phase: {
+        value: null,
+        animate: false
+      },
 
     }
   },
   methods: {
     initContext() {
-      let context = initContext(new THREE.Vector3(100, 20, 100), new THREE.Vector3(0, 0, 0), true)
+      let context = initContext("canvas", new THREE.Vector3(100, 20, 100), new THREE.Vector3(0, 0, 0), true)
 
       this.renderer = context.renderer
       this.camera = context.camera
@@ -150,7 +149,7 @@ export default {
       this.energy.time.push(this.time)
       this.energy.potential.push(sphEnergyP(GRAVITY, m, l, x1))
       this.energy.kinetic.push(sphEnergyK(m, l, x1, v1, v2))
-      this.phase.push([x1, v1])
+      this.phase.value = {x: x1, y: v1, z: 0}
 
       this.scene.add(this.trailLine)
       this.scene.add(this.line)
@@ -202,7 +201,6 @@ export default {
       this.pendulum.mass = parseFloat(status.pendulum.mass)
 
       this.step = parseFloat(status.step)
-
       this.numericalMethodSelected = status.numericalMethodSelected
 
       if (this.scene != null) {
@@ -210,74 +208,75 @@ export default {
       }
     },
     setAnimation(animate) {
-      if (animate) { this.move()  } else { this.stop() }
+      this.animate = animate  
+      this.phase.animate = animate
+      if(this.anFrmID == null){
+        this.move()
+      }
     },
     move() {
       this.anFrmID = requestAnimationFrame(this.move)
 
-      let m = this.pendulum.mass
-      let l = this.pendulum.length
-      let x1 = this.pendulum.angleAmplitude
-      let v1 = this.pendulum.velocityAmplitude
-      let x2 = this.pendulum.angleRotation
-      let v2 = this.pendulum.velocityRotation
+      if(this.animate){
+        let m = this.pendulum.mass
+        let l = this.pendulum.length
+        let x1 = this.pendulum.angleAmplitude
+        let v1 = this.pendulum.velocityAmplitude
+        let x2 = this.pendulum.angleRotation
+        let v2 = this.pendulum.velocityRotation
 
-      if(x1!=0) {
+        if(x1!=0) {
 
-        let nextStep1 = numericalResolution(this.pendulumAmplitudeEq, this.time, x1, v1, this.step)[this.numericalMethodSelected]
-        this.pendulum.angleAmplitude = nextStep1[0]
-        this.pendulum.velocityAmplitude = nextStep1[1]
+          let nextStep1 = numericalResolution(this.pendulumAmplitudeEq, this.time, x1, v1, this.step)[this.numericalMethodSelected]
+          this.pendulum.angleAmplitude = nextStep1[0]
+          this.pendulum.velocityAmplitude = nextStep1[1]
 
-        let nextStep2 = numericalResolution(this.pendulumRotationEq, this.time, x2, v2, this.step)[this.numericalMethodSelected]
-        this.pendulum.angleRotation = nextStep2[0]
-        this.pendulum.velocityRotation = nextStep2[1]
+          let nextStep2 = numericalResolution(this.pendulumRotationEq, this.time, x2, v2, this.step)[this.numericalMethodSelected]
+          this.pendulum.angleRotation = nextStep2[0]
+          this.pendulum.velocityRotation = nextStep2[1]
 
-        this.sphere.position.x =  (l * LENGTH_SCALE) * Math.sin(x1) * Math.sin(x2)
-        this.sphere.position.y = -(l * LENGTH_SCALE) * Math.cos(x1)
-        this.sphere.position.z =  (l * LENGTH_SCALE) * Math.sin(x1) * Math.cos(x2)
+          this.sphere.position.x =  (l * LENGTH_SCALE) * Math.sin(x1) * Math.sin(x2)
+          this.sphere.position.y = -(l * LENGTH_SCALE) * Math.cos(x1)
+          this.sphere.position.z =  (l * LENGTH_SCALE) * Math.sin(x1) * Math.cos(x2)
 
-        this.line.geometry.vertices[1].x = this.sphere.position.x
-        this.line.geometry.vertices[1].y = this.sphere.position.y
-        this.line.geometry.vertices[1].z = this.sphere.position.z
-        this.line.geometry.verticesNeedUpdate = true
+          this.line.geometry.vertices[1].x = this.sphere.position.x
+          this.line.geometry.vertices[1].y = this.sphere.position.y
+          this.line.geometry.vertices[1].z = this.sphere.position.z
+          this.line.geometry.verticesNeedUpdate = true
 
-        if (this.trail) {
-          let update = updateTrail(this.trailLine, this.sphere.position, this.trailReload)
-          this.trailLine.geometry.vertices = update.vertices
-          this.trailReload = update.trailReload
+          if (this.trail) {
+            let update = updateTrail(this.trailLine, this.sphere.position, this.trailReload)
+            this.trailLine.geometry.vertices = update.vertices
+            this.trailReload = update.trailReload
+          }
+        }
+
+        this.time += this.step
+
+        this.energyAux.time.push(this.time)
+        this.energyAux.potential.push(sphEnergyP(GRAVITY, m, l, x1))
+        this.energyAux.kinetic.push(sphEnergyK(m, l, x1, v1, v2))
+        this.phase.value = {x: x1, y: v1, z: 0}
+
+        if(this.energyAux.time.length == MAX_CHART_VALUES) {
+          this.energy = this.energyAux
+          this.energyAux = {
+            time: [],
+            potential: [],
+            kinetic: []
+          }
         }
       }
-
-      this.time += this.step
-
-      this.energyAux.time.push(this.time)
-      this.energyAux.potential.push(sphEnergyP(GRAVITY, m, l, x1))
-      this.energyAux.kinetic.push(sphEnergyK(m, l, x1, v1, v2))
-      this.phaseAux.push([x1, v1])
-
-      if(this.energyAux.time.length == MAX_CHART_VALUES) {
-        this.energy = this.energyAux
-        this.energyAux = {
-          time: [],
-          potential: [],
-          kinetic: []
-        }
-      }
-      
-      if(this.phaseAux.length == MAX_CHART_VALUES) {
-        this.phase = this.phaseAux
-        this.phaseAux = []
-      }
-
       this.renderer.render(this.scene, this.camera)
     },
-    stop() {
+    stop(){
       cancelAnimationFrame(this.anFrmID)
     }
   },
   mounted() {
     this.initContext()
     this.initScene()  
+    this.move()
   },
   beforeDestroy() {
     this.stop()
