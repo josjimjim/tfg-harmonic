@@ -90,13 +90,19 @@ export default {
         },
         step: 0.01,
 
-        numericalMethods: [],
         numericalMethodSelected: 'rungeKutta4'
       },
       clapper: {
         animate: false,
         text: 'Iniciar'
       }
+    }
+  },
+  computed: {
+    numericalMethods() { 
+      let numMeths = NUMERICAL_METHODS
+      numMeths.push({method:'pendulumExact', name: 'Solución exacta'})
+      return numMeths
     }
   },
   methods: {
@@ -115,8 +121,6 @@ export default {
     }
   },
   created(){
-    this.numericalMethods = NUMERICAL_METHODS
-    this.numericalMethods.push({method:'pendulumExact', name: 'Solución exacta'})
     this.setStatus()
   }
 }
