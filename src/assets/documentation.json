@@ -26,14 +26,14 @@
         "content": "Antes de adentrarnos en las simulaciones, debemos conocer el concepto básico sobre el que todas ellas se sustentan. Un objeto realiza un movimiento armónico simple (MAS) cuando su desplazamiento en función del tiempo está definido por la siguiente expresión."
       },
       "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Figure 1: Simple harmonic motion expression"
+        "src": "inicio/image091.png",
+        "alt": "Figura 1: Expresión del movimiento armónico simple"
       }
     },
     {
       "text": {
         "title": "",
-        "content": "Siendo A, la amplitud del movimiento, w la frecuencia angular y phi el desplazamiento del ángulo, o desfase. El término wt+phi comprende el ángulo en el tiempo t, conocido como fase."
+        "content": "Siendo A la amplitud del movimiento, ω la frecuencia angular y φ el desplazamiento del ángulo, o desfase. El término ωt + φ comprende el ángulo en el tiempo t , conocido como fase. "
       },
       "image": {
         "src": "",
@@ -43,17 +43,17 @@
     {
       "text": {
         "title": "",
-        "content": "Este movimiento se realiza de manera periódica entre gracias al seno en la expresión. Y tras definir los términos podemos observar como A es un modulador de la amplitud del seno, que siempre se desplaza entre dos valores [1, -1], acotando el movimiento a +-A. Esta periodicidad se puede definir con la expresión P = 2pi/w"
+        "content": "Tras definir los términos podemos observar como A es un modulador de la amplitud del seno, que siempre se desplaza entre dos valores [1, -1], acotando el movimiento a ±A . Este movimiento se realiza de manera periódica gracias al seno en la fórmula y se puede definir con la siguiente expresión, siendo este el tiempo que tarda el cuerpo en volver hasta su posición inicial tras un ciclo de movimiento. "
       },
       "image": {
-        "src": "",
-        "alt": ""
+        "src": "inicio/image098.png",
+        "alt": "Figura 2: Expresión del periodo en un MAS"
       }
     },
     {
       "text": {
         "title": "",
-        "content": "La fuerza en un MAS es conservativa, es decir, la diferencia de energías potenciales final e inicial siempre es 0, en caso de no existir rozamiento. Además, la energía potencial será máxima en los extremos, x=A, siendo además correspondiente a la energía total del sistema. Por el contrario, en la posición x = 0, la energía potencial será 0. También la energía mecánica total, Ep + Ek, se mantendrá siempre constante"
+        "content": "Podemos por tanto concluir con que un sistema que describa un MAS oscila con un periodo P en el rango que defina la amplitud. La fuerza en un MAS es conservativa, es decir, la diferencia de energías potenciales final e inicial siempre es 0, en caso de no existir rozamiento. Además, la energía potencial será máxima en los extremos, x=A, siendo correspondiente a la energía total del sistema. Por el contrario, en la posición x=0, la energía potencial será 0. También la energía mecánica total, E_p  + E_k, se mantendrá siempre constante"
       },
       "image": {
         "src": "",
@@ -73,7 +73,7 @@
     {
       "text": {
         "title": "",
-        "content": "Una vez entendidas las bases de un oscilador armónico podremos proseguir, ahora si, con el resto de modelos."
+        "content": "Una vez entendidas las bases de un oscilador armónico, podremos proseguir con la definición, ahora sí, de los sistemas que se han implementado."
       },
       "image": {
         "src": "",
@@ -85,67 +85,97 @@
     {
       "text": {
         "title": "Definicion",
-        "content": "Un péndulo simple es un oscilador armónico formado por un hilo rígido de longitud L y de masa despreciable del que cuelga una masa m, moviéndose de manera armónica alrededor de la normal al plano, con un ángulo theta respecto del eje perpendicular."
+        "content": "Un péndulo simple es un oscilador armónico formado por un hilo rígido de longitud L y de masa despreciable del que cuelga una masa m, moviéndose de manera armónica alrededor de la normal al plano, con un ángulo θ respecto del eje perpendicular."
       },
       "image": {
-        "src": "simple-pendulum.png",
-        "alt": "Figure 1: Simple pendulum schema"
+        "src": "simple-pendulum/simple-pendulum.png",
+        "alt": "Figura 1: Esquema del péndulo simple"
       }
     },
     {
       "text": {
-        "title": "Movimiento",
+        "title": "",
         "content": "El péndulo simple se define mediante la siguiente expresión, que se obtiene a partir de la relación entre energía potencial y energía cinética. Usando el principio de conservación de la energía, podemos deducir mediante el lagrangniano del sistema que el resultado obtenido es una EDO de segundo orden."
       },
       "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Figure 2: Equation of motion"
+        "src": "simple-pendulum/image106.png",
+        "alt": "Figura 2: Ecuación del movimiento"
       }
     },
     {
       "text": {
         "title": "",
-        "content": "La posición del péndulo en cualquier instante t viene dado por una composición de momentos armónicos en los ejes XY."
+        "content": "Un péndulo simple es un sistema no lineal debido a la presencia de la función seno en la expresión. Su posición en cualquier instante t viene dado por una composición de momentos armónicos en los ejes XY."
       },
       "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Figure 3: Pendulum position"
+        "src": "simple-pendulum/image109.png",
+        "alt": "Figura 3: Posición del péndulo"
       }
     },
     {
       "text": {
         "title": "",
-        "content": "Un péndulo simple es un sistema no lineal, ya que para valores del ángulo demasiado grandes, el sistema se vuelve inestable. ¿Y qué quiere decir esto? Significa que, si observamos el espacio de fases, existen valores de theta que hacen que el sistema no vuelva a su estado inicial, si no que se aleje de él, al contrario que si aplicamos valores muy pequeños, convirtiéndose en un sistema lineal. Esto es debido en parte a que el sistema puede rotar."
+        "content": "Cuando el sistema se encuentra en el punto más alto de su recorrido, su energía potencial es máxima y se define mediante la siguiente expresión a lo largo de todo su movimiento."
       },
       "image": {
-        "src": "home-placeholder.png",
-        "alt": "Figure 4: Phase space"
+        "src": "simple-pendulum/image111.png",
+        "alt": "Figura 4: Energía potencial"
       }
     },
     {
       "text": {
-        "title": "Solucion exacta",
-        "content": "Conociendo la no linealidad del sistema, la dinámica del sistema se vuelve irresoluble por métodos tradicionales de cálculo, teniendo que recurrir a métodos de aproximación numérica, como por ejemplo los métodos de Runge-Kutta. La definición del periodo, el tiempo que tarda en volver a su estado inicial, también vendrá sujeta a diferentes condiciones, y será definida por la siguiente expresión. El término integral se conoce como integral elíptica de primera especie, que no es más que una manera de medir el arco recorrido en una elipse, siendo k el módulo elíptico o excentricidad del giro."
+        "title": "Solución exacta",
+        "content": "Conociendo la no linealidad del sistema, el movimiento se vuelve irresoluble por métodos tradicionales de cálculo, teniendo que recurrir a métodos de aproximación numérica para obtener valores aproximados, pero no exactos, como por ejemplo usando alguno de los métodos de Runge-Kutta. La definición del periodo, el tiempo que tarda en volver a su estado inicial, también vendrá sujeta a diferentes condiciones, y será definida por la siguiente expresión. "
       },
       "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Figure 5: Period formula"
-      }
-    },
-    {
-      "text": {
-        "title": "",
-        "content": "Existen maneras de aproximar o resolver este tipo de integrales, como por ejemplo aproximando mediante series de Taylor o mediante el cálculo iterativo de la media aritmético-geométrica. Otra opción menos costosa puede ser usar algunas aproximaciones previamente calculadas del periodo, pero caben a cierto error. Y aun con la no linealidad, es posible encontrar una solución al sistema recurriendo al concepto de la integral elíptica. Necesitamos partir de la EDO inicial y a través de la energía se intenta linealizar el sistema, llegando a esta expresión."
-      },
-      "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Figure 5: Exact formula"
+        "src": "simple-pendulum/image112.png",
+        "alt": "Figura 5: Expresión exacta del periodo"
       }
     },
     {
       "text": {
         "title": "",
-        "content": "Es una ecuación que, teóricamente, funciona de manera óptima mientras el ángulo tienda al mínimo. Como se puede observar, aparece un nuevo término en la función: el seno elliptico de jacobi, que define a qué altura de una elipse nos encontramos, sería el equivalente al seno trigonométrico en una circunferencia; y K(x), que es la integral elíptica de primera especie, la misma que en el periodo. El seno de jacobi también puede ser aproximado mediante la media aritmético-geométrica, aunque existen consideraciones que pueden aplicarse, como aproximaciones para ángulos muy pequeños o muy grandes, comportándose como un sistema lineal."
+        "content": "El término integral se conoce como integral elíptica de primera especie, que no es más que una manera de medir el tiempo que se tarda en recorrer el arco completo de una elipse, siendo k el módulo elíptico o excentricidad del giro."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Existen maneras de aproximar o resolver este tipo de integrales, como por ejemplo aproximando mediante series de Taylor o mediante el cálculo iterativo de la media aritmético-geométrica. Otra opción menos costosa puede ser usar algunas aproximaciones previamente calculadas del periodo, pero dan lugar a cierto error. Estos métodos de resolución quedan explicados en el apartado de herramientas. "
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Aun con la no linealidad, es posible encontrar una solución al sistema recurriendo al concepto de la integral elíptica. Necesitamos partir de la EDO inicial y a través de la energía se intenta linealizar el sistema, llegando a esta expresión."
+      },
+      "image": {
+        "src": "simple-pendulum/image114.png",
+        "alt": "Figura 6: Solución exacta para v = 0"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Es una ecuación que, teóricamente, funciona de manera óptima mientras el ángulo tienda al mínimo. De manera experimental, sólo es práctica si el ángulo inicial es menor a 135º. "
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Como se puede observar, aparece un nuevo término en la función: el seno elíptico de Jacobi, que define a qué altura de una elipse nos encontramos, sería el equivalente al seno trigonométrico en una circunferencia; y K(x), que es la integral elíptica de primera especie, la misma que en el periodo. El seno de Jacobi también puede ser aproximado mediante la media aritmético-geométrica, aunque existen consideraciones que pueden aplicarse, como aproximaciones para ángulos muy pequeños o muy grandes, comportándose como un sistema lineal. "
       },
       "image": {
         "src": "",
@@ -160,14 +190,14 @@
         "content": "Una representación cotidiana de un péndulo simple puede verse en un particular sistema denominado Cuna de Newton o Péndulo de Newton. Es un sistema formado por N péndulos simples que, en estado de reposo, permanecen juntos, pero en estado de movimiento, el choque entre los diferentes elementos produce un intercambio del momento que se ve reflejado en el clásico movimiento."
       },
       "image": {
-        "src": "cradle-pendulum.png",
-        "alt": "Figure 1: Newton's cradle schema"
+        "src": "cradle-pendulum/cradle-pendulum.png",
+        "alt": "Figure 1: Esquema de la cuna de Newton"
       }
     },
     {
       "text": {
         "title": "",
-        "content": "Y es tan sencillo como un intercambio de momento a través del choque. Para explicarlo se utilizará un esquema sencillo, considerando solo el eje horizontal."
+        "content": "Y es tan sencillo como un intercambio de momento a través del choque. Para explicarlo se utilizará un esquema sencillo, considerando sólo el eje horizontal."
       },
       "image": {
         "src": "",
@@ -177,7 +207,7 @@
     {
       "text": {
         "title": "",
-        "content": "En un choque frontal de dos elementos con la misma masa y la misma aceleración, sin rozamiento, las fuerzas ejercidas resultará en 0, y a su vez, el momento ejercido también se hará nulo. Si esto no ocurriese, no se cumpliría con la conservación de la energía. Por tanto, podemos suponer que si uno de los elementos no ejerciera una fuerza igual y contraria a la del otro elemento, este traspasará su fuerza y momento al otro, para cumplir con que la relación de momentos sea conservativa."
+        "content": "En un choque frontal de dos elementos con la misma masa y la misma aceleración, sin rozamiento, las fuerzas ejercidas resultarán en 0, y a su vez, el momento ejercido también se hará nulo. Si esto no ocurriese, no se cumpliría con la conservación de la energía. Por tanto, podemos suponer que, si uno de los elementos no ejerciera una fuerza igual y contraria a la del otro elemento, éste traspasará su fuerza y momento al otro, para cumplir con que la relación de momentos sea conservativa. "
       },
       "image": {
         "src": "",
@@ -190,14 +220,14 @@
         "content": "Además de esto, debemos considerar que el choque será elástico, es decir, la energía cinética también se traspasa en el choque de manera equivalente, es decir, se conserva."
       },
       "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Figure 2: Newton's cradle motion"
+        "src": "cradle-pendulum/image121.png",
+        "alt": "Figure 2: Traspaso de velocidad en el choque para masa igual a 1"
       }
     },
     {
       "text": {
         "title": "",
-        "content": "Con estas dos expresiones podemos conocer cómo se realiza el traspaso de momento de un cuerpo a otro tras un choque y la velocidad final resultante en el choque. Así por ejemplo en un sistema de 4 elementos, si dos se moviesen en dirección hacia el resto a una velocidad constante, tras el choque se produciría un traspaso de momento y energía cinética a los dos cuerpos que estaban en reposo, haciendo que estos comenzaran a moverse y los dos iniciales se detuvieran."
+        "content": "Con estas dos expresiones podemos conocer cómo se realiza el traspaso de momento de un cuerpo a otro tras un choque y la velocidad final resultante. Así por ejemplo en un sistema de 4 elementos, si dos se moviesen en dirección hacia el resto a una velocidad constante, tras el choque se produciría un traspaso de momento y energía cinética a los dos cuerpos que estaban en reposo, haciendo que éstos comenzaran a moverse y los dos iniciales se detuvieran."
       },
       "image": {
         "src": "",
@@ -207,7 +237,7 @@
     {
       "text": {
         "title": "",
-        "content": "Volviendo al sistema armónico inicial, usando el mismo ejemplo de las cuatro bolas, solo necesitamos conocer la velocidad en el instante en el que los péndulos que se encontraran oscilando y la masa de estos para poner en marcha con una velocidad igual a los otros dos, contrarrestando la velocidad de los dos primeros."
+        "content": "Volviendo al sistema armónico inicial, usando el mismo ejemplo de las cuatro bolas, sólo necesitamos conocer la velocidad en el instante en el que los péndulos que se encontraran oscilando y la masa de éstos para poner en marcha con una velocidad igual a los otros dos, contrarrestando la velocidad de los dos primeros."
       },
       "image": {
         "src": "",
@@ -218,42 +248,120 @@
   "double-pendulum": [
     {
       "text": {
-        "title": "Lorem ipsum",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et vestibulum magna. Etiam et felis quis ante aliquet sollicitudin. Donec suscipit ipsum quis sapien ultrices, eu ullamcorper nisi tempor. Cras rhoncus justo nec nunc rutrum tincidunt. Sed sit amet ipsum aliquam sapien interdum interdum. Vivamus fermentum ornare quam, non egestas leo consequat ut. Cras eleifend sapien in tempus posuere. Duis in varius eros. Ut interdum fringilla massa, quis consequat metus convallis non. In pretium nulla eros, id congue tellus tempor eget. Maecenas lobortis ligula lectus, eget vestibulum ante viverra ut. Ut viverra elit nec felis bibendum congue. Sed at dolor imperdiet, gravida felis quis, blandit enim. In iaculis turpis eros, non commodo arcu hendrerit et. In ut velit eget diam congue pharetra sed ut sem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla placerat imperdiet nulla eu bibendum. Maecenas viverra feugiat risus at fermentum. Integer at mi id lacus molestie pretium et nec tellus. Nam sollicitudin neque vel neque sagittis accumsan. Nunc mattis lacus nisl. Nulla sed orci vestibulum, cursus odio nec, fringilla tortor. Aenean sollicitudin sollicitudin erat luctus blandit. Maecenas id efficitur enim. Pellentesque luctus porttitor ex, et placerat enim malesuada suscipit. Sed dictum odio eget sollicitudin dictum. Sed non leo sit amet augue auctor consequat. Nam laoreet diam tincidunt, cursus orci id, efficitur mauris. Aliquam laoreet est felis. Quisque ex sapien, dictum vitae diam vitae, maximus varius lectus. Donec a sapien turpis. Vivamus volutpat dui id lorem ornare malesuada. Aliquam sit amet tellus ac ante ullamcorper facilisis quis vel justo. Aenean dapibus quam egestas, dapibus diam sit amet, finibus nulla. Sed eget semper ex, at consequat mi. Donec maximus placerat ipsum, ut porta nunc porta in. Ut nec ultricies massa. Praesent mattis congue tellus, ac iaculis libero aliquet ut. Vestibulum libero felis, vestibulum id magna vel, tempus cursus eros. Morbi tincidunt dictum velit, vitae dictum nunc ornare ac. Mauris at luctus nibh, nec ultrices tortor. Curabitur iaculis, erat sit amet rhoncus aliquet, velit turpis consectetur ante, vitae faucibus sapien tellus sit amet lacus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut mi eros, tristique ac venenatis id, egestas quis lectus. Pellentesque sed egestas augue. Ut eu fringilla lectus. Nunc non diam faucibus, convallis urna sed, suscipit est. Cras egestas quam lorem, ut blandit mauris molestie ac."
-      },
-      "image": {
-        "src": "double-pendulum.png",
-        "alt": "Figure 1: Double pendulum schema"
-      }
-    },
-
-    {
-      "text": {
-        "title": "",
-        "content": "Vestibulum fringilla eros eget erat dignissim consequat. Nullam nec iaculis purus. Aenean feugiat erat nisi, in finibus urna aliquam nec. Mauris tempus a ex in ultricies. Fusce aliquam velit non est ornare, sit amet ornare metus tincidunt. Quisque est nisi, vehicula ac imperdiet at, laoreet vitae nisl. Etiam iaculis odio sit amet enim vulputate, a congue justo bibendum. Aenean luctus elementum rutrum. Curabitur congue, ligula tempor vehicula molestie, tortor arcu tincidunt eros, id ornare felis ligula et nulla. Suspendisse potenti. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam erat volutpat. Sed porta massa nisi, quis ultrices sem lobortis quis. Ut nec ultricies dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec iaculis sem at mi rhoncus, ut viverra lectus fermentum. Mauris ullamcorper, leo a dignissim bibendum, arcu eros ultrices libero, nec mollis velit lectus at quam. Morbi in facilisis magna, in sodales odio. Aenean consequat, sem in fringilla eleifend, diam mi posuere elit, nec condimentum lacus nisl eget augue."
+        "title": "Introducción",
+        "content": "Todos los modelos aquí presentados tienen algo en común, su comportamiento puede ser de una manera o de otra predecible. Eso quiere decir que independientemente de las condiciones iniciales podremos determinar con total certeza cual será el siguiente movimiento y que la trayectoria definida siempre será conocida con antelación. Estos sistemas son conocidos como deterministas, es decir, que pueden preverse."
       },
       "image": {
         "src": "",
         "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Aun así, existen fenómenos físicos en la naturaleza que, aun respondiendo a una naturaleza determinista, nos impiden relacionar las condiciones iniciales con la trayectoria que van a seguir en un futuro, describiéndose como movimientos aparentemente azarosos. Estos sistemas son conocidos como sistemas caóticos, en el que la variación mínima de las condiciones iniciales responde con un comportamiento, aunque determinista, totalmente distintos al que ocurría con otras condiciones iniciales."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "Teoría del caos",
+        "content": "La teoría del caos es la rama de las matemáticas encargada de estudiar los comportamientos dinámicos altamente sensibles a las condiciones iniciales. Estos sistemas se presentan en la naturaleza de distintas maneras y pueden darse tanto de una manera azarosa, en la que la gran cantidad de variables los vuelven totalmente impredecibles, o de una manera determinista, en los que su comportamiento con unas condiciones iniciales será completamente distinto del de otras, divergiendo completamente en la solución. ¿Pero qué condiciones deben darse para que un sistema sea caótico?<br/><ul><li>Sensibilidad a las condiciones iniciales: Como ya hemos comentado un sistema caótico es aquel en el que la leve variación de sus condiciones iniciales da como resultado cambios enormes en el comportamiento del sistema. Esto es conocido popularmente como Efecto mariposa.</li><li>Mezcla topológica: Un sistema no caótico mantiene un espacio de fases separado en regiones independientes. En un sistema caótico estas regiones terminan superponiéndose en algún instante de la evolución del sistema.</li><li>Movimiento oscilante: Un sistema caótico no se ajusta a órbitas cerradas ni puntos fijos.</li><ul>"
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Otro concepto importante a la hora de comprender los sistemas caóticos es el atractor. Un atractor comprende un conjunto de valores numéricos o soluciones en el espacio de fases al que se tiende a lo largo del tiempo."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "Péndulo doble",
+        "content": "Una vez comprendidos algunos conceptos básicos de la teoría del caos, vamos a simular un ejemplo clásico de la misma: el péndulo doble. "
+      },
+      "image": {
+        "src": "double-pendulum/double-pendulum.png",
+        "alt": "Figura 1: Esquema del péndulo doble"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Un péndulo doble es un sistema caótico determinista, en el que la variación inicial de sus condiciones iniciales da resultados dispares. Este sistema está formado por un péndulo compuesto, al igual que el péndulo simple, por una cuerda rígida de longitud L y masa despreciable del que cuelga una bola de masa m, aunque de esta bola cuelga otro péndulo de similares características. Su posición en el espacio se define mediante estas cuatro ecuaciones, dos para cada péndulo, que variarán en función del ángulo."
+      },
+      "image": {
+        "src": "double-pendulum/image124.png",
+        "alt": "Figura 2: Posición del péndulo"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Debido a su naturaleza oscilatoria podremos modelar su movimiento de la misma manera que un péndulo simple, a partir del lagrangniano conformado por sus energías, obteniendo dos EDOs."
+      },
+      "image": {
+        "src": "double-pendulum/image128.png",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": ""
+      },
+      "image": {
+        "src": "double-pendulum/image129.png",
+        "alt": "Figura 3: Ecuaciones del movimiento"
       }
     }
   ],
   "triple-pendulum": [
     {
       "text": {
-        "title": "Lorem ipsum",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et vestibulum magna. Etiam et felis quis ante aliquet sollicitudin. Donec suscipit ipsum quis sapien ultrices, eu ullamcorper nisi tempor. Cras rhoncus justo nec nunc rutrum tincidunt. Sed sit amet ipsum aliquam sapien interdum interdum. Vivamus fermentum ornare quam, non egestas leo consequat ut. Cras eleifend sapien in tempus posuere. Duis in varius eros. Ut interdum fringilla massa, quis consequat metus convallis non. In pretium nulla eros, id congue tellus tempor eget. Maecenas lobortis ligula lectus, eget vestibulum ante viverra ut. Ut viverra elit nec felis bibendum congue. Sed at dolor imperdiet, gravida felis quis, blandit enim. In iaculis turpis eros, non commodo arcu hendrerit et. In ut velit eget diam congue pharetra sed ut sem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla placerat imperdiet nulla eu bibendum. Maecenas viverra feugiat risus at fermentum. Integer at mi id lacus molestie pretium et nec tellus. Nam sollicitudin neque vel neque sagittis accumsan. Nunc mattis lacus nisl. Nulla sed orci vestibulum, cursus odio nec, fringilla tortor. Aenean sollicitudin sollicitudin erat luctus blandit. Maecenas id efficitur enim. Pellentesque luctus porttitor ex, et placerat enim malesuada suscipit. Sed dictum odio eget sollicitudin dictum. Sed non leo sit amet augue auctor consequat. Nam laoreet diam tincidunt, cursus orci id, efficitur mauris. Aliquam laoreet est felis. Quisque ex sapien, dictum vitae diam vitae, maximus varius lectus. Donec a sapien turpis. Vivamus volutpat dui id lorem ornare malesuada. Aliquam sit amet tellus ac ante ullamcorper facilisis quis vel justo. Aenean dapibus quam egestas, dapibus diam sit amet, finibus nulla. Sed eget semper ex, at consequat mi. Donec maximus placerat ipsum, ut porta nunc porta in. Ut nec ultricies massa. Praesent mattis congue tellus, ac iaculis libero aliquet ut. Vestibulum libero felis, vestibulum id magna vel, tempus cursus eros. Morbi tincidunt dictum velit, vitae dictum nunc ornare ac. Mauris at luctus nibh, nec ultrices tortor. Curabitur iaculis, erat sit amet rhoncus aliquet, velit turpis consectetur ante, vitae faucibus sapien tellus sit amet lacus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut mi eros, tristique ac venenatis id, egestas quis lectus. Pellentesque sed egestas augue. Ut eu fringilla lectus. Nunc non diam faucibus, convallis urna sed, suscipit est. Cras egestas quam lorem, ut blandit mauris molestie ac."
+        "title": "Péndulo triple",
+        "content": "Otro ejemplo no tan conocido, pero de igual comportamiento que el péndulo doble, es el péndulo triple."
       },
       "image": {
-        "src": "triple-pendulum.png",
-        "alt": "Figure 1: Double pendulum schema"
+        "src": "triple-pendulum/triple-pendulum.png",
+        "alt": "Figure 1: Esquema del péndulo triple"
       }
     },
-
     {
       "text": {
         "title": "",
-        "content": "Vestibulum fringilla eros eget erat dignissim consequat. Nullam nec iaculis purus. Aenean feugiat erat nisi, in finibus urna aliquam nec. Mauris tempus a ex in ultricies. Fusce aliquam velit non est ornare, sit amet ornare metus tincidunt. Quisque est nisi, vehicula ac imperdiet at, laoreet vitae nisl. Etiam iaculis odio sit amet enim vulputate, a congue justo bibendum. Aenean luctus elementum rutrum. Curabitur congue, ligula tempor vehicula molestie, tortor arcu tincidunt eros, id ornare felis ligula et nulla. Suspendisse potenti. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam erat volutpat. Sed porta massa nisi, quis ultrices sem lobortis quis. Ut nec ultricies dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec iaculis sem at mi rhoncus, ut viverra lectus fermentum. Mauris ullamcorper, leo a dignissim bibendum, arcu eros ultrices libero, nec mollis velit lectus at quam. Morbi in facilisis magna, in sodales odio. Aenean consequat, sem in fringilla eleifend, diam mi posuere elit, nec condimentum lacus nisl eget augue."
+        "content": "Su composición es igual a la del péndulo doble, pero del que a su vez cuelga una nueva masa que oscila en consonancia con el resto produciendo de nuevo un movimiento caótico ya que, la más leve variación de sus condiciones iniciales resultará en trayectorias completamente diferentes. La posición de las masas queda determinada por las siguientes fórmulas:"
+      },
+      "image": {
+        "src": "triple-pendulum/image131.png",
+        "alt": "Figura 2: Posición del péndulo triple"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Y de manera similar, podremos determinar su ecuación del movimiento gracias al lagrangniano del sistema, que resulta en una serie de ecuaciones que comienzan a volverse bastante extensas. "
+      },
+      "image": {
+        "src": "triple-pendulum/image137.png",
+        "alt": "Figura 3: Ecuaciones del movimiento"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Para aplicar los métodos numéricos será necesario extenderlas en función de la ecuación que se quiera resolver. Para facilitar la tarea podemos utilizar cualquier software que nos proporcione opciones de resolución de ecuaciones de manera simbólica. En nuestro caso se ha usado Sage para llevar a cabo esta tarea."
       },
       "image": {
         "src": "",
@@ -265,37 +373,7 @@
     {
       "text": {
         "title": "Definicion",
-        "content": "El péndulo esférico es un sistema similar al péndulo simple pero al que se ha añadido un grado de libertad. Un hilo rígido de longitud L y de masa despreciable del que cuelga una masa m, con un ángulo theta respecto del eje perpendicular que definirá la amplitud, la normal al plano XY en este caso; y un ángulo phi, que definirá la rotación realizada alrededor de la normal."
-      },
-      "image": {
-        "src": "spherical-pendulum.png",
-        "alt": "Figure 1: Spherical pendulum schema"
-      }
-    },
-    {
-      "text": {
-        "title": "",
-        "content": "Añadir una nueva coordenada hace replantear cómo debemos atacar el problema y, en este caso, el péndulo ha sido modelado mediante coordenadas esféricas. Esto resultará en ciertas condiciones más adelante."
-      },
-      "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Figure 2: Spherical pendulum position"
-      }
-    },
-    {
-      "text": {
-        "title": "",
-        "content": "Al igual que en el péndulo simple, la obtención de las ecuaciones que definen el movimiento del sistema partirán de la energía potencial y la energía cinética, construyendo con ellas el lagrangniano. Trás derivar por el ángulo de amplitud y el ángulo de rotación obtenemos las siguientes EDO."
-      },
-      "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Figure 3: Equations of motion"
-      }
-    },
-    {
-      "text": {
-        "title": "",
-        "content": "El péndulo esférico actuará de la misma manera que lo hace un péndulo simple siempre y cuando no ejerzamos una fuerza de rotación, vphi diferente de 0. En caso contrario, el péndulo comenzará a oscilar, produciendo esas figura en forma de cuenco tan características. "
+        "content": "El péndulo esférico es un sistema similar al péndulo simple, pero al que se ha añadido un grado de libertad. Un hilo rígido de longitud L y de masa despreciable del que cuelga una masa m, con un ángulo θ respecto del eje perpendicular que definirá la amplitud, la normal al plano XY en este caso; y un ángulo φ, que definirá la rotación realizada alrededor de la normal."
       },
       "image": {
         "src": "",
@@ -305,7 +383,37 @@
     {
       "text": {
         "title": "",
-        "content": "Aun así podremos comprobar como uno de los términos se encuentra multiplicado por la cotangente de la amplitud, y es que existe el problema para este modelado de que la contangente tiende a infinito al acercarse a 0, por tanto, una vez aplicamos una fuerza de rotación, debemos considerar que no sea demasiado baja, ya que entonces el movimiento oscilatorio degenerará y no continuará con el movimiento."
+        "content": "Añadir una nueva coordenada hace replantear cómo debemos atacar el problema y, en este caso, el péndulo ha sido modelado mediante coordenadas esféricas. Esto resultará en ciertas condiciones más adelante."
+      },
+      "image": {
+        "src": "spherical-pendulum/spherical-pendulum.png",
+        "alt": "Figura 1: Esquema del péndulo esférico"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Al igual que en el péndulo simple, la obtención de las ecuaciones que definen el movimiento del sistema partirá de la energía potencial y la energía cinética, construyendo con ellas el lagrangniano. Tras derivar por el ángulo de amplitud y el ángulo de rotación obtenemos las siguientes EDO."
+      },
+      "image": {
+        "src": "spherical-pendulum/image143.png",
+        "alt": "Figura 2: Ecuaciones del movimiento"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "El péndulo esférico actuará de la misma manera que lo hace un péndulo simple siempre y cuando no ejerzamos una fuerza de rotación, φ diferente de 0. En caso contrario, el péndulo comenzará a oscilar, produciendo esas figuras en forma de cuenco tan características.  "
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Aun así, podremos comprobar cómo uno de los términos se encuentra multiplicado por la cotangente de la amplitud, y es que existe el problema para este modelado de que la cotangente tiende a infinito al acercarse a 0, por tanto, una vez aplicamos una fuerza de rotación, debemos considerar que no sea demasiado baja, ya que entonces el movimiento oscilatorio degenerará y no continuará con el movimiento."
       },
       "image": {
         "src": "",
@@ -315,11 +423,11 @@
     {
       "text": {
         "title": "Pendulo de Focault",
-        "content": "Existe un caso especial del péndulo esférico, el cual es denominado, péndulo de Focault. Las oscilaciones producidas por este péndulo son debidas a la rotación de la tierra y a la inclinación que el péndulo tenga con respecto al eje terrestre. En este caso, las EDO que definen al péndulo esférico pueden ser sustituidas por una composición de movimientos armónicos simples para los ejes X e Y. Así que suponiendo un lugar en el planeta y teniendo en cuenta parámetros parámetros como la rotación de la tierra, podemos llegar hasta las ecuaciones que definen el movimiento del péndulo"
+        "content": "Existe un caso especial del péndulo esférico, el cual es denominado, péndulo de Foucault. Las oscilaciones producidas por este péndulo son debidas a la rotación de la tierra y a la inclinación que el péndulo tenga con respecto al eje terrestre. En este caso, las EDO que definen al péndulo esférico pueden ser sustituidas por una composición de movimientos armónicos simples para los ejes X e Y. Así que suponiendo un lugar en el planeta y teniendo en cuenta parámetros como la rotación de la tierra, podemos llegar hasta las ecuaciones que definen el movimiento del péndulo, donde ω_p es la frecuencia angular y ω es la velocidad de rotación."
       },
       "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Figure 4: Equations of motion"
+        "src": "spherical-pendulum/image148.png",
+        "alt": "Figura 3: Movimiento del péndulo de Focault"
       }
     }
   ],
@@ -327,17 +435,17 @@
     {
       "text": {
         "title": "Definicion",
-        "content": "El péndulo cónico es un sistema similar al péndulo esférico. Una masa m que pende de una varilla ígida de lóngitud L y se desplaza con tres grados de libertad, una amplitud de valor theta en el eje Z y una rotación sobre el plano XY de valor phi."
+        "content": "El péndulo cónico es un sistema similar al péndulo esférico. Una masa m que cuelga de una varilla rígida de longitud L y se desplaza con tres grados de libertad, una amplitud de valor θ en el eje Z y una rotación sobre el plano XY de valor θ."
       },
       "image": {
-        "src": "conical-pendulum.png",
-        "alt": "Figure 1: Conical pendulum schema"
+        "src": "conical-pendulum/conical-pendulum.png",
+        "alt": "Figura 1: Esquéma del péndulo cónico"
       }
     },
     {
       "text": {
-        "title": "Movimiento",
-        "content": "Pero a diferencia del péndulo esférico, un péndulo cónico no realiza un movimiento armónico, si no un movimiento circular uniforme producido por una fuerza centrífuga que hará que el péndulo comience a rotar. Esta fuerza centrifuga es producida por un aumento de la velocidad de rotación, o frecuenca angular. Cuando esta velocidad alcanza un valor crítico, el péndulo abandona el estado de reposo y comienza a elevarse, girando alrededor del eje Z."
+        "title": "",
+        "content": "Pero a diferencia del péndulo esférico, un péndulo cónico no realiza un movimiento armónico, si no un movimiento circular uniforme producido por una fuerza centrífuga que hará que el péndulo comience a rotar. Esta fuerza centrífuga es producida por un aumento de la velocidad de rotación, o frecuencia angular, ω. Cuando esta velocidad alcanza un valor crítico, el péndulo abandona el estado de reposo y comienza a elevarse, girando alrededor del eje Z."
       },
       "image": {
         "src": "",
@@ -347,21 +455,41 @@
     {
       "text": {
         "title": "",
-        "content": "Para modelar el péndulo cónico partimos de la definición de periodo."
+        "content": "Para modelar el péndulo cónico partimos de la tensión del sistema, suponiendo una masa que se encuentra en equilibrio en el eje central."
       },
       "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Figure 2: Period formula"
+        "src": "conical-pendulum/image152.png",
+        "alt": "Figura 2: Fórmula del periodo"
       }
     },
     {
       "text": {
         "title": "",
-        "content": "Sabemos que existe una relación entre la frecuencia angular del modelo que produce la fuerza centripeta y la tensión producida por el hilo que sujeta la masa. Esta aceleración, centripeta en este caso, podemos hayarla con la siguiente expresión. Solo necesitamos sustituir y despejar la ecuación para descubrir como varía el ángulo en función de la velocidad angular."     
+        "content": "Sabemos que existe una relación entre la frecuencia angular del modelo que produce la fuerza centrípeta y la tensión producida por el hilo que sujeta la masa. Esta aceleración, descrita por la masa corresponde la de un movimiento circular uniforme. "     
       },
       "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Figure 3: Centripetal acceleration and centrifugal force"
+        "src": "conical-pendulum/image153.png",
+        "alt": "Figura 3: Aceleración centrípeta"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Sólo necesitamos igualar ambas expresiones a través de la segunda ley de Newton para obtener dos soluciones, una correspondiente al sistema en reposo, sin alcanzar la velocidad crítica y otra en movimiento."     
+      },
+      "image": {
+        "src": "conical-pendulum/image154.png",
+        "alt": "Figura 4: Estados del péndulo"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Una vez conocida la expresión que indica cómo se mueve el péndulo, debemos también averiguar cuál es la expresión que representa esa velocidad crítica que se debe alcanzar, que dependerá de la energía del sistema. Cuando la energía alcance su valor crítico entonces podremos decir que el péndulo comienza a moverse. Este valor crítico de la velocidad se consigue mediante la siguiente expresión."     
+      },
+      "image": {
+        "src": "conical-pendulum/image156.png",
+        "alt": "Figura 5: Frecuencia angular crítica"
       }
     }
   ],
@@ -369,7 +497,7 @@
     {
       "text": {
         "title": "Definicion",
-        "content": "Los movimientos amortiguados corresponden a movimientos armónicos simples. en los que existe una serie de fuerzas externas, producidas generalmente por un muelle, en la cual una “empuja” la masa a un ritmo constante k y otra que resiste la expansión del muelle, de igual constante pero de signo contrario, que devuelve al sistema a su estado inicial y lo mantienen en oscilación."
+        "content": "Los movimientos amortiguados corresponden a movimientos armónicos simples en los que existen una serie de fuerzas externas, producidas generalmente por un muelle, en la cual una “empuja” la masa a un ritmo constante k y otra que resiste la expansión del muelle, de igual constante, pero de signo contrario, que devuelve al sistema a su estado inicial y lo mantienen en oscilación."
       },
       "image": {
         "src": "",
@@ -379,39 +507,79 @@
     {
       "text": {
         "title": "",
-        "content": "El péndulo amortiguado es un oscilador armónico formado por un muelle de longitud L y masa despreciable del que pende una masa m. El muelle tiene una constante elástica k que le permite elongarse hasta una longitud n. Este sistema se mueve en los ejes XY, siendo modelado por la unión de dos modos de oscilación, la de un péndulo simple, en el movimiento oscilante; y la de un muelle elástico, en el movimiento de contracción."
+        "content": "El péndulo amortiguado es un oscilador armónico formado por un muelle de longitud L y masa despreciable del que pende una masa m. El muelle tiene una constante elástica k que le permite elongarse hasta una longitud x. Este sistema se mueve en los ejes XY, siendo modelado por la unión de dos modos de oscilación, la de un péndulo simple, en el movimiento oscilante; y la de un muelle elástico, en el movimiento de contracción. "
       },
       "image": {
-        "src": "spring-pendulum.png",
-        "alt": "Figure 1: Spring pendulum schema"
+        "src": "spring-pendulum/spring-pendulum.png",
+        "alt": "Figura 1: Esquéma del péndulo amortiguado"
       }
     },
     {
       "text": {
         "title": "",
-        "content": "A diferencia del péndulo simple y debido a sus dos grados de libertad, se define por dos ecuaciones de movimiento, una que indica cómo varía el ángulo con respecto a la vertical y otra como varía la elongación del muelle. Estas expresiones se obtienen a través del lagrangniano que aúna las energías potenciales y cinéticas de los dos movimientos. La energía potencial del péndulo será 0 solo cuando el sistema esté en reposo, por ejemplo algún estado en el que la elongación x se encuentre a 0. Debido a la no linealidad del sistema, no puede una representación exacta del movimiento, por ello será necesario el uso de métodos numéricos de aproximación."
+        "content": "A diferencia del péndulo simple y debido a sus dos grados de libertad, se define por dos ecuaciones de movimiento, una que indica cómo varía el ángulo con respecto a la vertical y otra cómo varía la elongación del muelle. Estas expresiones se obtienen a través del lagrangniano que aúna las energías potenciales y cinéticas de los dos movimientos. La energía potencial del péndulo será 0 sólo cuando el sistema esté en reposo, por ejemplo, algún estado en el que la elongación x se encuentre a 0. Debido a la no linealidad del sistema, no se puede dar una representación exacta del movimiento, por ello será necesario el uso de métodos numéricos de aproximación."
       },
       "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Figure 2: Equations of motion"
+        "src": "spring-pendulum/image118.png",
+        "alt": "Figura 2: Ecuaciones del movimiento"
       }
     }
   ],
   "euler": [
     {
       "text": {
-        "title": "Euler Method",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor varius, viverra est at, laoreet turpis. Phasellus id nulla elit. Quisque fringilla nisi sit amet elit tempor, id tincidunt velit sodales. Nulla id consequat nulla. Vivamus porta placerat sem nec facilisis. Pellentesque consectetur placerat mi vel placerat. Sed vel eros mollis, vestibulum mi non, luctus purus. Donec et molestie nisl, sed euismod nunc. Phasellus at porta purus."
+        "title": "Introducción a los métodos numéricos",
+        "content": "Durante todo el proyecto realizaremos una serie de simulaciones que vendrán modeladas en base a una o varias ecuaciones diferenciales ordinarias, que se obtendrán en apartados siguientes. Las EDO son ecuaciones diferenciales en las que una función y una sola variable independiente, por ejemplo, x(t), se relaciona con sus derivadas. Las EDO nos sirven para comprender cómo varían ciertas variables físicas. Un ejemplo básico sería la velocidad, que se obtiene en base a la derivada de la posición con respecto al tiempo. O la aceleración, que se obtiene con respecto a la segunda derivada de la posición, o en base a la velocidad."
       },
       "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Placeholder"
+        "src": "",
+        "alt": ""
       }
     },
     {
       "text": {
         "title": "",
-        "content": "Vestibulum purus elit, semper at rhoncus at, tempus quis lacus. Morbi volutpat in lectus et posuere. Quisque ut tincidunt nunc. Praesent dolor dui, rhoncus sed vestibulum nec, tempus et libero. Morbi vel condimentum lacus. Donec ac purus sed neque volutpat rhoncus. Phasellus sit amet est vitae felis feugiat feugiat. Fusce in dolor accumsan lorem malesuada dictum vel vitae magna. Vestibulum sit amet pharetra massa, eu lobortis sem. Sed in sollicitudin velit, sit amet vulputate lorem. Donec risus odio, facilisis id nibh sit amet, semper posuere sapien. Mauris gravida tortor quis ex egestas interdum. Proin quis posuere ante, eget volutpat neque. Aliquam mi lectus, molestie sit amet risus sollicitudin, rhoncus porta tortor. Duis sed elit a velit pellentesque elementum nec non urna. Praesent risus ligula, egestas ut ultrices sed, elementum finibus urna."
+        "content": "En muchas ocasiones estas ecuaciones no pueden resolverse por medio de métodos analíticos; en otras, simplemente no necesitamos el resultado exacto de la expresión y puede servirnos una aproximación. Para estos casos existen los llamados métodos numéricos de resolución para EDO. Estos métodos se encargan de buscar valores aproximados de la solución de manera iterativa, haciéndola crecer en función de un paso y son ideales a la hora de realizar simulaciones por ordenador. "
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "El paso se define como la diferencia entre dos instantes de tiempo (o la variable independiente que se suponga) dividido entre el número de intervalos que queramos producir."
+      },
+      "image": {
+        "src": "euler/image006.png",
+        "alt": "Figura 1: Paso entre soluciones"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Con esta introducción y el concepto de paso en mente, haremos un repaso por alguno de estos métodos más conocidos y que, como veremos, llevan mucho tiempo entre nosotros."
+      },
+      "image": {
+        "src": "",
+        "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "Método de Euler",
+        "content": "El primero de los métodos de numéricos de aproximación creado es el método de Euler. Tratado por primera vez en 1768 en su libro Institutionum calculi integralis, Euler planteó un método de resolución para EDO donde la derivada se aproxima mediante un cociente incremental. Consecutivos cálculos sobre el método darán como resultado una sucesión de puntos que corresponderán a una aproximación de la curva dada. Este método se define mediante la siguiente expresión, donde y(x_0) es el dato inicial:"
+      },
+      "image": {
+        "src": "euler/image008.png",
+        "alt": "Figura 2: Método de Euler"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "El método de Euler no se encuentra exento de errores, ya que cuanto mayor sea el valor de h, más nos alejaremos de la curva exacta obteniendo peores aproximaciones consecuentemente; y en caso de suponer un paso muy pequeño, deberemos considerar el posible coste computacional que acarrearía esta decisión."
       },
       "image": {
         "src": "",
@@ -422,40 +590,60 @@
   "heun": [
     {
       "text": {
-        "title": "Heun's Method",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor varius, viverra est at, laoreet turpis. Phasellus id nulla elit. Quisque fringilla nisi sit amet elit tempor, id tincidunt velit sodales. Nulla id consequat nulla. Vivamus porta placerat sem nec facilisis. Pellentesque consectetur placerat mi vel placerat. Sed vel eros mollis, vestibulum mi non, luctus purus. Donec et molestie nisl, sed euismod nunc. Phasellus at porta purus."
+        "title": "Método de Heun",
+        "content": "Similar al primer método nos encontramos con el método de Heun, o Euler modificado, que resulta en una mejora del método de Euler, donde nuevos términos aparecen:"
       },
       "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Placeholder"
+        "src": "heun/image010.png",
+        "alt": "Figura 1: Estimaciones de la derivada"
       }
     },
     {
       "text": {
         "title": "",
-        "content": "Vestibulum purus elit, semper at rhoncus at, tempus quis lacus. Morbi volutpat in lectus et posuere. Quisque ut tincidunt nunc. Praesent dolor dui, rhoncus sed vestibulum nec, tempus et libero. Morbi vel condimentum lacus. Donec ac purus sed neque volutpat rhoncus. Phasellus sit amet est vitae felis feugiat feugiat. Fusce in dolor accumsan lorem malesuada dictum vel vitae magna. Vestibulum sit amet pharetra massa, eu lobortis sem. Sed in sollicitudin velit, sit amet vulputate lorem. Donec risus odio, facilisis id nibh sit amet, semper posuere sapien. Mauris gravida tortor quis ex egestas interdum. Proin quis posuere ante, eget volutpat neque. Aliquam mi lectus, molestie sit amet risus sollicitudin, rhoncus porta tortor. Duis sed elit a velit pellentesque elementum nec non urna. Praesent risus ligula, egestas ut ultrices sed, elementum finibus urna."
+        "content": ""
       },
       "image": {
-        "src": "",
-        "alt": ""
+		"src": "heun/image012.png",
+        "alt": "Figura 2: Media de las dos estimaciones"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "En esta ocasión no solo nos encontramos con la estimación de una sola pendiente sino 2, donde  (k1) y (k2) son una aproximación de la derivada en dos pasos consecutivos respectivamente. La media de estas dos pendientes dará como resultado un nuevo punto cercano a la curva exacta y una aproximación más precisa a la del método de Euler."
+      },
+      "image": {
+		"src": "heun/image012.png",
+        "alt": "Figura 2: Media de las dos estimaciones"
       }
     }
   ],
   "rungeKutta4": [
     {
       "text": {
-        "title": "Runge-Kutta 4th Order",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor varius, viverra est at, laoreet turpis. Phasellus id nulla elit. Quisque fringilla nisi sit amet elit tempor, id tincidunt velit sodales. Nulla id consequat nulla. Vivamus porta placerat sem nec facilisis. Pellentesque consectetur placerat mi vel placerat. Sed vel eros mollis, vestibulum mi non, luctus purus. Donec et molestie nisl, sed euismod nunc. Phasellus at porta purus."
+        "title": "Runge-Kutta de orden 4",
+        "content": "El método de Runge-Kutta clásico, Runge-Kutta de 4 orden o simplemente RK4, es el método más ampliamente usado de entre todos los métodos de aproximación numérica. Su planteamiento presenta una evolución al presentado en el método de Euler, siendo esta una variación en la que nos encontramos con cuatro pasos previos hasta llegar a la aproximación."
       },
       "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Placeholder"
+		"src": "runge-kutta-4/image015.png",
+        "alt": ""
       }
     },
     {
       "text": {
         "title": "",
-        "content": "Vestibulum purus elit, semper at rhoncus at, tempus quis lacus. Morbi volutpat in lectus et posuere. Quisque ut tincidunt nunc. Praesent dolor dui, rhoncus sed vestibulum nec, tempus et libero. Morbi vel condimentum lacus. Donec ac purus sed neque volutpat rhoncus. Phasellus sit amet est vitae felis feugiat feugiat. Fusce in dolor accumsan lorem malesuada dictum vel vitae magna. Vestibulum sit amet pharetra massa, eu lobortis sem. Sed in sollicitudin velit, sit amet vulputate lorem. Donec risus odio, facilisis id nibh sit amet, semper posuere sapien. Mauris gravida tortor quis ex egestas interdum. Proin quis posuere ante, eget volutpat neque. Aliquam mi lectus, molestie sit amet risus sollicitudin, rhoncus porta tortor. Duis sed elit a velit pellentesque elementum nec non urna. Praesent risus ligula, egestas ut ultrices sed, elementum finibus urna."
+        "content": ""
+      },
+      "image": {
+		"src": "runge-kutta-4/image016.png",
+        "alt": "Figura 1: Método de Runge-Kutta"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Similar al concepto de Heun, esta vez se estimarán cuatro pendientes para las que se realizarán sendas aproximaciones de la derivada (k1,k2,k3,k4) en dos pasos consecutivos y dos intermedios, donde la media de estas aproximaciones dará como resultado la aproximación final, obteniendo un error mucho menor que en métodos anteriores."
       },
       "image": {
         "src": "",
@@ -466,18 +654,48 @@
   "rungeKuttaFehlberg45": [
     {
       "text": {
-        "title": "Runge-Kutta-Fehlberg 4th & 5th Order",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor varius, viverra est at, laoreet turpis. Phasellus id nulla elit. Quisque fringilla nisi sit amet elit tempor, id tincidunt velit sodales. Nulla id consequat nulla. Vivamus porta placerat sem nec facilisis. Pellentesque consectetur placerat mi vel placerat. Sed vel eros mollis, vestibulum mi non, luctus purus. Donec et molestie nisl, sed euismod nunc. Phasellus at porta purus."
+        "title": "Tableros de Butcher",
+        "content": "Existe toda una familia de métodos derivados del método de Runge-Kutta ya que es posible generalizar la estructura de este método para construir otros equivalentes de una manera sencilla y con una variación del error diferente, mediante el conocido como Tablero de Butcher, en el que a partir de unos pesos determinados podemos obtener una matriz de valores que conformarán el método. La siguiente expresión define la forma generalizada de cada una de las soluciones obtenidas en el método. Como vemos, se parte directamente del método de Euler, al que se han añadido los valores a_(s,n),b_(n )y c_s, siendo, los dos últimos el peso de la solución y la variación del tamaño del paso, mientras que el primer valor se calculará en torno a los demás."
       },
       "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Placeholder"
+        "src": "runge-kutta-fehlberg/image020.png",
+        "alt": ""
       }
     },
     {
       "text": {
         "title": "",
-        "content": "Vestibulum purus elit, semper at rhoncus at, tempus quis lacus. Morbi volutpat in lectus et posuere. Quisque ut tincidunt nunc. Praesent dolor dui, rhoncus sed vestibulum nec, tempus et libero. Morbi vel condimentum lacus. Donec ac purus sed neque volutpat rhoncus. Phasellus sit amet est vitae felis feugiat feugiat. Fusce in dolor accumsan lorem malesuada dictum vel vitae magna. Vestibulum sit amet pharetra massa, eu lobortis sem. Sed in sollicitudin velit, sit amet vulputate lorem. Donec risus odio, facilisis id nibh sit amet, semper posuere sapien. Mauris gravida tortor quis ex egestas interdum. Proin quis posuere ante, eget volutpat neque. Aliquam mi lectus, molestie sit amet risus sollicitudin, rhoncus porta tortor. Duis sed elit a velit pellentesque elementum nec non urna. Praesent risus ligula, egestas ut ultrices sed, elementum finibus urna."
+        "content": ""
+      },
+      "image": {
+        "src": "runge-kutta-fehlberg/butcher1.png",
+        "alt": "Figura 1: Composición del tablero de Butcher"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "Así, por ejemplo, usando la estructura anterior podemos construir el tablero de Butcher del método de Runge-Kutta."
+      },
+      "image": {
+        "src": "runge-kutta-fehlberg/butcher2.png",
+        "alt": "Figura 2: Tablero de Butcher para RK4"
+      }
+    },
+    {
+      "text": {
+        "title": "Runge-Kutta-Fehlberg de orden 4 y 5",
+        "content": "Partiendo de este esquema es posible construir otros métodos. Uno muy interesante y bastante usado en simulaciones es el método de Runge-Kutta-Fehlberg de orden 4 y 5, que usa dos aproximaciones, una de orden 4 y otra de orden 5. El tablero de Butcher nos permite representarlo sin ocupar demasiado espacio, de otra manera, se extendería demasiado."
+      },
+      "image": {
+        "src": "runge-kutta-fehlberg/butcher3.png",
+        "alt": "Figura 2: Tablero de Butcher para RKF45"
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": "En este método se juega con la idea del paso adaptativo, el incremento o decremento del paso en cada iteración, comparando el error producido por sus dos aproximaciones. Tomando una tolerancia al error como referencia, si el error producido por ambas aproximaciones es menor, entonces el paso será optimo; en caso contrario será necesario variar el paso y recalcular la solución tantas veces sea necesario para así obtener una solución con el mínimo error. Este paso adaptativo se realiza en cada iteración."
       },
       "image": {
         "src": "",
@@ -488,22 +706,32 @@
   "agm": [
     {
       "text": {
-        "title": "Arithmetic-Geometric Mean",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor varius, viverra est at, laoreet turpis. Phasellus id nulla elit. Quisque fringilla nisi sit amet elit tempor, id tincidunt velit sodales. Nulla id consequat nulla. Vivamus porta placerat sem nec facilisis. Pellentesque consectetur placerat mi vel placerat. Sed vel eros mollis, vestibulum mi non, luctus purus. Donec et molestie nisl, sed euismod nunc. Phasellus at porta purus."
+        "title": "Média aritmético-geométrica",
+        "content": "Otra herramienta que resulta de utilidad, sobre todo a la hora de aproximar integrales, es la conocida como media aritmético-geométrica. En este método se realiza de manera iterativa la media aritmética y la media geométrica de dos valores hasta hacerlos converger en el mismo valor."
       },
       "image": {
-        "src": "formula-placeholder.png",
-        "alt": "Placeholder"
+        "src": "",
+        "alt": ""
       }
     },
     {
       "text": {
         "title": "",
-        "content": "Vestibulum purus elit, semper at rhoncus at, tempus quis lacus. Morbi volutpat in lectus et posuere. Quisque ut tincidunt nunc. Praesent dolor dui, rhoncus sed vestibulum nec, tempus et libero. Morbi vel condimentum lacus. Donec ac purus sed neque volutpat rhoncus. Phasellus sit amet est vitae felis feugiat feugiat. Fusce in dolor accumsan lorem malesuada dictum vel vitae magna. Vestibulum sit amet pharetra massa, eu lobortis sem. Sed in sollicitudin velit, sit amet vulputate lorem. Donec risus odio, facilisis id nibh sit amet, semper posuere sapien. Mauris gravida tortor quis ex egestas interdum. Proin quis posuere ante, eget volutpat neque. Aliquam mi lectus, molestie sit amet risus sollicitudin, rhoncus porta tortor. Duis sed elit a velit pellentesque elementum nec non urna. Praesent risus ligula, egestas ut ultrices sed, elementum finibus urna."
+        "content": ""
       },
       "image": {
-        "src": "",
+        "src": "agm/image076.png",
         "alt": ""
+      }
+    },
+    {
+      "text": {
+        "title": "",
+        "content": ""
+      },
+      "image": {
+        "src": "agm/image077.png",
+        "alt": "Figura 1: Proceso de la média aritmético-geométrica"
       }
     }
   ]
