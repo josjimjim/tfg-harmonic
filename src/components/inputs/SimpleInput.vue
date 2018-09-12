@@ -89,20 +89,22 @@ export default {
           active: false
         },
         step: 0.01,
-
+        
         numericalMethodSelected: 'rungeKutta4'
       },
       clapper: {
         animate: false,
         text: 'Iniciar'
-      }
+      },
+
+      numericalMethodsAux: [],
     }
   },
   computed: {
     numericalMethods() { 
-      let numMeths = NUMERICAL_METHODS
-      numMeths.push({method:'pendulumExact', name: 'Solución exacta'})
-      return numMeths
+      this.numericalMethodsAux = this.numericalMethodsAux.concat(NUMERICAL_METHODS)
+      this.numericalMethodsAux.push({method:'pendulumExact', name: 'Solución exacta'})
+      return this.numericalMethodsAux
     }
   },
   methods: {
@@ -122,6 +124,9 @@ export default {
   },
   created(){
     this.setStatus()
+  },
+  destroyed() {
+    this.numericalMethodsAux.pop()
   }
 }
 </script>

@@ -51,7 +51,7 @@ export default {
           }
       }
       return contains ? NUMERICAL_METHODS : null
-    } 
+    }
   }
 }
 </script>

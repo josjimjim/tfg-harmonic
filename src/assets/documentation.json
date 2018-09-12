@@ -191,7 +191,7 @@
       },
       "image": {
         "src": "cradle-pendulum/cradle-pendulum.png",
-        "alt": "Figure 1: Esquema de la cuna de Newton"
+        "alt": "Figura 1: Esquema de la cuna de Newton"
       }
     },
     {
@@ -221,7 +221,7 @@
       },
       "image": {
         "src": "cradle-pendulum/image121.png",
-        "alt": "Figure 2: Traspaso de velocidad en el choque para masa igual a 1"
+        "alt": "Figura 2: Traspaso de velocidad en el choque para masa igual a 1"
       }
     },
     {
@@ -615,7 +615,7 @@
       },
       "image": {
 		"src": "heun/image012.png",
-        "alt": "Figura 2: Media de las dos estimaciones"
+        "alt": "Figura 3: Media de las dos estimaciones"
       }
     }
   ],
@@ -689,7 +689,7 @@
       },
       "image": {
         "src": "runge-kutta-fehlberg/butcher3.png",
-        "alt": "Figura 2: Tablero de Butcher para RKF45"
+        "alt": "Figura 3: Tablero de Butcher para RKF45"
       }
     },
     {
