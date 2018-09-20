@@ -214,6 +214,8 @@ export default {
           }else{
             this.nextStep = pendulumSimpleExact(this.time, this.angle0, this.velocity0, this.pendulum.length)
             this.time += parseFloat(this.nextStep[2])
+            
+            this.nextStep[0] = (this.angle0 > Math.PI ? -1 : 1) * this.nextStep[0]
           }
           this.pendulum.angle = parseFloat(this.nextStep[0])
           this.pendulum.velocity = parseFloat(this.nextStep[1])
